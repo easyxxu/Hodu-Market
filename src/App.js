@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
-import Header from "./components/Header";
+import Home from "./pages/Home/Home";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -17,6 +17,12 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Spoqa Han Sans Neo', 'Spoqa Han Sans JP', sans-serif;
     border: 0;
     cursor: pointer;
+    padding: 0;
+  }
+  input{
+    &:focus{
+      outline: none;
+    }
   }
   .a11y-hidden {
     clip: rect(1px, 1px, 1px, 1px);
@@ -34,7 +40,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <Header />
+      <Home />
     </>
   );
 }

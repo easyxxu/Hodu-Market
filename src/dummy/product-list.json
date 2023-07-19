@@ -1,0 +1,35 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "src": "../../assets/product.svg",
+      "corporation": "우당탕탕 라이캣의 실험실",
+      "name": "Hack Your Life 개발자 노트북 파우치",
+      "price": 29000
+    },
+    {
+      "id": 2,
+      "corporation": "제주코딩베이스캠프",
+      "name": "네 개발잡니다 개발자키링",
+      "price": 29000
+    },
+    {
+      "id": 3,
+      "corporation": "백엔드글로벌",
+      "name": "Hack Your Life 개발자 노트북 파우치",
+      "price": 29000
+    },
+    {
+      "id": 4,
+      "corporation": "제주코딩베이스캠프",
+      "name": "네 개발잡니다 개발자키링",
+      "price": 29000
+    },
+    {
+      "id": 5,
+      "corporation": "우당탕탕 라이캣의 실험실",
+      "name": "Hack Your Life 개발자 노트북 파우치",
+      "price": 29000
+    }
+  ]
+}

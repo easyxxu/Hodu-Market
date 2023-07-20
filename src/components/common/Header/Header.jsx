@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import Logo from "../../assets/Logo-hodu.svg";
-import ShoppingCart from "../../assets/icon-shopping-cart.svg";
-import MyPage from "../../assets/icon-user.svg";
-import SearchIcon from "../../assets/search.svg";
+import Logo from "../../../assets/Logo-hodu.svg";
+import ShoppingCart from "../../../assets/icon-shopping-cart.svg";
+import MyPage from "../../../assets/icon-user.svg";
+import SearchIcon from "../../../assets/search.svg";
 
 export default function Header() {
   return (

@@ -11,9 +11,8 @@ export const BannerContainer = styled.div`
 
 export const BannerLeftBtn = styled.button`
   position: absolute;
-  top: 50%;
-  left: 4%;
-  transform: translate(-50%, -50%);
+  top: 35%;
+  left: 0;
   width: 60px;
   height: 124px;
   background: url(${ArrowLeft}) no-repeat;
@@ -21,9 +20,8 @@ export const BannerLeftBtn = styled.button`
 
 export const BannerRightBtn = styled.button`
   position: absolute;
-  top: 50%;
-  right: 1%;
-  transform: translate(-50%, -50%);
+  top: 35%;
+  right: 0;
   width: 60px;
   height: 124px;
   background: url(${ArrowRight}) no-repeat;

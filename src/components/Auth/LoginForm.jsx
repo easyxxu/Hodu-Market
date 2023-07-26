@@ -65,6 +65,9 @@ const LoginFormContainer = styled.form`
     width: 480px;
     border-bottom: 1px solid #ccc;
     padding: 20px 0;
+    &:focus {
+      border-bottom: 1px solid #21bf48;
+    }
   }
   input:first-of-type {
     margin-bottom: 6px;

@@ -1,19 +1,48 @@
 import reset from "styled-reset";
 import { createGlobalStyle } from "styled-components";
-
+import SpoqaHanSansNeoRegular from "../style/fonts/SpoqaHanSansNeo-Regular.ttf";
+import SpoqaHanSansNeoMedium from "../style/fonts/SpoqaHanSansNeo-Medium.ttf";
+import SpoqaHanSansNeoBold from "../style/fonts/SpoqaHanSansNeo-Bold.ttf";
 export const GlobalStyle = createGlobalStyle`
   ${reset}
-  * {
-    font-family: 'Spoqa Han Sans Neo', 'Spoqa Han Sans JP', sans-serif;
+  @font-face {
+  font-family: 'Spoqa Han Sans Neo';
+  src: url(${SpoqaHanSansNeoRegular});
+  font-weight: 400;
+  }
+
+  @font-face {
+    font-family: 'Spoqa Han Sans Neo';
+    src: url(${SpoqaHanSansNeoMedium});
+    font-weight: 500;
+  }
+
+  @font-face {
+    font-family: 'Spoqa Han Sans Neo';
+    src: url(${SpoqaHanSansNeoBold});
+    font-weight: 700;
+  }
+  :root{
+    --content-color-dark: #767676;
+    --content-color-light: #c4c4c4;
+    --point-color: #21bf48;
+  }
+  *{
     box-sizing: border-box;
   }
+  body {
+    font-family: 'Spoqa Han Sans Neo';
+    font-weight: 400;
+  }
   a{
-    font-family: 'Spoqa Han Sans Neo', 'Spoqa Han Sans JP', sans-serif;
+    font-family: 'Spoqa Han Sans Neo';    
+    font-weight: 400;
     color: inherit;
     text-decoration: none;
   }
   button{
-    font-family: 'Spoqa Han Sans Neo', 'Spoqa Han Sans JP', sans-serif;
+    font-family: 'Spoqa Han Sans Neo';
+    font-weight: 400;
     border: 0;
     cursor: pointer;
     padding: 0;

@@ -7,30 +7,36 @@ import SearchIcon from "../../../assets/search.svg";
 
 export default function Header() {
   return (
-    <HeaderContainer>
-      <h1>
-        <a href="/">
-          <img src={Logo} alt="호두 로고" />
-        </a>
-      </h1>
-      <SearchContainer>
-        <SearchInput type="text" placeholder="상품을 검색해보세요!" />
-        <SearchBtn></SearchBtn>
-      </SearchContainer>
-      <Nav>
-        <ShoppingCartLink href="/">
-          <img src={ShoppingCart} alt="shopping-cart" />
-          <p>장바구니</p>
-        </ShoppingCartLink>
-        <LoginLink href="/">
-          <img src={MyPage} alt="my-page" />
-          <p>로그인</p>
-        </LoginLink>
-      </Nav>
-    </HeaderContainer>
+    <HeaderDiv>
+      <HeaderContainer>
+        <h1>
+          <a href="/">
+            <img src={Logo} alt="호두 로고" />
+          </a>
+        </h1>
+        <SearchContainer>
+          <SearchInput type="text" placeholder="상품을 검색해보세요!" />
+          <SearchBtn></SearchBtn>
+        </SearchContainer>
+        <Nav>
+          <ShoppingCartLink href="/">
+            <img src={ShoppingCart} alt="shopping-cart" />
+            <p>장바구니</p>
+          </ShoppingCartLink>
+          <LoginLink href="/">
+            <img src={MyPage} alt="my-page" />
+            <p>로그인</p>
+          </LoginLink>
+        </Nav>
+      </HeaderContainer>
+    </HeaderDiv>
   );
 }
-
+const HeaderDiv = styled.div`
+  /* padding: 0 350px; */
+  box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.1);
+  position: relative;
+`;
 const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
@@ -41,7 +47,6 @@ const HeaderContainer = styled.header`
   padding: 26px 30px;
   z-index: 10;
   position: relative;
-  box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.1);
 `;
 
 const SearchContainer = styled.div`

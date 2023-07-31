@@ -25,6 +25,7 @@ export const GlobalStyle = createGlobalStyle`
   :root{
     --content-color-dark: #767676;
     --content-color-light: #c4c4c4;
+    --price-point-color: #eb5757;
     --point-color: #21bf48;
   }
   *{

@@ -1,10 +1,10 @@
 import React from "react";
 import * as S from "./CartHeaderStyle";
-export default function CartHeader() {
+export default function CartHeader({ className }) {
   return (
     <>
       <S.CartTitle>장바구니</S.CartTitle>
-      <S.CartTabTitle>
+      <S.CartTabTitle className={className}>
         <S.CartCheckBox></S.CartCheckBox>
         <p>상품정보</p>
         <p>수량</p>

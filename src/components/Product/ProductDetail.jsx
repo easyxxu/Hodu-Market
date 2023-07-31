@@ -1,5 +1,6 @@
 import React from "react";
 import TestProduct from "../../assets/product2.svg";
+import { Button } from "../common/Button/Button";
 import * as S from "./ProductDetailStyle";
 export default function ProductDetail() {
   return (
@@ -32,8 +33,25 @@ export default function ProductDetail() {
             </S.TotalCntContainer>
           </S.TotalContainer>
           <S.BtnBuyContainer>
-            <S.BtnBuy>바로 구매</S.BtnBuy>
-            <S.BtnCart>장바구니</S.BtnCart>
+            <Button
+              type="button"
+              size="M"
+              width="416px"
+              color="white"
+              fontSize="M"
+              fontWeight="bold"
+              content="바로구매"
+            ></Button>
+            <Button
+              type="button"
+              size="M"
+              width="200px"
+              color="white"
+              bgColor="dark"
+              fontSize="M"
+              fontWeight="bold"
+              content="장바구니"
+            ></Button>
           </S.BtnBuyContainer>
         </div>
       </S.DetailContainer>

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Button } from "../common/Button/Button";
 export default function LoginForm() {
   return (
     <LoginContainer>
@@ -13,7 +14,14 @@ export default function LoginForm() {
         <input type="text" id="Id" placeholder="아이디" />
         <label htmlFor="password" className="a11y-hidden" />
         <input type="password" id="password" placeholder="비밀번호" />
-        <LoginSubmitBtn type="submit">로그인</LoginSubmitBtn>
+        <Button
+          size="M"
+          width="M"
+          color="white"
+          fontSize="M"
+          fontWeight="bold"
+          content="로그인"
+        />
       </LoginFormContainer>
       <LoginLinkContainer>
         <a href="/">회원가입</a>

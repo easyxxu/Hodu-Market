@@ -1,8 +1,8 @@
 import React from "react";
 import * as S from "./CartTotalStyle";
-export default function CartTotal() {
+export default function CartTotal({ className }) {
   return (
-    <S.TotalContainer>
+    <S.TotalContainer className={className}>
       <S.TotalBox>
         <p>총 상품금액</p>
         <p>

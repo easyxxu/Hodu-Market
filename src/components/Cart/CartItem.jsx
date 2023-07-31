@@ -1,6 +1,7 @@
 import React from "react";
 import * as S from "./CartItemStyle";
 import TestProduct from "../../assets/product2.svg";
+import { Button } from "../common/Button/Button";
 
 export default function CartItem() {
   return (
@@ -22,7 +23,7 @@ export default function CartItem() {
       </S.BtnContainer>
       <S.ProductPriceContainer>
         <p>17500원</p>
-        <button>주문하기</button>
+        <Button width="130px" size="M" content="주문하기" />
       </S.ProductPriceContainer>
       <S.BtnClose />
     </S.CartItemContainer>

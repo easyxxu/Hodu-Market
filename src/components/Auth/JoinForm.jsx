@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import React from "react";
 import UpArrow from "../../assets/icon-up-arrow.svg";
 import Check from "../../assets/icon-check.svg";
+import { Button } from "../common/Button/Button";
 export default function JoinForm() {
   return (
     <JoinContainer>
@@ -15,7 +16,7 @@ export default function JoinForm() {
           <label htmlFor="id">아이디</label>
           <IdContainer>
             <input id="id" type="text" />
-            <button type="submit">중복확인</button>
+            <Button content="중복확인" />
           </IdContainer>
           <label htmlFor="password">비밀번호</label>
           <input id="password" type="password" />
@@ -49,7 +50,16 @@ export default function JoinForm() {
             </div>
           </AgreeLabel>
         </AgreeContainer>
-        <JoinSubmitBtn>가입하기</JoinSubmitBtn>
+        <Button
+          type="button"
+          size="M"
+          width="M"
+          bgColor="disabled"
+          color="white"
+          fontSize="M"
+          fontWeight="bold"
+          content="가입하기"
+        />
       </Form>
     </JoinContainer>
   );
@@ -84,6 +94,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 34px;
+  align-items: center;
 `;
 const JoinFormContainer = styled.div`
   display: flex;
@@ -186,13 +197,4 @@ const AgreeLabel = styled.label`
   display: flex;
   line-height: 18px;
   color: #767676;
-`;
-const JoinSubmitBtn = styled.button`
-  width: 550px;
-  padding: 19px 207px;
-  border-radius: 10px;
-  font-size: 18px;
-  font-weight: 700;
-  background-color: #21bf48;
-  color: #fff;
 `;

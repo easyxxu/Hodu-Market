@@ -80,16 +80,9 @@ const LoginFormContainer = styled.form`
   input:first-of-type {
     margin-bottom: 6px;
   }
-`;
-const LoginSubmitBtn = styled.button`
-  width: 480px;
-  background-color: #21bf48;
-  padding: 19px 215px;
-  font-size: 18px;
-  font-weight: 700;
-  color: #fff;
-  border-radius: 5px;
-  margin-top: 36px;
+  button {
+    margin-top: 36px;
+  }
 `;
 const LoginLinkContainer = styled.div`
   text-align: center;

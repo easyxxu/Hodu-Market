@@ -107,7 +107,7 @@ const JoinFormContainer = styled.div`
   position: relative;
   input {
     width: 480px;
-    padding: 15.5px;
+    padding: 17px 10px;
     border: 1px solid #c4c4c4;
     border-radius: 5px;
     margin-bottom: 12px;

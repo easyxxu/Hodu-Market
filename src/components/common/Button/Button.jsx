@@ -138,7 +138,7 @@ function TabMenuButton({ type, content, cnt, onClick }) {
   return (
     <TabMenuButtonStyle type={type} onClick={onClick}>
       {content}
-      <p>{cnt}</p>
+      {cnt && <p>{cnt}</p>}
     </TabMenuButtonStyle>
   );
 }

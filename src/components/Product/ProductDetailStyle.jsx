@@ -5,7 +5,7 @@ import Plus from "../../assets/icon-plus-line.svg";
 const Wrapper = styled.div`
   max-width: 1280px;
   width: 100%;
-  margin: 0 auto;
+  margin: 80px auto;
 `;
 const DetailContainer = styled.div`
   display: flex;
@@ -122,9 +122,7 @@ const BtnBuyContainer = styled.div`
   display: flex;
   gap: 14px;
 `;
-const DetailInfoContainer = styled.div`
-  margin-bottom: 50px;
-`;
+const DetailInfoContainer = styled.div``;
 const BtnDetailInfoActive = styled.button`
   width: 320px;
   color: var(--point-color);

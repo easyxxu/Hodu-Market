@@ -39,66 +39,68 @@ export default function SellerDashboard() {
             </li>
           </ul>
         </TabMenuBar>
-        <ProductList>
-          <table>
-            <thead>
-              <tr>
-                <th>상품정보</th>
-                <th>판매가격</th>
-                <th>수정</th>
-                <th>삭제</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <ProductInfo>
-                    <img src={ProductImg} alt="상품이미지" />
-                    <div>
-                      <p>딥러닝 개발자 무릎 담요</p>
-                      <p>재고: 370개</p>
-                    </div>
-                  </ProductInfo>
-                </td>
-                <td>17500원</td>
-                <td>
-                  <Button width="70px" color="white" content="수정" />
-                </td>
-                <td>
-                  <Button
-                    width="70px"
-                    bgColor="light"
-                    border="yes"
-                    content="삭제"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <ProductInfo>
-                    <img src={ProductImg} alt="상품이미지" />
-                    <div>
-                      <p>딥러닝 개발자 무릎 담요</p>
-                      <p>재고: 370개</p>
-                    </div>
-                  </ProductInfo>
-                </td>
-                <td>17500원</td>
-                <td>
-                  <Button width="70px" color="white" content="수정" />
-                </td>
-                <td>
-                  <Button
-                    width="70px"
-                    bgColor="light"
-                    border="yes"
-                    content="삭제"
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </ProductList>
+        <ProductListBackground>
+          <ProductList>
+            <table>
+              <thead>
+                <tr>
+                  <th>상품정보</th>
+                  <th>판매가격</th>
+                  <th>수정</th>
+                  <th>삭제</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <ProductInfo>
+                      <img src={ProductImg} alt="상품이미지" />
+                      <div>
+                        <p>딥러닝 개발자 무릎 담요</p>
+                        <p>재고: 370개</p>
+                      </div>
+                    </ProductInfo>
+                  </td>
+                  <td>17500원</td>
+                  <td>
+                    <Button width="70px" color="white" content="수정" />
+                  </td>
+                  <td>
+                    <Button
+                      width="70px"
+                      bgColor="light"
+                      border="yes"
+                      content="삭제"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <ProductInfo>
+                      <img src={ProductImg} alt="상품이미지" />
+                      <div>
+                        <p>딥러닝 개발자 무릎 담요</p>
+                        <p>재고: 370개</p>
+                      </div>
+                    </ProductInfo>
+                  </td>
+                  <td>17500원</td>
+                  <td>
+                    <Button width="70px" color="white" content="수정" />
+                  </td>
+                  <td>
+                    <Button
+                      width="70px"
+                      bgColor="light"
+                      border="yes"
+                      content="삭제"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ProductList>
+        </ProductListBackground>
       </DashBoardMain>
     </div>
   );
@@ -126,6 +128,13 @@ const TabMenuBar = styled.div`
     margin-bottom: 10px;
   }
 `;
+const ProductListBackground = styled.div`
+  width: 1000px;
+  height: 800px;
+  border: 1px solid var(--content-colr-light);
+  background-color: #f2f2f2;
+  margin-bottom: 80px;
+`;
 const ProductList = styled.div`
   img {
     width: 70px;
@@ -136,6 +145,7 @@ const ProductList = styled.div`
     max-width: 1440px;
     width: 1000px;
     /* width: 100%; */
+    background-color: #fff;
     border: 1px solid var(--content-color-light);
   }
   thead {

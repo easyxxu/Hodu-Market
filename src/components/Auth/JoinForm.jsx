@@ -1,7 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../common/Button/Button";
 import * as S from "./JoinFormStyle";
 export default function JoinForm() {
+  const [userInfo, setUserInfo] = useState({
+    username: "",
+    password: "",
+    passwordCheck: "",
+    name: "",
+    phone: "",
+  });
+  const [idValidErrorMsg, setIdValidErrorMsg] = useState("");
+  const [pwValidErrorMsg, setPwValidErrorMsg] = useState("");
+  const [pwDoubleCheckErrorMsg, setPwDoubleCheckErrorMsg] = useState("");
+  const [idValid, setIdValid] = useState(false);
+  const [pwValid, setPwValid] = useState(false);
+  const [pwDoubleValid, setPwDoubleValid] = useState(false);
+  const handleSubmit = (e) => {};
+
+  // onChange 발생
+  const handleInputChange = (e) => {
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+  };
+  // onBlur 발생
+  const idValidCheck = (e) => {
+    const regex = /^[a-zA-Z0-9]{1,20}$/;
+    if (!regex.test(e.target.value) && e.target.value.length > 0) {
+      console.log(regex.test(e.target.value));
+      setIdValidErrorMsg(
+        "ID는 20자 이내의 영어 소문자, 대문자, 숫자만 가능합니다."
+      );
+    } else if (e.target.value.length < 1) {
+      setIdValidErrorMsg("필수 정보입니다");
+    } else {
+      setIdValidErrorMsg("");
+      setIdValid(true);
+    }
+  };
+  const pwValidCheck = (e) => {
+    const regex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    if (!regex.test(e.target.value) && e.target.value.length > 0) {
+      console.log(e.target.value, regex.test(e.target.value));
+      setPwValidErrorMsg("8자 이상, 영문 대소문자, 숫자를 사용하세요.");
+    } else if (e.target.value.length < 1) {
+      setPwValidErrorMsg("필수 정보입니다.");
+    } else {
+      setPwValidErrorMsg("");
+      setPwValid(true);
+    }
+  };
+  const pwDoubleCheck = (e) => {
+    if (userInfo.password !== e.target.value) {
+      setPwDoubleCheckErrorMsg("비밀번호가 일치하지 않습니다.");
+    } else {
+      setPwDoubleCheckErrorMsg("");
+      setPwDoubleValid(true);
+    }
+  };
   return (
     <S.JoinContainer>
       <h1 className="a11y-hidden">회원가입</h1>
@@ -9,17 +63,48 @@ export default function JoinForm() {
         <S.BuyerJoinBtn>구매회원가입</S.BuyerJoinBtn>
         <S.SellerJoinBtn>판매회원가입</S.SellerJoinBtn>
       </S.JoinTypeBtn>
-      <S.Form>
+      <S.Form onSubmit={handleSubmit}>
         <S.JoinFormContainer>
           <label htmlFor="id">아이디</label>
           <S.IdContainer>
-            <input id="id" type="text" />
+            <input
+              name="username"
+              id="id"
+              type="text"
+              onChange={handleInputChange}
+              onBlur={idValidCheck}
+            />
             <Button content="중복확인" />
           </S.IdContainer>
-          <label htmlFor="password">비밀번호</label>
-          <input id="password" type="password" />
-          <label htmlFor="passwordCheck">비밀번호 재확인</label>
-          <input id="passwordCheck" type="password" />
+          <S.ErrorMsg>{idValidErrorMsg}</S.ErrorMsg>
+          <label htmlFor="password">
+            비밀번호
+            <S.CheckIconStyle
+              fill={pwValid ? "var(--point-color)" : "#f2f2f2"}
+            />
+          </label>
+          <input
+            name="password"
+            id="password"
+            type="password"
+            onChange={handleInputChange}
+            onBlur={pwValidCheck}
+          />
+          <S.ErrorMsg>{pwValidErrorMsg}</S.ErrorMsg>
+          <label htmlFor="passwordCheck">
+            비밀번호 재확인
+            <S.CheckIconStyle
+              fill={pwDoubleValid ? "var(--point-color)" : "#f2f2f2"}
+            />
+          </label>
+          <input
+            name="passwordCheck"
+            id="passwordCheck"
+            type="password"
+            onChange={handleInputChange}
+            onBlur={pwDoubleCheck}
+          />
+          <S.ErrorMsg>{pwDoubleCheckErrorMsg}</S.ErrorMsg>
           <label htmlFor="name">이름</label>
           <input id="name" type="text" />
           <fieldset>
@@ -49,10 +134,10 @@ export default function JoinForm() {
           </S.AgreeLabel>
         </S.AgreeContainer>
         <Button
-          type="button"
+          type="submit"
           size="M"
           width="M"
-          bgColor="disabled"
+          bgcolor="disabled"
           color="white"
           fontSize="M"
           fontWeight="bold"

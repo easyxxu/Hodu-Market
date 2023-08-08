@@ -20,11 +20,11 @@ export const ButtonStyle = styled.button`
       ? "16px 0px"
       : "10px 0px"};
   background-color: ${(props) =>
-    props.bgColor === "disabled"
+    props.bgcolor === "disabled"
       ? "var(--content-color-light)"
-      : props.bgColor === "dark"
+      : props.bgcolor === "dark"
       ? "var(--content-color-dark)"
-      : props.bgColor === "light"
+      : props.bgcolor === "light"
       ? "#fff"
       : "var(--point-color)"};
   color: ${(props) => (props.color === "white" ? "#ffffff" : "#767676")};
@@ -34,7 +34,7 @@ export const ButtonStyle = styled.button`
   border: ${(props) =>
     props.border === "yes" ? "1px solid var(--content-color-light)" : "none"};
   ${(props) =>
-    props.bgColor === "light" &&
+    props.bgcolor === "light" &&
     css`
       &:hover {
         border: 1px solid #000;
@@ -98,7 +98,7 @@ function Button({
   content,
   size,
   width,
-  bgColor,
+  bgcolor,
   color,
   fontSize,
   fontWeight,
@@ -112,7 +112,7 @@ function Button({
       type={type ? "button" : "submit"}
       size={size}
       width={width}
-      bgColor={bgColor}
+      bgcolor={bgcolor}
       color={color}
       fontSize={fontSize}
       fontWeight={fontWeight}

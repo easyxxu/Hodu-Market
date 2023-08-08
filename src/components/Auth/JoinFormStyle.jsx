@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import UpArrow from "../../assets/icon-up-arrow.svg";
-import Check from "../../assets/icon-check.svg";
+import CheckBoxIcon from "../../assets/icon-check.svg";
+import { ReactComponent as CheckIcon } from "../../assets/icon-check-off.svg";
 const JoinContainer = styled.div`
   max-width: 550px;
   margin: 50px auto;
@@ -54,6 +55,7 @@ const JoinFormContainer = styled.div`
     color: #767676;
     font-size: 16px;
     margin-bottom: 10px;
+    position: relative;
   }
 `;
 const IdContainer = styled.div`
@@ -71,6 +73,12 @@ const IdContainer = styled.div`
     padding: 17px 31px;
     font-size: 16px;
   }
+`;
+const CheckIconStyle = styled(CheckIcon)`
+  fill: ${(props) => props.fill};
+  position: absolute;
+  top: 39px;
+  right: 10px;
 `;
 const PhoneContainer = styled.div`
   display: flex;
@@ -126,7 +134,7 @@ const AgreeInput = styled.input`
   }
   &:checked + label::before {
     content: "";
-    background: url(${Check}) no-repeat 50% 50%;
+    background: url(${CheckBoxIcon}) no-repeat 50% 50%;
     border: 1px solid #21bf48;
   }
 `;
@@ -135,7 +143,11 @@ const AgreeLabel = styled.label`
   line-height: 18px;
   color: #767676;
 `;
-
+const ErrorMsg = styled.small`
+  color: var(--price-point-color);
+  font-size: 16px;
+  margin-bottom: 12px;
+`;
 export {
   JoinContainer,
   JoinTypeBtn,
@@ -148,4 +160,6 @@ export {
   AgreeContainer,
   AgreeInput,
   AgreeLabel,
+  ErrorMsg,
+  CheckIconStyle,
 };

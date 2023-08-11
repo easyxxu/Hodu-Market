@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import UpArrow from "../../assets/icon-up-arrow.svg";
+import DownArrow from "../../assets/icon-down-arrow.svg";
 import CheckBoxIcon from "../../assets/icon-check.svg";
 import { ReactComponent as CheckIcon } from "../../assets/icon-check-off.svg";
 const JoinContainer = styled.div`
@@ -63,6 +64,10 @@ const IdContainer = styled.div`
   gap: 12px;
   input {
     width: 346px;
+    border: ${(props) =>
+      props.valid === "false"
+        ? "1px solid var(--price-point-color)"
+        : "1px solid #c4c4c4"};
   }
   button {
     width: 122px;
@@ -88,30 +93,38 @@ const PhoneContainer = styled.div`
   input {
     width: 152px;
   }
-  button {
-    width: 152px;
-    height: 54px;
-    font-size: 16px;
-    border: 1px solid #c4c4c4;
-    border-radius: 10px;
-    padding: 17px 73px 17px 50px;
-    margin-bottom: 10px;
-    background: url(${UpArrow}) no-repeat 90% 50%;
-  }
   ul {
-    display: none;
     position: absolute;
     top: 0;
     left: 0;
-    transform: translate(0%, 30%);
+    transform: translate(0%, 40%);
     width: 152px;
+    height: 150px;
+    overflow-y: scroll;
     border-radius: 5px;
     border: 1px solid #c4c4c4;
     text-align: center;
+    background-color: #fff;
   }
   li {
     padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: normal;
   }
+`;
+const PhoneFirstBtn = styled.button`
+  width: 152px;
+  height: 54px;
+  font-size: 16px;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  padding: 17px 73px 17px 50px;
+  margin-bottom: 10px;
+  background-image: ${(props) =>
+    props.state === "active" ? `url(${UpArrow})` : `url(${DownArrow})`};
+  background-repeat: no-repeat;
+  background-position: 90% 50%;
 `;
 const AgreeContainer = styled.div`
   width: 480px;
@@ -144,7 +157,10 @@ const AgreeLabel = styled.label`
   color: #767676;
 `;
 const ErrorMsg = styled.small`
-  color: var(--price-point-color);
+  color: ${(props) =>
+    props.valid === "success"
+      ? "var(--point-color)"
+      : "var(--price-point-color)"};
   font-size: 16px;
   margin-bottom: 12px;
 `;
@@ -157,6 +173,7 @@ export {
   JoinFormContainer,
   IdContainer,
   PhoneContainer,
+  PhoneFirstBtn,
   AgreeContainer,
   AgreeInput,
   AgreeLabel,

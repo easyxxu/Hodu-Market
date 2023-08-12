@@ -48,6 +48,7 @@ export const GlobalStyle = createGlobalStyle`
     cursor: pointer;
     padding: 0;
     background-color: inherit;
+    &:disabled{cursor: default}
   }
   input{
     border: 0;

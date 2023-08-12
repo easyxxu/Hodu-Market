@@ -1,6 +1,6 @@
 ---
-name: 이슈 템플릿
-about: 이슈를 위한 템플릿
+name: TODO 템플릿
+about: TODO를 위한 템플릿
 title: ''
 labels: ''
 assignees: ''

@@ -1,14 +1,15 @@
+// import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import { idDuplicateCheckApi } from "../../apis/signupApi";
+import { idDuplicateCheckApi, signupBuyerApi } from "../../apis/signupApi";
 import { Button } from "../common/Button/Button";
 import * as S from "./JoinFormStyle";
 export default function JoinForm() {
   const [userInfo, setUserInfo] = useState({
     username: "",
     password: "",
-    passwordCheck: "",
+    password2: "",
     name: "",
-    phone: "",
+    phone_number: "",
   });
   const [idValidErrorMsg, setIdValidErrorMsg] = useState("");
   const [pwValidErrorMsg, setPwValidErrorMsg] = useState("");
@@ -17,18 +18,56 @@ export default function JoinForm() {
   const [idDuplicateValid, setIdDuplicateValid] = useState(false);
   const [pwValid, setPwValid] = useState(false);
   const [pwDoubleValid, setPwDoubleValid] = useState(false);
-  const [phoneFirst, setPhoneFirst] = useState("");
+  const [phoneFirst, setPhoneFirst] = useState("010");
+  const [phoneSecond, setPhoneSecond] = useState("");
+  const [phoneThird, setPhoneThird] = useState("");
   const [phoneListVisible, setPhoneListVisible] = useState(false);
-  const handleSubmit = (e) => {};
+  const [joinAgree, setJoinAgree] = useState(false);
+  // const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await signupBuyerApi(userInfo);
+    console.log(res);
+  };
+  console.log(userInfo);
+  const handleSubmitBtn = () => {
+    return idValid && idDuplicateValid && pwValid && pwDoubleValid && joinAgree;
+  };
+
+  const updatePhoneInfo = () => {
+    console.log("실행됨", phoneFirst, phoneSecond, phoneThird);
+    if (phoneFirst && phoneSecond && phoneThird) {
+      setUserInfo({
+        ...userInfo,
+        phone_number: `${phoneFirst}${phoneSecond}${phoneThird}`,
+      });
+    }
+  };
 
   const handlePhoneListItemClick = (e) => {
     setPhoneFirst(e.target.textContent);
     setPhoneListVisible(false);
+    updatePhoneInfo(); // 호출 추가
   };
+
+  const handlePhoneSecondChange = (e) => {
+    setPhoneSecond(e.target.value);
+    updatePhoneInfo(); // 호출 추가
+  };
+
+  const handlePhoneThirdChange = (e) => {
+    setPhoneThird(e.target.value);
+    updatePhoneInfo(); // 호출 추가
+  };
+  const handleAgreeChange = (e) => {
+    setJoinAgree(e.target.checked);
+  };
+
   // onChange 발생
   const handleInputChange = (e) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
+
   const phoneFirstList = ["010", "011", "016", "017", "018", "019"];
 
   const phoneList = (
@@ -103,6 +142,7 @@ export default function JoinForm() {
       setPwDoubleValid(true);
     }
   };
+  // console.log("userInfo", userInfo);
   return (
     <S.JoinContainer>
       <h1 className="a11y-hidden">회원가입</h1>
@@ -110,7 +150,7 @@ export default function JoinForm() {
         <S.BuyerJoinBtn>구매회원가입</S.BuyerJoinBtn>
         <S.SellerJoinBtn>판매회원가입</S.SellerJoinBtn>
       </S.JoinTypeBtn>
-      <S.Form onSubmit={handleSubmit}>
+      <S.Form>
         <S.JoinFormContainer>
           <label htmlFor="id">아이디</label>
           <S.IdContainer
@@ -152,22 +192,27 @@ export default function JoinForm() {
             onBlur={pwValidCheck}
           />
           <S.ErrorMsg>{pwValidErrorMsg}</S.ErrorMsg>
-          <label htmlFor="passwordCheck">
+          <label htmlFor="password2">
             비밀번호 재확인
             <S.CheckIconStyle
               fill={pwDoubleValid ? "var(--point-color)" : "#f2f2f2"}
             />
           </label>
           <input
-            name="passwordCheck"
-            id="passwordCheck"
+            name="password2"
+            id="password2"
             type="password"
             onChange={handleInputChange}
             onBlur={pwDoubleCheck}
           />
           <S.ErrorMsg>{pwDoubleCheckErrorMsg}</S.ErrorMsg>
           <label htmlFor="name">이름</label>
-          <input id="name" type="text" />
+          <input
+            name="name"
+            id="name"
+            type="text"
+            onChange={handleInputChange}
+          />
           <fieldset>
             <label htmlFor="phone">휴대폰번호</label>
             <S.PhoneContainer>
@@ -179,13 +224,31 @@ export default function JoinForm() {
                 {phoneFirst || "010"}
               </S.PhoneFirstBtn>
               {phoneListVisible && phoneList}
-              <input type="text" />
-              <input type="text" />
+              <input
+                name="phoneSecond"
+                value={phoneSecond}
+                onChange={handlePhoneSecondChange}
+                maxLength="4"
+                type="text"
+              />
+              <input
+                name="phoneThird"
+                value={phoneThird}
+                onChange={handlePhoneThirdChange}
+                maxLength="4"
+                type="text"
+              />
             </S.PhoneContainer>
           </fieldset>
         </S.JoinFormContainer>
         <S.AgreeContainer>
-          <S.AgreeInput type="checkbox" id="agree" />
+          <S.AgreeInput
+            type="checkbox"
+            id="agree"
+            value={joinAgree}
+            onChange={handleAgreeChange}
+            required
+          />
           <S.AgreeLabel htmlFor="agree">
             <div>
               호두샵의 <span>이용약관</span> 및 <span>개인정보처리방침</span>에
@@ -197,11 +260,13 @@ export default function JoinForm() {
           type="submit"
           size="M"
           width="M"
-          bgcolor="disabled"
+          bgcolor={!handleSubmitBtn() ? "disabled" : null}
           color="white"
           fontSize="M"
           fontWeight="bold"
           content="가입하기"
+          disabled={!handleSubmitBtn()}
+          onClick={handleSubmit}
         />
       </S.Form>
     </S.JoinContainer>

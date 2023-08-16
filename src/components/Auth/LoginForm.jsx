@@ -1,19 +1,94 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { loginApi } from "../../apis/authApi";
 import { Button } from "../common/Button/Button";
 export default function LoginForm() {
+  const [loginInfo, setLoginInfo] = useState({
+    username: "",
+    password: "",
+    login_type: "BUYER",
+  });
+  // const [idErrorMsg, setIdErrorMsg] = useState("");
+  // const [pwErrorMsg, setPwErrorMsg] = useState("");
+  const [loginErrorMsg, setLoginErrorMsg] = useState("");
+  // const [idValid, setIdValid] = useState(false);
+  // const [pwValid, setPwValid] = useState(false);
+  // const [loginValid, setLoginValid] = useState(false);
+
+  const handleLoginTypeChange = (e) => {
+    if (e.target.name === "buyer") {
+      setLoginInfo({ ...loginInfo, login_type: "BUYER" });
+    } else if (e.target.name === "seller") {
+      setLoginInfo({ ...loginInfo, login_type: "SELLER" });
+    }
+  };
+  const handleInputChange = (e) => {
+    setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
+  };
+  const idCheck = (e) => {
+    if (e.target.value.length < 1) {
+      setLoginErrorMsg("아이디를 입력해주세요.");
+    } else {
+      setLoginErrorMsg("");
+      // setIdValid(true);
+    }
+  };
+  const pwCheck = (e) => {
+    if (e.target.value.length < 1) {
+      setLoginErrorMsg("비밀번호를 입력해주세요.");
+    } else {
+      setLoginErrorMsg("");
+      // setPwValid(true);
+    }
+  };
+  const loginSubmit = async (e) => {
+    e.preventDefault();
+    if (loginInfo.username.length < 1 && loginInfo.password.length < 1) {
+      setLoginErrorMsg("아이디와 비밀번호를 입력해주세요.");
+    } else {
+      setLoginErrorMsg("");
+    }
+    try {
+      const res = await loginApi(loginInfo);
+      localStorage.setItem("token", res.data.token);
+      console.log("로그인 성공!", res);
+    } catch (err) {
+      console.error("로그인 에러", err);
+    }
+  };
+  console.log("loginInfo: ", loginInfo);
   return (
     <LoginContainer>
       <h1 className="a11y-hidden">로그인</h1>
       <LoginTypeBtn>
-        <BuyerLoginBtn>구매회원 로그인</BuyerLoginBtn>
-        <SellerLoginBtn>판매회원 로그인</SellerLoginBtn>
+        <BuyerLoginBtn name="buyer" onClick={handleLoginTypeChange}>
+          구매회원 로그인
+        </BuyerLoginBtn>
+        <SellerLoginBtn name="seller" onClick={handleLoginTypeChange}>
+          판매회원 로그인
+        </SellerLoginBtn>
       </LoginTypeBtn>
-      <LoginFormContainer>
+      <LoginFormContainer onSubmit={loginSubmit}>
         <label htmlFor="Id" className="a11y-hidden" />
-        <input type="text" id="Id" placeholder="아이디" />
+        <input
+          type="text"
+          id="Id"
+          name="username"
+          onChange={handleInputChange}
+          onBlur={idCheck}
+          placeholder="아이디"
+        />
         <label htmlFor="password" className="a11y-hidden" />
-        <input type="password" id="password" placeholder="비밀번호" />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          onChange={handleInputChange}
+          onBlur={pwCheck}
+          placeholder="비밀번호"
+        />
+        <ErrorMsg>{loginErrorMsg}</ErrorMsg>
         <Button
           size="M"
           width="M"
@@ -24,7 +99,7 @@ export default function LoginForm() {
         />
       </LoginFormContainer>
       <LoginLinkContainer>
-        <a href="/">회원가입</a>
+        <Link to="/join">회원가입</Link>
         <a href="/">비밀번호 찾기</a>
       </LoginLinkContainer>
     </LoginContainer>
@@ -98,4 +173,9 @@ const LoginLinkContainer = styled.div`
       transform: translate(14px, 0);
     }
   }
+`;
+const ErrorMsg = styled.small`
+  color: var(--price-point-color);
+  align-self: flex-start;
+  margin-top: 26px;
 `;

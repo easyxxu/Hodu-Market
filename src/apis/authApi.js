@@ -1,5 +1,6 @@
 import { axiosInstance } from "./axiosInstance";
 
+// 회원가입
 export const signupBuyerApi = async (userInfo) => {
   const res = await axiosInstance.post("/accounts/signup/", userInfo);
   return res.data;
@@ -27,5 +28,11 @@ export const businessRegistrationNumApi = async (registerNum) => {
     "/accounts/signup/valid/company_registration_number/",
     registerNum
   );
+  return res;
+};
+
+// 로그인
+export const loginApi = async (userInfo) => {
+  const res = await axiosInstance.post("/accounts/login/", userInfo);
   return res;
 };

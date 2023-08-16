@@ -1,6 +1,6 @@
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import { idDuplicateCheckApi, signupBuyerApi } from "../../apis/signupApi";
+import { idDuplicateCheckApi, signupBuyerApi } from "../../apis/authApi";
 import { Button } from "../common/Button/Button";
 import * as S from "./JoinFormStyle";
 export default function JoinForm() {
@@ -23,11 +23,15 @@ export default function JoinForm() {
   const [phoneThird, setPhoneThird] = useState("");
   const [phoneListVisible, setPhoneListVisible] = useState(false);
   const [joinAgree, setJoinAgree] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await signupBuyerApi(userInfo);
-    console.log(res);
+    try {
+      await signupBuyerApi(userInfo);
+      navigate("/login");
+    } catch (err) {
+      console.error("회원가입 오류", err);
+    }
   };
   console.log(userInfo);
   const handleSubmitBtn = () => {

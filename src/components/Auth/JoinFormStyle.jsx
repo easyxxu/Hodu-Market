@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled, css } from "styled-components";
 import UpArrow from "../../assets/icon-up-arrow.svg";
 import DownArrow from "../../assets/icon-down-arrow.svg";
 import CheckBoxIcon from "../../assets/icon-check.svg";
@@ -17,25 +17,48 @@ const JoinTypeBtn = styled.div`
   }
 `;
 const BuyerJoinBtn = styled.button`
-  z-index: 2;
-  background-color: #fff;
-  border-top: 1px solid #c4c4c4;
-  border-left: 1px solid #c4c4c4;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  ${(props) =>
+    props.type === "active"
+      ? css`
+          z-index: 2;
+          background-color: #fff;
+          border-top: 1px solid #c4c4c4;
+          border-left: 1px solid #c4c4c4;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+        `
+      : css`
+          background-color: #f2f2f2;
+          border: 1px solid #c4c4c4;
+          border-radius: 10px;
+        `}
 `;
 const SellerJoinBtn = styled.button`
-  border: 1px solid #c4c4c4;
-  background-color: #f2f2f2;
-  border-radius: 10px;
+  ${(props) =>
+    props.type === "active"
+      ? css`
+          z-index: 2;
+          background-color: #fff;
+          border-top: 1px solid #c4c4c4;
+          border-right: 1px solid #c4c4c4;
+          border-top-right-radius: 10px;
+          border-top-left-radius: 10px;
+        `
+      : css`
+          background-color: #f2f2f2;
+          border: 1px solid #c4c4c4;
+          border-radius: 10px;
+        `}
 `;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 34px;
   align-items: center;
+  transform: translateY(-20px);
 `;
 const JoinFormContainer = styled.div`
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   width: 550px;
@@ -44,14 +67,6 @@ const JoinFormContainer = styled.div`
   padding: 40px 35px 36px;
   z-index: 1;
   position: relative;
-  input {
-    width: 480px;
-    padding: 17px 10px;
-    border: 1px solid #c4c4c4;
-    border-radius: 5px;
-    margin-bottom: 12px;
-    font-size: 16px;
-  }
   label {
     color: #767676;
     font-size: 16px;
@@ -59,16 +74,20 @@ const JoinFormContainer = styled.div`
     position: relative;
   }
 `;
+const Input = styled.input`
+  width: 480px;
+  padding: 17px 10px;
+  border: ${(props) =>
+    props.valid === "false"
+      ? "1px solid var(--price-point-color)"
+      : "1px solid #c4c4c4"};
+  border-radius: 5px;
+  margin-bottom: 12px;
+  font-size: 16px;
+`;
 const IdContainer = styled.div`
   display: flex;
   gap: 12px;
-  input {
-    width: 346px;
-    border: ${(props) =>
-      props.valid === "false"
-        ? "1px solid var(--price-point-color)"
-        : "1px solid #c4c4c4"};
-  }
   button {
     width: 122px;
     height: 54px;
@@ -78,6 +97,13 @@ const IdContainer = styled.div`
     padding: 17px 31px;
     font-size: 16px;
   }
+`;
+const SmInput = styled(Input)`
+  width: 346px;
+  border: ${(props) =>
+    props.valid === "false"
+      ? "1px solid var(--price-point-color)"
+      : "1px solid #c4c4c4"};
 `;
 const CheckIconStyle = styled(CheckIcon)`
   fill: ${(props) => props.fill};
@@ -89,7 +115,8 @@ const PhoneContainer = styled.div`
   display: flex;
   gap: 12px;
   position: relative;
-  margin-top: 10px;
+  margin: 10px 0 50px;
+  z-index: 2;
   input {
     width: 152px;
   }
@@ -112,6 +139,12 @@ const PhoneContainer = styled.div`
     font-size: 16px;
     line-height: normal;
   }
+  input {
+    margin-bottom: 0px;
+  }
+`;
+const PhoneInput = styled(Input)`
+  width: 152px;
 `;
 const PhoneFirstBtn = styled.button`
   width: 152px;
@@ -120,7 +153,6 @@ const PhoneFirstBtn = styled.button`
   border: 1px solid #c4c4c4;
   border-radius: 5px;
   padding: 17px 73px 17px 50px;
-  margin-bottom: 10px;
   background-image: ${(props) =>
     props.state === "active" ? `url(${UpArrow})` : `url(${DownArrow})`};
   background-repeat: no-repeat;
@@ -164,6 +196,22 @@ const ErrorMsg = styled.small`
   font-size: 16px;
   margin-bottom: 12px;
 `;
+const SellerContainer = styled.div`
+  display: flex;
+  gap: 12px;
+  input {
+    width: 346px;
+  }
+  button {
+    width: 122px;
+    height: 54px;
+    background-color: #21bf48;
+    border-radius: 5px;
+    color: #fff;
+    padding: 17px 31px;
+    font-size: 16px;
+  }
+`;
 export {
   JoinContainer,
   JoinTypeBtn,
@@ -179,4 +227,8 @@ export {
   AgreeLabel,
   ErrorMsg,
   CheckIconStyle,
+  SellerContainer,
+  Input,
+  SmInput,
+  PhoneInput,
 };

@@ -1,19 +1,36 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import { idDuplicateCheckApi, signupBuyerApi } from "../../apis/authApi";
+import {
+  companyRegistrationNumApi,
+  idDuplicateCheckApi,
+  signupBuyerApi,
+  signupSellerApi,
+} from "../../apis/authApi";
 import { Button } from "../common/Button/Button";
 import * as S from "./JoinFormStyle";
 export default function JoinForm() {
-  const [userInfo, setUserInfo] = useState({
+  const [buyerInfo, setBuyerInfo] = useState({
     username: "",
     password: "",
     password2: "",
     name: "",
     phone_number: "",
   });
+  const [sellerInfo, setSellerInfo] = useState({
+    username: "", // 아이디
+    password: "",
+    password2: "",
+    phone_number: "", // 전화번호는 010으로 시작하는 10~11자리 숫자
+    name: "", // 이름
+    company_registration_number: "",
+    store_name: "",
+  });
+  const [joinType, setJoinType] = useState("buyer");
   const [idValidErrorMsg, setIdValidErrorMsg] = useState("");
   const [pwValidErrorMsg, setPwValidErrorMsg] = useState("");
   const [pwDoubleCheckErrorMsg, setPwDoubleCheckErrorMsg] = useState("");
+  const [companyRegistrationNumMsg, setCompanyRegistrationNumMsg] =
+    useState("");
   const [idValid, setIdValid] = useState(false);
   const [idDuplicateValid, setIdDuplicateValid] = useState(false);
   const [pwValid, setPwValid] = useState(false);
@@ -22,29 +39,66 @@ export default function JoinForm() {
   const [phoneSecond, setPhoneSecond] = useState("");
   const [phoneThird, setPhoneThird] = useState("");
   const [phoneListVisible, setPhoneListVisible] = useState(false);
+  const [companyRegistrationNumValid, setCompanyRegistrationNumValid] =
+    useState(false);
   const [joinAgree, setJoinAgree] = useState(false);
   const navigate = useNavigate();
+
+  // Form Submit API 통신
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signupBuyerApi(userInfo);
+      if (joinType === "buyer") {
+        await signupBuyerApi(buyerInfo);
+      } else if (joinType === "seller") {
+        await signupSellerApi(sellerInfo);
+      }
       navigate("/login");
+      console.log("회원가입 성공!");
     } catch (err) {
       console.error("회원가입 오류", err);
+      alert(err.response.data.phone_number[0]);
     }
   };
-  console.log(userInfo);
+  // 모든 input값 유효하다면 버튼 활성화
   const handleSubmitBtn = () => {
-    return idValid && idDuplicateValid && pwValid && pwDoubleValid && joinAgree;
+    if (joinType === "buyer") {
+      return (
+        idValid && idDuplicateValid && pwValid && pwDoubleValid && joinAgree
+      );
+    } else if (joinType === "seller") {
+      return (
+        idValid &&
+        idDuplicateValid &&
+        pwValid &&
+        pwDoubleValid &&
+        joinAgree &&
+        companyRegistrationNumValid
+      );
+    }
   };
-
+  // 회원가입 타입 설정
+  const handlerJoinTypeChange = (e) => {
+    if (e.target.name === "buyer") {
+      setJoinType("buyer");
+    } else if (e.target.name === "seller") {
+      setJoinType("seller");
+    }
+  };
+  // 전화번호 업데이트
   const updatePhoneInfo = () => {
-    console.log("실행됨", phoneFirst, phoneSecond, phoneThird);
     if (phoneFirst && phoneSecond && phoneThird) {
-      setUserInfo({
-        ...userInfo,
-        phone_number: `${phoneFirst}${phoneSecond}${phoneThird}`,
-      });
+      if (joinType === "buyer") {
+        setBuyerInfo({
+          ...buyerInfo,
+          phone_number: `${phoneFirst}${phoneSecond}${phoneThird}`,
+        });
+      } else if (joinType === "seller") {
+        setSellerInfo({
+          ...sellerInfo,
+          phone_number: `${phoneFirst}${phoneSecond}${phoneThird}`,
+        });
+      }
     }
   };
 
@@ -69,7 +123,11 @@ export default function JoinForm() {
 
   // onChange 발생
   const handleInputChange = (e) => {
-    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+    if (joinType === "buyer") {
+      setBuyerInfo({ ...buyerInfo, [e.target.name]: e.target.value });
+    } else if (joinType === "seller") {
+      setSellerInfo({ ...sellerInfo, [e.target.name]: e.target.value });
+    }
   };
 
   const phoneFirstList = ["010", "011", "016", "017", "018", "019"];
@@ -133,46 +191,98 @@ export default function JoinForm() {
       setPwValid(true);
     }
   };
-
+  // 비밀번호 재확인
   const pwDoubleCheck = (e) => {
-    if (userInfo.password !== e.target.value && userInfo.password.length > 0) {
-      setPwDoubleCheckErrorMsg("비밀번호가 일치하지 않습니다.");
-      setPwDoubleValid(false);
-    } else if (pwValidErrorMsg === "필수 정보입니다.") {
-      setPwDoubleCheckErrorMsg("비밀번호가 일치하지 않습니다.");
-      setPwDoubleValid(false);
-    } else {
-      setPwDoubleCheckErrorMsg("");
-      setPwDoubleValid(true);
+    if (joinType === "buyer") {
+      if (
+        (buyerInfo.password !== e.target.value &&
+          buyerInfo.password.length > 0) ||
+        pwValid === false
+      ) {
+        setPwDoubleCheckErrorMsg("비밀번호가 일치하지 않습니다.");
+        setPwDoubleValid(false);
+      } else {
+        setPwDoubleCheckErrorMsg("");
+        setPwDoubleValid(true);
+      }
+    } else if (joinType === "seller") {
+      if (
+        (sellerInfo.password !== e.target.value &&
+          sellerInfo.password.length > 0) ||
+        pwValid === false
+      ) {
+        setPwDoubleCheckErrorMsg("비밀번호가 일치하지 않습니다.");
+        setPwDoubleValid(false);
+      } else {
+        setPwDoubleCheckErrorMsg("");
+        setPwDoubleValid(true);
+      }
+    }
+  };
+  // 사업자번호 유효성 체크
+  const companyRegisterationNumCheck = async (registerNum) => {
+    try {
+      const res = await companyRegistrationNumApi(registerNum);
+      setCompanyRegistrationNumMsg(res.data.Success);
+      setCompanyRegistrationNumValid(true);
+    } catch (err) {
+      console.error("사업자번호 유효성 오류: ", err);
+      if (
+        err.response.data.FAIL_Message === "이미 등록된 사업자등록번호입니다."
+      ) {
+        setCompanyRegistrationNumMsg("이미 등록된 사업자등록번호입니다.");
+      } else if (
+        err.response.data.FAIL_Message ===
+        "company_registration_number 필드를 추가해주세요 :)"
+      ) {
+        setCompanyRegistrationNumMsg(
+          "company_registration_number 필드를 추가해주세요 :)"
+        );
+      }
+      setCompanyRegistrationNumValid(false);
     }
   };
   // console.log("userInfo", userInfo);
+  // console.log("sellerInfo: ", sellerInfo);
   return (
     <S.JoinContainer>
       <h1 className="a11y-hidden">회원가입</h1>
       <S.JoinTypeBtn>
-        <S.BuyerJoinBtn>구매회원가입</S.BuyerJoinBtn>
-        <S.SellerJoinBtn>판매회원가입</S.SellerJoinBtn>
+        <S.BuyerJoinBtn
+          name="buyer"
+          onClick={handlerJoinTypeChange}
+          type={joinType === "buyer" ? "active" : null}
+        >
+          구매회원가입
+        </S.BuyerJoinBtn>
+        <S.SellerJoinBtn
+          name="seller"
+          onClick={handlerJoinTypeChange}
+          type={joinType === "seller" ? "active" : null}
+        >
+          판매회원가입
+        </S.SellerJoinBtn>
       </S.JoinTypeBtn>
       <S.Form>
         <S.JoinFormContainer>
           <label htmlFor="id">아이디</label>
-          <S.IdContainer
-            valid={
-              idValidErrorMsg.length > 0 && idValid === false ? "false" : null
-            }
-          >
-            <input
+          <S.IdContainer>
+            <S.SmInput
               name="username"
               id="id"
               type="text"
               onChange={handleInputChange}
               onBlur={idValidCheck}
+              valid={
+                idValidErrorMsg.length > 0 && idValid === false ? "false" : null
+              }
             />
             <Button
               type="button"
               content="중복확인"
-              onClick={() => idDuplicateCheck(userInfo.username)}
+              onClick={() =>
+                idDuplicateCheck(buyerInfo.username || sellerInfo.username)
+              }
             />
           </S.IdContainer>
           <S.ErrorMsg
@@ -188,12 +298,13 @@ export default function JoinForm() {
               fill={pwValid ? "var(--point-color)" : "#f2f2f2"}
             />
           </label>
-          <input
+          <S.Input
             name="password"
             id="password"
             type="password"
             onChange={handleInputChange}
             onBlur={pwValidCheck}
+            valid={pwValidErrorMsg.length > 0 && !pwValid ? "false" : null}
           />
           <S.ErrorMsg>{pwValidErrorMsg}</S.ErrorMsg>
           <label htmlFor="password2">
@@ -202,16 +313,21 @@ export default function JoinForm() {
               fill={pwDoubleValid ? "var(--point-color)" : "#f2f2f2"}
             />
           </label>
-          <input
+          <S.Input
             name="password2"
             id="password2"
             type="password"
             onChange={handleInputChange}
             onBlur={pwDoubleCheck}
+            valid={
+              pwDoubleCheckErrorMsg.length > 0 && !pwDoubleValid
+                ? "false"
+                : null
+            }
           />
           <S.ErrorMsg>{pwDoubleCheckErrorMsg}</S.ErrorMsg>
           <label htmlFor="name">이름</label>
-          <input
+          <S.Input
             name="name"
             id="name"
             type="text"
@@ -228,14 +344,14 @@ export default function JoinForm() {
                 {phoneFirst || "010"}
               </S.PhoneFirstBtn>
               {phoneListVisible && phoneList}
-              <input
+              <S.PhoneInput
                 name="phoneSecond"
                 value={phoneSecond}
                 onChange={handlePhoneSecondChange}
                 maxLength="4"
                 type="text"
               />
-              <input
+              <S.PhoneInput
                 name="phoneThird"
                 value={phoneThird}
                 onChange={handlePhoneThirdChange}
@@ -244,6 +360,46 @@ export default function JoinForm() {
               />
             </S.PhoneContainer>
           </fieldset>
+          {joinType === "seller" && (
+            <>
+              <label htmlFor="companyRegisterationNum">사업자 등록번호</label>
+              <S.SellerContainer>
+                <S.SmInput
+                  name="company_registration_number"
+                  id="companyRegisterationNum"
+                  type="text"
+                  onChange={handleInputChange}
+                  valid={
+                    companyRegistrationNumMsg.length > 0 &&
+                    companyRegistrationNumValid === false
+                      ? "false"
+                      : null
+                  }
+                />
+                <Button
+                  type="button"
+                  content="인증"
+                  onClick={() =>
+                    companyRegisterationNumCheck(
+                      sellerInfo.company_registration_number
+                    )
+                  }
+                />
+              </S.SellerContainer>
+              <S.ErrorMsg
+                valid={companyRegistrationNumValid ? "success" : null}
+              >
+                {companyRegistrationNumMsg}
+              </S.ErrorMsg>
+              <label htmlFor="storeName">스토어 이름</label>
+              <S.Input
+                id="storeName"
+                type="text"
+                name="store_name"
+                onChange={handleInputChange}
+              />
+            </>
+          )}
         </S.JoinFormContainer>
         <S.AgreeContainer>
           <S.AgreeInput

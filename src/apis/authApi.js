@@ -1,13 +1,13 @@
 import { axiosInstance } from "./axiosInstance";
 
 // 회원가입
-export const signupBuyerApi = async (userInfo) => {
-  const res = await axiosInstance.post("/accounts/signup/", userInfo);
+export const signupBuyerApi = async (buyerInfo) => {
+  const res = await axiosInstance.post("/accounts/signup/", buyerInfo);
   return res.data;
 };
 
-export const signupSellerApi = async (userInfo) => {
-  const res = await axiosInstance.post("/accounts/signup_seller/", userInfo);
+export const signupSellerApi = async (sellerInfo) => {
+  const res = await axiosInstance.post("/accounts/signup_seller/", sellerInfo);
   return res.data;
 };
 
@@ -23,10 +23,11 @@ export const idDuplicateCheckApi = async (id) => {
   return res;
 };
 
-export const businessRegistrationNumApi = async (registerNum) => {
+export const companyRegistrationNumApi = async (registerNum) => {
+  const inputRegisterNum = { company_registration_number: registerNum };
   const res = await axiosInstance.post(
     "/accounts/signup/valid/company_registration_number/",
-    registerNum
+    inputRegisterNum
   );
   return res;
 };

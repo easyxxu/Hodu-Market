@@ -2,10 +2,10 @@ import React from "react";
 import Footer from "../common/Footer/Footer";
 import { Header, SellerHeader } from "../common/Header/Header";
 import styled from "styled-components";
-export default function Layout({ type, children }) {
+export default function MainLayout({ type, children }) {
   return (
     <Container>
-      {/* 쇼핑몰의 헤더 */}
+      {/* 쇼핑몰의 헤더(BUYER or SELLER) */}
       <Header type={type} />
       <MainContainer>{children}</MainContainer>
       <Footer />

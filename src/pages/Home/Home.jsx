@@ -1,20 +1,22 @@
 import React from "react";
 import Banner from "../../components/Banner/Banner";
-import Header from "../../components/common/Header/Header";
-import styled from "styled-components";
 import Product from "../../components/Product/Product";
-import Footer from "../../components/common/Footer/Footer";
+import MainLayout from "../../components/Layout/Layout";
 
-const HomeContainer = styled.div`
-  width: 100%;
-`;
 export default function Home() {
+  const userType = localStorage.getItem("user_type");
   return (
-    <HomeContainer>
-      <Header />
+    <MainLayout
+      type={
+        userType === "BUYER"
+          ? "BUYER"
+          : userType === "SELLER"
+          ? "SELLER"
+          : "NOTUSER"
+      }
+    >
       <Banner />
       <Product />
-      <Footer />
-    </HomeContainer>
+    </MainLayout>
   );
 }

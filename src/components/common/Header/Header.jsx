@@ -6,38 +6,8 @@ import MyPage from "../../../assets/icon-user.svg";
 import SearchIcon from "../../../assets/search.svg";
 import ShoppingBag from "../../../assets/icon-shopping-bag.svg";
 import { Button } from "../Button/Button";
+import { Link } from "react-router-dom";
 
-const HeaderType = (type) => {
-  if (type === "customer") {
-    return (
-      <Nav>
-        <ShoppingCartLink href="/">
-          <img src={ShoppingCart} alt="shopping-cart" />
-          <p>장바구니</p>
-        </ShoppingCartLink>
-        <LoginLink href="/">
-          <img src={MyPage} alt="my-page" />
-          <p>로그인</p>
-        </LoginLink>
-      </Nav>
-    );
-  } else if (type === "seller") {
-    return (
-      <Nav>
-        <LoginLink href="/">
-          <img src={MyPage} alt="my-page" />
-          <p>마이페이지</p>
-        </LoginLink>
-        <Button
-          width="MS"
-          color="white"
-          img={ShoppingBag}
-          content="판매자센터"
-        />
-      </Nav>
-    );
-  }
-};
 export function Header({ type }) {
   return (
     <HeaderDiv>
@@ -56,6 +26,52 @@ export function Header({ type }) {
     </HeaderDiv>
   );
 }
+const HeaderType = (type) => {
+  const TOKEN = localStorage.getItem("token");
+  if (type === "BUYER" && TOKEN) {
+    return (
+      <Nav>
+        <ShoppingCartLink href="/">
+          <img src={ShoppingCart} alt="shopping-cart" />
+          <p>장바구니</p>
+        </ShoppingCartLink>
+        <HeaderLink to="/login">
+          <img src={MyPage} alt="my-page" />
+          <p>마이페이지</p>
+        </HeaderLink>
+      </Nav>
+    );
+  } else if (type === "SELLER" && TOKEN) {
+    return (
+      <Nav>
+        <HeaderLink href="/">
+          <img src={MyPage} alt="my-page" />
+          <p>마이페이지</p>
+        </HeaderLink>
+        <Button
+          width="MS"
+          color="white"
+          img={ShoppingBag}
+          content="판매자센터"
+        />
+      </Nav>
+    );
+  } else {
+    return (
+      <Nav>
+        <ShoppingCartLink href="/">
+          <img src={ShoppingCart} alt="shopping-cart" />
+          <p>장바구니</p>
+        </ShoppingCartLink>
+        <HeaderLink to="/login">
+          <img src={MyPage} alt="my-page" />
+          <p>로그인</p>
+        </HeaderLink>
+      </Nav>
+    );
+  }
+};
+
 export function SellerHeader() {
   return (
     <HeaderDiv>
@@ -126,7 +142,7 @@ const ShoppingCartLink = styled.a`
   font-size: 12px;
 `;
 
-const LoginLink = styled.a`
+const HeaderLink = styled(Link)`
   text-align: center;
   color: #767676;
   font-size: 12px;

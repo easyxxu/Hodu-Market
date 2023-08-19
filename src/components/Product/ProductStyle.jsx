@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Product from "../../assets/product.svg";
 
 const ProductList = styled.ul`
   display: flex;
@@ -12,7 +11,6 @@ const ProductList = styled.ul`
 const ProductImg = styled.img`
   width: 350px;
   height: 350px;
-  background: url(${Product}) no-repeat center;
   border-radius: 10px;
   border: 1px solid #c4c4c4;
   margin-bottom: 6px;

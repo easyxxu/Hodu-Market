@@ -8,17 +8,31 @@ import {
   ProductPrice,
   ProductWon,
 } from "./ProductStyle";
-import productList from "../../dummy/product-list.json";
+import { useState } from "react";
+import { loadAllProduct } from "../../apis/productApi";
+import { useEffect } from "react";
 
 export default function ProductItem() {
+  const [productList, setProductList] = useState([]);
+  const getProductList = async () => {
+    try {
+      const res = await loadAllProduct();
+      setProductList(res.results);
+    } catch (err) {
+      console.error("productList Error: ", err);
+    }
+  };
+  useEffect(() => {
+    getProductList();
+  }, []);
   return (
     <ProductList>
-      {productList.products.map((product) => (
+      {productList.map((product) => (
         <li key={product.id}>
           <ProductLink href="/">
-            <ProductImg />
-            <ProductCorporation>{product.corporation}</ProductCorporation>
-            <ProductName>{product.name}</ProductName>
+            <ProductImg src={product.image} alt="상품이미지" />
+            <ProductCorporation>{product.store_name}</ProductCorporation>
+            <ProductName>{product.product_name}</ProductName>
             <ProductPrice>
               {product.price.toLocaleString("ko-KR")}
               <ProductWon>원</ProductWon>

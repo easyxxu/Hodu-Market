@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { loginApi } from "../../apis/authApi";
 import { Button } from "../common/Button/Button";
 export default function LoginForm() {
@@ -66,10 +66,18 @@ export default function LoginForm() {
     <LoginContainer>
       <h1 className="a11y-hidden">로그인</h1>
       <LoginTypeBtn>
-        <BuyerLoginBtn name="buyer" onClick={handleLoginTypeChange}>
+        <BuyerLoginBtn
+          name="buyer"
+          onClick={handleLoginTypeChange}
+          type={loginInfo.login_type === "BUYER" ? "active" : null}
+        >
           구매회원 로그인
         </BuyerLoginBtn>
-        <SellerLoginBtn name="seller" onClick={handleLoginTypeChange}>
+        <SellerLoginBtn
+          name="seller"
+          onClick={handleLoginTypeChange}
+          type={loginInfo.login_type === "SELLER" ? "active" : null}
+        >
           판매회원 로그인
         </SellerLoginBtn>
       </LoginTypeBtn>
@@ -124,17 +132,38 @@ const LoginTypeBtn = styled.div`
   }
 `;
 const BuyerLoginBtn = styled.button`
-  z-index: 2;
-  background-color: #fff;
-  border-top: 1px solid #c4c4c4;
-  border-left: 1px solid #c4c4c4;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  ${(props) =>
+    props.type === "actve"
+      ? css`
+          z-index: 2;
+          background-color: #fff;
+          border-top: 1px solid #c4c4c4;
+          border-left: 1px solid #c4c4c4;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+        `
+      : css`
+          background-color: #f2f2f2;
+          border: 1px solid #c4c4c4;
+          border-radius: 10px;
+        `}
 `;
 const SellerLoginBtn = styled.button`
-  border: 1px solid #c4c4c4;
-  background-color: #f2f2f2;
-  border-radius: 10px;
+  ${(props) =>
+    props.type === "active"
+      ? css`
+          z-index: 2;
+          background-color: #fff;
+          border-top: 1px solid #c4c4c4;
+          border-right: 1px solid #c4c4c4;
+          border-top-right-radius: 10px;
+          border-top-left-radius: 10px;
+        `
+      : css`
+          background-color: #f2f2f2;
+          border: 1px solid #c4c4c4;
+          border-radius: 10px;
+        `}
 `;
 const LoginFormContainer = styled.form`
   background-color: #fff;

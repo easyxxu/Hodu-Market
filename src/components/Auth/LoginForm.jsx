@@ -133,7 +133,7 @@ const LoginTypeBtn = styled.div`
 `;
 const BuyerLoginBtn = styled.button`
   ${(props) =>
-    props.type === "actve"
+    props.type === "active"
       ? css`
           z-index: 2;
           background-color: #fff;

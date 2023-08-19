@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { loginApi } from "../../apis/authApi";
 import { Button } from "../common/Button/Button";
@@ -9,13 +9,15 @@ export default function LoginForm() {
     password: "",
     login_type: "BUYER",
   });
+  const [loginErrorMsg, setLoginErrorMsg] = useState("");
   // const [idErrorMsg, setIdErrorMsg] = useState("");
   // const [pwErrorMsg, setPwErrorMsg] = useState("");
-  const [loginErrorMsg, setLoginErrorMsg] = useState("");
   // const [idValid, setIdValid] = useState(false);
   // const [pwValid, setPwValid] = useState(false);
   // const [loginValid, setLoginValid] = useState(false);
+  const navigate = useNavigate();
 
+  // 로그인 타입 설정
   const handleLoginTypeChange = (e) => {
     if (e.target.name === "buyer") {
       setLoginInfo({ ...loginInfo, login_type: "BUYER" });
@@ -52,7 +54,9 @@ export default function LoginForm() {
     try {
       const res = await loginApi(loginInfo);
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user_type", res.data.user_type);
       console.log("로그인 성공!", res);
+      navigate("/");
     } catch (err) {
       console.error("로그인 에러", err);
     }

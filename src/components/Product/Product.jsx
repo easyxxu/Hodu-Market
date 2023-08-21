@@ -19,7 +19,7 @@ export default function ProductItem() {
       const res = await loadAllProduct();
       setProductList(res.results);
     } catch (err) {
-      console.error("productList Error: ", err);
+      console.error("getProductList Error: ", err);
     }
   };
   useEffect(() => {
@@ -28,8 +28,8 @@ export default function ProductItem() {
   return (
     <ProductList>
       {productList.map((product) => (
-        <li key={product.id}>
-          <ProductLink href="/">
+        <li key={product.product_id}>
+          <ProductLink to={`/product/detail/${product.product_id}`}>
             <ProductImg src={product.image} alt="상품이미지" />
             <ProductCorporation>{product.store_name}</ProductCorporation>
             <ProductName>{product.product_name}</ProductName>

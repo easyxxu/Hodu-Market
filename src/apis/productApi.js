@@ -9,3 +9,8 @@ export const loadSellerProduct = async () => {
   const res = await axiosInstance.get("/seller/");
   return res.data;
 };
+
+export const loadProductDetail = async (productId) => {
+  const res = await axiosInstance.get(`/products/${productId}`);
+  return res;
+};

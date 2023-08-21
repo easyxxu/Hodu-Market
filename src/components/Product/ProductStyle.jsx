@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const ProductList = styled.ul`
@@ -15,7 +16,7 @@ const ProductImg = styled.img`
   border: 1px solid #c4c4c4;
   margin-bottom: 6px;
 `;
-const ProductLink = styled.a`
+const ProductLink = styled(Link)`
   display: flex;
   flex-direction: column;
   gap: 10px;

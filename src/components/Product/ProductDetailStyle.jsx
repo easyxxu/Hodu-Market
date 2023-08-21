@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { ButtonStyle } from "../common/Button/Button";
 import Minus from "../../assets/icon-minus-line.svg";
 import Plus from "../../assets/icon-plus-line.svg";
 const Wrapper = styled.div`
@@ -122,7 +121,7 @@ const BtnBuyContainer = styled.div`
   display: flex;
   gap: 14px;
 `;
-const DetailInfoContainer = styled.div``;
+const DetailTabContainer = styled.div``;
 const BtnDetailInfoActive = styled.button`
   width: 320px;
   color: var(--point-color);
@@ -137,6 +136,10 @@ const BtnDetailInfoUnActive = styled.button`
   font-size: 18px;
   border-bottom: 6px solid #e0e0e0;
   padding: 19px 0;
+`;
+const DetailInfo = styled.div`
+  margin-top: 20px;
+  text-align: center;
 `;
 export {
   Wrapper,
@@ -154,7 +157,8 @@ export {
   TotalCntContainer,
   TotalPrice,
   BtnBuyContainer,
-  DetailInfoContainer,
+  DetailTabContainer,
   BtnDetailInfoActive,
   BtnDetailInfoUnActive,
+  DetailInfo,
 };

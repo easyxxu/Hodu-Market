@@ -1,8 +1,57 @@
 import React from "react";
+import { useRef } from "react";
+import { useState } from "react";
 import styled from "styled-components";
+import { productAddApi } from "../../apis/productApi";
 import Frame from "../../assets/frame.svg";
 import { Button } from "../common/Button/Button";
+import imgUploadBtn from "../../assets/icon-img.svg";
 export default function ProductAdd() {
+  const [product, setProduct] = useState({
+    product_name: "",
+    image: "",
+    price: "",
+    shipping_method: "",
+    shipping_fee: "",
+    stock: "",
+    product_info: "",
+  });
+  const inputImgRef = useRef(null);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await productAddApi(product);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const handleInputChange = (e) => {
+    setProduct({ ...product, [e.target.name]: e.target.value });
+    console.log(e);
+  };
+  const handleImgChange = () => {
+    const file = inputImgRef.current.files[0];
+    // 파일 객체가 없는 경우 함수 종료
+    if (!file) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setProduct({ ...product, image: reader.result });
+    };
+  };
+  const onClickInput = () => {
+    inputImgRef.current.click();
+  };
+  const handleShippingMethod = (e) => {
+    if (e.target.textContent === "택배, 소포, 등기") {
+      setProduct({ ...product, shipping_method: "DELEVERY" });
+    } else {
+      setProduct({ ...product, shipping_method: "PARCEL" });
+    }
+  };
+  console.log(product);
   return (
     <div>
       <Title>상품 등록</Title>
@@ -31,53 +80,96 @@ export default function ProductAdd() {
             </ul>
           </ProductCautionContainer>
         </div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <ProductAddContainer>
             <ProductImg>
-              <label htmlFor="productImg">상품 이미지</label>
-              <input type="file" id="productImg" />
+              <label htmlFor="image">상품 이미지</label>
+              <ProductImgInputContainer>
+                <input
+                  type="file"
+                  id="image"
+                  name="image"
+                  accept=".jpg,.jpeg,.png,.gif"
+                  ref={inputImgRef}
+                  onChange={handleImgChange}
+                />
+                <ProductImgInputBtn type="button" onClick={onClickInput}>
+                  <img src={imgUploadBtn} alt="이미지 추가하기" />
+                </ProductImgInputBtn>
+                {product.image && (
+                  <ProductImgPreview
+                    src={product.image}
+                    alt="상품 미리보기"
+                    onClick={onClickInput}
+                  />
+                )}
+              </ProductImgInputContainer>
             </ProductImg>
             <ProductInfo>
               <label htmlFor="productName">상품명</label>
-              <ProductNameInput type="text" id="productName" />
+              <ProductNameInput
+                type="text"
+                id="productName"
+                name="product_name"
+                onChange={handleInputChange}
+              />
               <label htmlFor="productPrice">판매가</label>
               <InputFrameContainer>
-                <input type="text" id="productPrice" />
+                <input
+                  type="text"
+                  id="productPrice"
+                  name="price"
+                  onChange={handleInputChange}
+                />
               </InputFrameContainer>
               <label htmlFor="deliveryMethod">배송방법</label>
               <DeliveryBtnContainer>
                 <Button
+                  type="button"
                   id="deliveryMethod"
                   content="택배, 소포, 등기"
                   width="L"
                   size="L"
                   color="white"
+                  onClick={handleShippingMethod}
                 />
                 <Button
+                  type="button"
                   id="deliverMethod"
                   content="직접배송(화물배달)"
                   width="L"
                   size="L"
                   border="yes"
                   bgcolor="light"
+                  onClick={handleShippingMethod}
                 />
               </DeliveryBtnContainer>
               <label htmlFor="deliveryStandardPrice">기본배송비</label>
               <InputFrameContainer>
-                <input type="text" id="deliveryStandardPrice" />
+                <input
+                  type="text"
+                  id="deliveryStandardPrice"
+                  name="shipping_method"
+                  onChange={handleInputChange}
+                />
               </InputFrameContainer>
-              <label htmlFor="stockOfProduct">재고</label>
+              <label htmlFor="stock">재고</label>
               <InputFrameCntContainer>
-                <input type="text" id="stockOfProduct" />
+                <input
+                  type="text"
+                  id="stock"
+                  name="stock"
+                  onChange={handleInputChange}
+                />
               </InputFrameCntContainer>
             </ProductInfo>
           </ProductAddContainer>
           <ProductDetailContainer>
-            <p>상품 상세 정보</p>
-            <div>에디터 영역</div>
+            <label htmlFor="productInfo">상품 상세 정보</label>
+            <textarea type="text" id="productInfo" name="product_info" />
           </ProductDetailContainer>
           <FormBtnContainer>
-            <Button width="200px" bgColor="light" border="yes" content="취소" />
+            <Button width="200px" bgcolor="light" border="yes" content="취소" />
             <Button
               width="200px"
               color="white"
@@ -128,15 +220,35 @@ const ProductAddContainer = styled.div`
     font-weight: 400;
   }
 `;
+const ProductImgInputContainer = styled.div`
+  width: 454px;
+  height: 454px;
+  position: relative;
+  border: 1px solid var(--content-color-light);
+`;
 const ProductImg = styled.div`
   label {
     margin-bottom: 10px;
   }
   input {
-    width: 454px;
-    height: 454px;
-    background: var(--content-color-light);
+    display: none;
   }
+`;
+const ProductImgInputBtn = styled.button`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+const ProductImgPreview = styled.img`
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 451px;
+  height: 451px;
+  object-fit: contain;
+  cursor: pointer;
+  /* border: 1px solid var(--content-color-light); */
 `;
 const ProductInfo = styled.div``;
 const ProductNameInput = styled.input`
@@ -179,21 +291,22 @@ const DeliveryBtnContainer = styled.div`
 `;
 const ProductDetailContainer = styled.div`
   margin-top: 40px;
-  p {
+  label {
     color: var(--content-color-dark);
     font-size: 16px;
   }
-  div {
+  textarea {
     margin-top: 10px;
-    width: 100%;
+    width: 944px;
     height: 400px;
     border-radius: 5px;
     border: 1px solid var(--content-color-light);
-    background: #f2f2f2;
-    text-align: center;
-    font-size: 48px;
-    line-height: 400px;
-    color: var(--content-color-light);
+    padding: 16px 17px;
+    /* background: #f2f2f2; */
+    /* text-align: center; */
+    font-size: 20px;
+    /* line-height: 400px; */
+    /* color: var(--content-color-light); */
   }
 `;
 const FormBtnContainer = styled.div`

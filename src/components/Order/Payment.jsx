@@ -116,7 +116,7 @@ export default function Payment() {
                 <Button
                   width="L"
                   size="L"
-                  bgColor="disabled"
+                  bgcolor="disabled"
                   color="white"
                   content="결제하기"
                 />

@@ -89,7 +89,7 @@ export default function ProductDetail({
               size="M"
               width="200px"
               color="white"
-              bgColor="dark"
+              bgcolor="dark"
               fontSize="M"
               fontWeight="bold"
               content="장바구니"

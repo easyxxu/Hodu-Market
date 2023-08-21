@@ -16,7 +16,7 @@ export default function ErrorPage() {
           <Button width="200px" color="white" content="메인으로" />
           <Button
             width="200px"
-            bgColor="light"
+            bgcolor="light"
             border="yes"
             content="이전 페이지"
           />

@@ -59,7 +59,7 @@ export default function ProductAdd() {
                   width="L"
                   size="L"
                   border="yes"
-                  bgColor="light"
+                  bgcolor="light"
                 />
               </DeliveryBtnContainer>
               <label htmlFor="deliveryStandardPrice">기본배송비</label>

@@ -7,7 +7,7 @@ export const axiosInstance = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-export const authInstance = axios.create({
+export const privateInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
     Authorization: `JWT ${localStorage.getItem("token")}`,

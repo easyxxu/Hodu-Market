@@ -41,6 +41,9 @@ export const GlobalStyle = createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
+  textarea{
+    font-family: 'Spoqa Han Sans Neo';    
+  }
   button{
     font-family: 'Spoqa Han Sans Neo';
     font-weight: 400;

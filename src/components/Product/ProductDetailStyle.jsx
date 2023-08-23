@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import Minus from "../../assets/icon-minus-line.svg";
-import Plus from "../../assets/icon-plus-line.svg";
 const Wrapper = styled.div`
   max-width: 1280px;
   width: 100%;
@@ -37,48 +35,8 @@ const Delivery = styled.p`
   color: var(--content-color-dark);
   margin-bottom: 20px;
 `;
-
-const BtnContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 36px;
-  padding: 13px;
-  width: 150px;
-  border: 1px solid var(--content-color-light);
-  border-radius: 5px;
+const CountBtnContainer = styled.div`
   margin: 30px 0;
-  button {
-    width: 20px;
-    height: 20px;
-  }
-  p {
-    font-size: 18px;
-    position: relative;
-    &::before {
-      content: "";
-      position: absolute;
-      width: 1px;
-      height: 47px;
-      top: -14px;
-      left: -20px;
-      background-color: var(--content-color-light);
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      width: 1px;
-      height: 47px;
-      top: -14px;
-      right: -20px;
-      background-color: var(--content-color-light);
-    }
-  }
-`;
-const BtnMinus = styled.button`
-  background: url(${Minus}) no-repeat center center;
-`;
-const BtnPlus = styled.button`
-  background: url(${Plus}) no-repeat center center;
 `;
 const TotalContainer = styled.div`
   display: flex;
@@ -149,9 +107,7 @@ export {
   ProductName,
   ProductPrice,
   Delivery,
-  BtnContainer,
-  BtnMinus,
-  BtnPlus,
+  CountBtnContainer,
   TotalContainer,
   Total,
   TotalCntContainer,

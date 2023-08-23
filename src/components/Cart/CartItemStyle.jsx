@@ -1,8 +1,5 @@
 import styled from "styled-components";
-import TestProduct from "../../assets/product2.svg";
 import ToggleCheck from "../../assets/toggle-check.svg";
-import Minus from "../../assets/icon-minus-line.svg";
-import Plus from "../../assets/icon-plus-line.svg";
 import Close from "../../assets/icon-delete.svg";
 const CartItemContainer = styled.div`
   max-width: 1280px;
@@ -50,48 +47,7 @@ const ProductInfoWrapper = styled.div`
     color: var(--content-color-dark);
   }
 `;
-const BtnContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 36px;
-  padding: 13px;
-  width: 150px;
-  border: 1px solid var(--content-color-light);
-  border-radius: 5px;
-  margin-right: 148px;
-  button {
-    width: 20px;
-    height: 20px;
-  }
-  p {
-    font-size: 18px;
-    position: relative;
-    &::before {
-      content: "";
-      position: absolute;
-      width: 1px;
-      height: 47px;
-      top: -14px;
-      left: -20px;
-      background-color: var(--content-color-light);
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      width: 1px;
-      height: 47px;
-      top: -14px;
-      right: -20px;
-      background-color: var(--content-color-light);
-    }
-  }
-`;
-const BtnMinus = styled.button`
-  background: url(${Minus}) no-repeat center center;
-`;
-const BtnPlus = styled.button`
-  background: url(${Plus}) no-repeat center center;
-`;
+
 const ProductPriceContainer = styled.div`
   margin: 0 auto;
   p {
@@ -125,9 +81,6 @@ export {
   ProductInfo,
   ProductImg,
   ProductInfoWrapper,
-  BtnContainer,
-  BtnMinus,
-  BtnPlus,
   ProductPriceContainer,
   BtnClose,
 };

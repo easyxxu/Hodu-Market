@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { Button } from "../common/Button/Button";
+import { Button, CountButton } from "../common/Button/Button";
 import * as S from "./ProductDetailStyle";
 export default function ProductDetail({
   storeName,
@@ -54,11 +54,13 @@ export default function ProductDetail({
             &nbsp; 원
           </S.Delivery>
           <hr />
-          <S.BtnContainer>
-            <S.BtnMinus onClick={handlerBtnMinus}></S.BtnMinus>
-            <p>{productCnt}</p>
-            <S.BtnPlus onClick={handlerBtnPlus}></S.BtnPlus>
-          </S.BtnContainer>
+          <S.CountBtnContainer>
+            <CountButton
+              onClick1={handlerBtnMinus}
+              onClick2={handlerBtnPlus}
+              productCnt={productCnt}
+            />
+          </S.CountBtnContainer>
           <hr />
           <S.TotalContainer>
             <S.Total>총 상품 금액</S.Total>

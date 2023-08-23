@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import * as S from "./CartItemStyle";
 import TestProduct from "../../assets/product2.svg";
-import { Button } from "../common/Button/Button";
+import { Button, CountButton } from "../common/Button/Button";
 
 export default function CartItem() {
+  const [productCnt, setProductCnt] = useState(1);
+  const handlerBtnMinus = () => {
+    if (productCnt > 1) {
+      setProductCnt(productCnt - 1);
+      // setTotalPrice(totalPrice - productPrice);
+    }
+  };
+  const handlerBtnPlus = () => {
+    setProductCnt(productCnt + 1);
+    // setTotalPrice(totalPrice + productPrice);
+  };
   return (
     <S.CartItemContainer>
       <S.ToggleCheckBtn />
@@ -16,11 +27,11 @@ export default function CartItem() {
           <p>택배배송 / 무료배송</p>
         </S.ProductInfoWrapper>
       </S.ProductInfo>
-      <S.BtnContainer>
-        <S.BtnMinus></S.BtnMinus>
-        <p>1</p>
-        <S.BtnPlus></S.BtnPlus>
-      </S.BtnContainer>
+      <CountButton
+        onClick1={handlerBtnMinus}
+        onClick2={handlerBtnPlus}
+        productCnt={productCnt}
+      />
       <S.ProductPriceContainer>
         <p>17500원</p>
         <Button width="130px" size="M" content="주문하기" />

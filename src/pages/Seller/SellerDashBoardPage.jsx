@@ -1,11 +1,11 @@
 import React from "react";
-import Layout from "../../components/Layout/Layout";
+import { SellerMainLayout } from "../../components/Layout/Layout";
 import SellerDashboard from "../../components/Seller/SellerDashboard";
 
 export default function SellerDashBoardPage() {
   return (
-    <Layout>
+    <SellerMainLayout>
       <SellerDashboard />
-    </Layout>
+    </SellerMainLayout>
   );
 }

@@ -3,12 +3,13 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { loadProductDetail } from "../../apis/productApi";
-import MainLayout from "../../components/Layout/Layout";
+import { MainLayout } from "../../components/Layout/Layout";
 import ProductDetail from "../../components/Product/ProductDetail";
 
 export default function ProductDetailPage() {
   const product = useParams();
   const [productInfo, setProductInfo] = useState({});
+  const userType = localStorage.getItem("user_type");
   const getProductDetail = async (productId) => {
     try {
       const res = await loadProductDetail(productId);
@@ -21,7 +22,7 @@ export default function ProductDetailPage() {
     getProductDetail(product.id);
   }, []);
   return (
-    <MainLayout type="BUYER">
+    <MainLayout type={userType}>
       <ProductDetail
         storeName={productInfo.store_name}
         productName={productInfo.product_name}

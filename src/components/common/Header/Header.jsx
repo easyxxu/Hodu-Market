@@ -6,16 +6,16 @@ import MyPage from "../../../assets/icon-user.svg";
 import SearchIcon from "../../../assets/search.svg";
 import ShoppingBag from "../../../assets/icon-shopping-bag.svg";
 import { Button } from "../Button/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function Header({ type }) {
   return (
     <HeaderDiv>
       <HeaderContainer>
         <h1>
-          <a href="/">
+          <Link to="/">
             <img src={Logo} alt="호두 로고" />
-          </a>
+          </Link>
         </h1>
         <SearchContainer>
           <SearchInput type="text" placeholder="상품을 검색해보세요!" />
@@ -26,25 +26,28 @@ export function Header({ type }) {
     </HeaderDiv>
   );
 }
-const HeaderType = (type) => {
+export function HeaderType(type) {
   const TOKEN = localStorage.getItem("token");
+  const navigate = useNavigate();
+  // BUYER로 로그인한 상태
   if (type === "BUYER" && TOKEN) {
     return (
       <Nav>
-        <ShoppingCartLink href="/">
+        <ShoppingCartLink to="/cart">
           <img src={ShoppingCart} alt="shopping-cart" />
           <p>장바구니</p>
         </ShoppingCartLink>
-        <HeaderLink to="/login">
+        <HeaderLink to="/">
           <img src={MyPage} alt="my-page" />
           <p>마이페이지</p>
         </HeaderLink>
       </Nav>
     );
   } else if (type === "SELLER" && TOKEN) {
+    // SELLER로 로그인한 상태
     return (
       <Nav>
-        <HeaderLink href="/">
+        <HeaderLink to="/">
           <img src={MyPage} alt="my-page" />
           <p>마이페이지</p>
         </HeaderLink>
@@ -53,13 +56,15 @@ const HeaderType = (type) => {
           color="white"
           img={ShoppingBag}
           content="판매자센터"
+          onClick={() => navigate("/sellercenter")}
         />
       </Nav>
     );
   } else {
+    // 로그인 안한 경우
     return (
       <Nav>
-        <ShoppingCartLink href="/">
+        <ShoppingCartLink to="/cart">
           <img src={ShoppingCart} alt="shopping-cart" />
           <p>장바구니</p>
         </ShoppingCartLink>
@@ -70,16 +75,16 @@ const HeaderType = (type) => {
       </Nav>
     );
   }
-};
-
+}
+// 판매자 센터 헤더
 export function SellerHeader() {
   return (
     <HeaderDiv>
       <SellerHeaderDiv>
         <h1>
-          <a href="/">
+          <Link to="/">
             <img src={Logo} alt="호두 로고" />
-          </a>
+          </Link>
         </h1>
         <h2>판매자센터</h2>
       </SellerHeaderDiv>
@@ -136,7 +141,7 @@ const Nav = styled.nav`
   align-items: center;
 `;
 
-const ShoppingCartLink = styled.a`
+const ShoppingCartLink = styled(Link)`
   text-align: center;
   color: #767676;
   font-size: 12px;

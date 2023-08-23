@@ -3,7 +3,9 @@ import PlusIcon from "../../assets/icon-plus.svg";
 import { Button, TabMenuButton } from "../common/Button/Button";
 import ProductImg from "../../assets/product2.svg";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 export default function SellerDashboard() {
+  const navigate = useNavigate();
   return (
     <div>
       <DashBoardTop>
@@ -17,6 +19,9 @@ export default function SellerDashboard() {
           color="white"
           img={PlusIcon}
           content="상품업로드"
+          onClick={() => {
+            navigate("/sellercenter/addproduct");
+          }}
         />
       </DashBoardTop>
       <DashBoardMain>
@@ -68,7 +73,7 @@ export default function SellerDashboard() {
                   <td>
                     <Button
                       width="70px"
-                      bgColor="light"
+                      bgcolor="light"
                       border="yes"
                       content="삭제"
                     />
@@ -91,7 +96,7 @@ export default function SellerDashboard() {
                   <td>
                     <Button
                       width="70px"
-                      bgColor="light"
+                      bgcolor="light"
                       border="yes"
                       content="삭제"
                     />

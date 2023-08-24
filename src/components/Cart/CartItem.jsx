@@ -1,39 +1,63 @@
 import React, { useState } from "react";
 import * as S from "./CartItemStyle";
-import TestProduct from "../../assets/product2.svg";
 import { Button, CountButton } from "../common/Button/Button";
+import { useRecoilState } from "recoil";
+import { cartTotalAtom } from "../../atoms/cartAtom";
+import { useEffect } from "react";
 
-export default function CartItem() {
+export default function CartItem({ item }) {
+  const cartItemInfo = item.data;
   const [productCnt, setProductCnt] = useState(1);
-  const handlerBtnMinus = () => {
+  const [itemPrice, setItemPrice] = useState(cartItemInfo.price);
+  const [totalPrice, setTotalPrice] = useRecoilState(cartTotalAtom);
+  const handleBtnMinus = () => {
     if (productCnt > 1) {
       setProductCnt(productCnt - 1);
-      // setTotalPrice(totalPrice - productPrice);
+      const newPrice = itemPrice - cartItemInfo.price;
+      setItemPrice(newPrice);
+      setTotalPrice((prevTotal) => prevTotal - newPrice);
     }
   };
-  const handlerBtnPlus = () => {
+  const handleBtnPlus = () => {
     setProductCnt(productCnt + 1);
-    // setTotalPrice(totalPrice + productPrice);
+    const newPrice = itemPrice + cartItemInfo.price;
+    setItemPrice(newPrice);
+    setTotalPrice((prevTotal) => prevTotal + newPrice);
   };
+  useEffect(() => {
+    setTotalPrice({
+      total: (prev) => prev + itemPrice,
+      shippingFee: (prev) => prev + cartItemInfo.shipping_fee,
+    });
+  }, [itemPrice]);
+  console.log(totalPrice);
   return (
-    <S.CartItemContainer>
-      <S.ToggleCheckBtn />
+    <S.CartItemContainer key={cartItemInfo.product_id}>
+      <S.ToggleCheckBox type="checkbox" />
       <S.ProductInfo>
-        <S.ProductImg src={TestProduct} alt="상품이미지" />
+        <S.ProductImg src={cartItemInfo.image} alt="상품이미지" />
         <S.ProductInfoWrapper>
-          <p>백엔드글로벌</p>
-          <p>딥러닝 개발자 무릎 담요</p>
-          <p>17500원</p>
-          <p>택배배송 / 무료배송</p>
+          <p>{cartItemInfo.store_name}</p>
+          <p>{cartItemInfo.product_name}</p>
+          <p>{itemPrice.toLocaleString("ko-KR")}원</p>
+          <p>
+            {cartItemInfo.shipping_method === "DELIVERY"
+              ? "택배배송"
+              : "직접배송"}{" "}
+            /{" "}
+            {cartItemInfo.shipping_fee === 0
+              ? "무료배송"
+              : `${cartItemInfo.shipping_fee.toLocaleString("ko-KR")} 원`}
+          </p>
         </S.ProductInfoWrapper>
       </S.ProductInfo>
       <CountButton
-        onClick1={handlerBtnMinus}
-        onClick2={handlerBtnPlus}
+        onClick1={handleBtnMinus}
+        onClick2={handleBtnPlus}
         productCnt={productCnt}
       />
       <S.ProductPriceContainer>
-        <p>17500원</p>
+        <p>{itemPrice.toLocaleString("ko-KR")}원</p>
         <Button width="130px" size="M" content="주문하기" />
       </S.ProductPriceContainer>
       <S.BtnClose />

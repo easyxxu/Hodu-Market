@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { addCart } from "../../apis/cartApi";
+import { productIdAtom } from "../../atoms/productAtom";
 import { Button, CountButton } from "../common/Button/Button";
 import * as S from "./ProductDetailStyle";
 export default function ProductDetail({
@@ -11,25 +15,47 @@ export default function ProductDetail({
   productShippingFee,
   productDescription,
 }) {
+  const productId = useRecoilValue(productIdAtom);
   const [productCnt, setProductCnt] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
-
+  const [productInfo, setProductInfo] = useState({
+    product_id: "",
+    quantity: 1,
+    check: false,
+  });
+  const navigate = useNavigate();
   useEffect(() => {
     setTotalPrice(productPrice);
   }, [productPrice]);
 
   // 상품 수량 handler
-  const handlerBtnMinus = () => {
+  const handleBtnMinus = () => {
     if (productCnt > 1) {
       setProductCnt(productCnt - 1);
       setTotalPrice(totalPrice - productPrice);
     }
   };
-  const handlerBtnPlus = () => {
+  const handleBtnPlus = () => {
     setProductCnt(productCnt + 1);
     setTotalPrice(totalPrice + productPrice);
   };
-  console.log(productPrice);
+
+  const handleAddCart = async () => {
+    try {
+      const res = await addCart(productInfo);
+      console.log("장바구니 담기 성공: ", res);
+      navigate("/cart");
+    } catch (err) {
+      console.error("장바구니 담기 에러: ", err);
+    }
+  };
+  useEffect(() => {
+    setProductInfo({ ...productInfo, quantity: productCnt });
+  }, [productCnt]);
+
+  useEffect(() => {
+    setProductInfo({ ...productInfo, product_id: productId });
+  }, [productId]);
   return (
     <S.Wrapper>
       <S.DetailContainer>
@@ -56,8 +82,8 @@ export default function ProductDetail({
           <hr />
           <S.CountBtnContainer>
             <CountButton
-              onClick1={handlerBtnMinus}
-              onClick2={handlerBtnPlus}
+              onClick1={handleBtnMinus}
+              onClick2={handleBtnPlus}
               productCnt={productCnt}
             />
           </S.CountBtnContainer>
@@ -95,6 +121,7 @@ export default function ProductDetail({
               fontSize="M"
               fontWeight="bold"
               content="장바구니"
+              onClick={handleAddCart}
             ></Button>
           </S.BtnBuyContainer>
         </div>

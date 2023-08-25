@@ -2,14 +2,23 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import { loadProductDetail } from "../../apis/productApi";
+import { productIdAtom } from "../../atoms/productAtom";
 import { MainLayout } from "../../components/Layout/Layout";
 import ProductDetail from "../../components/Product/ProductDetail";
 
 export default function ProductDetailPage() {
-  const product = useParams();
+  const { id } = useParams();
+  const [productId, setProductId] = useRecoilState(productIdAtom);
   const [productInfo, setProductInfo] = useState({});
   const userType = localStorage.getItem("user_type");
+
+  // productId 업데이트 시 useEffect를 통해 getProductDetail 호출
+  useEffect(() => {
+    setProductId(id);
+  }, [id]);
+
   const getProductDetail = async (productId) => {
     try {
       const res = await loadProductDetail(productId);
@@ -18,9 +27,10 @@ export default function ProductDetailPage() {
       console.error("getProductDetail Error: ", err);
     }
   };
+
   useEffect(() => {
-    getProductDetail(product.id);
-  }, []);
+    getProductDetail(productId);
+  }, [productId]);
   return (
     <MainLayout type={userType}>
       <ProductDetail

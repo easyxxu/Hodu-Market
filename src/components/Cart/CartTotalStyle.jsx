@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Minus from "../../assets/minus-icon_2.svg";
 import Plus from "../../assets/plus-icon_2.svg";
+import Result from "../../assets/icon-result.svg";
 const TotalContainer = styled.div`
   display: flex;
   border-radius: 10px;
@@ -15,7 +16,7 @@ const TotalContainer = styled.div`
 const TotalBox = styled.div`
   width: 320px;
   height: 150px;
-  padding: 46px 91px;
+  padding: 46px 0;
   text-align: center;
   position: relative;
   p:last-child {
@@ -39,6 +40,15 @@ const TotalBox = styled.div`
     content: "";
     position: absolute;
     background: url(${Plus}) no-repeat center;
+    top: 55px;
+    right: 0;
+    width: 34px;
+    height: 34px;
+  }
+  &:nth-child(3)::after {
+    content: "";
+    position: absolute;
+    background: url(${Result}) no-repeat center;
     top: 55px;
     right: 0;
     width: 34px;

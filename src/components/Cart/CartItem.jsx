@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import * as S from "./CartItemStyle";
 import { Button, CountButton } from "../common/Button/Button";
-import { useRecoilState } from "recoil";
-import { cartTotalAtom } from "../../atoms/cartAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { cartItemAllSelectAtom, cartTotalAtom } from "../../atoms/cartAtom";
 import { useEffect } from "react";
 
 export default function CartItem({ item }) {
@@ -10,6 +10,7 @@ export default function CartItem({ item }) {
   const [productCnt, setProductCnt] = useState(1);
   const [itemPrice, setItemPrice] = useState(cartItemInfo.price);
   const [totalPrice, setTotalPrice] = useRecoilState(cartTotalAtom);
+  const isAllSelect = useRecoilValue(cartItemAllSelectAtom);
   const handleBtnMinus = () => {
     if (productCnt > 1) {
       setProductCnt(productCnt - 1);
@@ -30,10 +31,10 @@ export default function CartItem({ item }) {
       shippingFee: (prev) => prev + cartItemInfo.shipping_fee,
     });
   }, [itemPrice]);
-  console.log(totalPrice);
+
   return (
     <S.CartItemContainer key={cartItemInfo.product_id}>
-      <S.ToggleCheckBox type="checkbox" />
+      <S.ToggleCheckBox type="checkbox" checked={isAllSelect} />
       <S.ProductInfo>
         <S.ProductImg src={cartItemInfo.image} alt="상품이미지" />
         <S.ProductInfoWrapper>

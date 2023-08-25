@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import * as S from "./CartItemStyle";
 import { Button, CountButton } from "../common/Button/Button";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { cartItemAllSelectAtom, cartTotalAtom } from "../../atoms/cartAtom";
+import { useRecoilState } from "recoil";
+import { cartCheckedItemsAtom, cartTotalAtom } from "../../atoms/cartAtom";
 import { useEffect } from "react";
 
 export default function CartItem({ item }) {
@@ -10,37 +10,78 @@ export default function CartItem({ item }) {
   const [productCnt, setProductCnt] = useState(1);
   const [itemPrice, setItemPrice] = useState(cartItemInfo.price);
   const [totalPrice, setTotalPrice] = useRecoilState(cartTotalAtom);
-  const isAllSelect = useRecoilValue(cartItemAllSelectAtom);
+  const [checkItems, setCheckItems] = useRecoilState(cartCheckedItemsAtom);
+  const [isChecked, setIsChecked] = useState(true);
+
+  useEffect(() => {
+    checkItems.includes(cartItemInfo.product_id)
+      ? setIsChecked(true)
+      : setIsChecked(false);
+  }, [checkItems]);
+
   const handleBtnMinus = () => {
     if (productCnt > 1) {
       setProductCnt(productCnt - 1);
       const newPrice = itemPrice - cartItemInfo.price;
       setItemPrice(newPrice);
-      setTotalPrice((prevTotal) => prevTotal - newPrice);
+      if (isChecked) {
+        setTotalPrice((prev) => ({
+          total: prev.total - cartItemInfo.price,
+          shippingFee: prev.shippingFee,
+        }));
+      }
     }
   };
   const handleBtnPlus = () => {
     setProductCnt(productCnt + 1);
     const newPrice = itemPrice + cartItemInfo.price;
     setItemPrice(newPrice);
-    setTotalPrice((prevTotal) => prevTotal + newPrice);
+    if (isChecked) {
+      setTotalPrice((prev) => ({
+        total: prev.total + cartItemInfo.price,
+        shippingFee: prev.shippingFee,
+      }));
+    }
   };
+  const handleCartSingleSelect = (checked, id) => {
+    if (checked) {
+      setCheckItems((prev) => [...prev, id]);
+    } else {
+      setCheckItems(checkItems.filter((item) => item !== id));
+    }
+  };
+
   useEffect(() => {
-    setTotalPrice({
-      total: (prev) => prev + itemPrice,
-      shippingFee: (prev) => prev + cartItemInfo.shipping_fee,
-    });
-  }, [itemPrice]);
+    console.log("실행됨");
+    // setTotalPrice({ total: 0, shippingFee: 0 });
+    if (isChecked) {
+      setTotalPrice((prev) => ({
+        total: prev.total + itemPrice,
+        shippingFee: prev.shippingFee + cartItemInfo.shipping_fee,
+      }));
+    } else {
+      setTotalPrice((prev) => ({
+        total: prev.total - itemPrice,
+        shippingFee: prev.shippingFee - cartItemInfo.shipping_fee,
+      }));
+    }
+  }, [isChecked]);
 
   return (
-    <S.CartItemContainer key={cartItemInfo.product_id}>
-      <S.ToggleCheckBox type="checkbox" checked={isAllSelect} />
+    <S.CartItemContainer>
+      <S.ToggleCheckBox
+        type="checkbox"
+        checked={isChecked}
+        onChange={(e) =>
+          handleCartSingleSelect(e.target.checked, cartItemInfo.product_id)
+        }
+      />
       <S.ProductInfo>
         <S.ProductImg src={cartItemInfo.image} alt="상품이미지" />
         <S.ProductInfoWrapper>
           <p>{cartItemInfo.store_name}</p>
           <p>{cartItemInfo.product_name}</p>
-          <p>{itemPrice.toLocaleString("ko-KR")}원</p>
+          <p>{cartItemInfo.price.toLocaleString("ko-KR")}원</p>
           <p>
             {cartItemInfo.shipping_method === "DELIVERY"
               ? "택배배송"

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import ToggleUnCheck from "../../assets/toggle-uncheck.svg";
+import ToggleCheck from "../../assets/toggle-check.svg";
+
 const CartTitle = styled.h2`
   font-size: 36px;
   font-weight: 700;
@@ -30,10 +32,15 @@ const CartTabTitle = styled.div`
     text-align: center;
   }
 `;
-const CartCheckBox = styled.button`
+const CartCheckBox = styled.input`
   background: url(${ToggleUnCheck}) no-repeat;
   width: 20px;
   height: 20px;
   margin-right: 40px;
+  appearance: none;
+  cursor: pointer;
+  &:checked {
+    background: url(${ToggleCheck}) no-repeat;
+  }
 `;
 export { CartTitle, CartTabTitle, CartCheckBox };

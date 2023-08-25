@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import ToggleCheck from "../../assets/toggle-check.svg";
+import ToggleUnCheck from "../../assets/toggle-uncheck.svg";
 import Close from "../../assets/icon-delete.svg";
-const CartItemContainer = styled.div`
+const CartItemContainer = styled.li`
   max-width: 1280px;
   display: flex;
   align-items: center;
@@ -10,11 +11,16 @@ const CartItemContainer = styled.div`
   border: 2px solid #e0e0e0;
   position: relative;
 `;
-const ToggleCheckBtn = styled.button`
-  background: url(${ToggleCheck}) no-repeat;
+const ToggleCheckBox = styled.input`
+  background: url(${ToggleUnCheck}) no-repeat;
   width: 20px;
   height: 20px;
   margin-right: 40px;
+  appearance: none;
+  cursor: pointer;
+  &:checked {
+    background: url(${ToggleCheck}) no-repeat;
+  }
 `;
 const ProductInfo = styled.div`
   display: flex;
@@ -77,7 +83,7 @@ const BtnClose = styled.button`
 `;
 export {
   CartItemContainer,
-  ToggleCheckBtn,
+  ToggleCheckBox,
   ProductInfo,
   ProductImg,
   ProductInfoWrapper,

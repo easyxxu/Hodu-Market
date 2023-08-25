@@ -59,6 +59,7 @@ export default function LoginForm() {
       navigate("/");
     } catch (err) {
       console.error("로그인 에러", err);
+      setLoginErrorMsg("아이디 또는 비밀번호가 틀렸습니다.");
     }
   };
   console.log("loginInfo: ", loginInfo);

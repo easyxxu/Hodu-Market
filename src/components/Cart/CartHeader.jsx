@@ -2,6 +2,7 @@ import React from "react";
 import * as S from "./CartHeaderStyle";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { cartItemAtom, cartCheckedItemsAtom } from "../../atoms/cartAtom";
+import { useEffect } from "react";
 export default function CartHeader({ className }) {
   const cartList = useRecoilValue(cartItemAtom);
   const [checkItems, setCheckItems] = useRecoilState(cartCheckedItemsAtom);
@@ -15,13 +16,14 @@ export default function CartHeader({ className }) {
       setCheckItems([]);
     }
   };
+
   return (
     <>
       <S.CartTitle>장바구니</S.CartTitle>
       <S.CartTabTitle className={className}>
         <S.CartCheckBox
           type="checkbox"
-          onClick={(e) => handleAllSelect(e.target.checked)}
+          onChange={(e) => handleAllSelect(e.target.checked)}
           checked={checkItems.length === cartList.length ? true : false}
         />
         <p>상품정보</p>

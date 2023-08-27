@@ -20,6 +20,7 @@ export default function ProductDetail({
   productShippingFee,
   productDescription,
 }) {
+  const token = localStorage.getItem("token");
   const productId = useRecoilValue(productIdAtom);
   const [cartAddForm, setCartAddForm] = useRecoilState(cartAddFormAtom);
   const [quantity, setQuantity] = useRecoilState(quantityAtom);
@@ -28,9 +29,24 @@ export default function ProductDetail({
   const totalPrice =
     productPrice && (productPrice * quantity).toLocaleString("ko-KR");
 
+  // 주문하기 모달 오픈
+  const handleOrderModalOpen = () => {
+    if (token) {
+      navigate("/order");
+    } else {
+      openModal(modalsList.goLogin, {
+        onCancel: () => {
+          closeModal(modalsList.goLogin);
+        },
+        onGoLogin: () => {
+          navigate("/login");
+          closeModal(modalsList.goLogin);
+        },
+      });
+    }
+  };
   // 장바구니 담기 모달 오픈
-  const handleModalOpen = async () => {
-    const token = localStorage.getItem("token");
+  const handleCartModalOpen = async () => {
     if (token) {
       // 로그인한 경우
       try {
@@ -124,6 +140,7 @@ export default function ProductDetail({
               fontSize="M"
               fontWeight="bold"
               content="바로구매"
+              onClick={handleOrderModalOpen}
             ></Button>
             <Button
               type="button"
@@ -134,7 +151,7 @@ export default function ProductDetail({
               fontSize="M"
               fontWeight="bold"
               content="장바구니"
-              onClick={handleModalOpen}
+              onClick={handleCartModalOpen}
             ></Button>
           </S.BtnBuyContainer>
         </div>

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { addCart } from "../../apis/cartApi";
-import { productIdAtom } from "../../atoms/productAtom";
+import { productAddFormAtom, productIdAtom } from "../../atoms/productAtom";
+import useModal from "../../hooks/useModal";
 import { Button, CountButton } from "../common/Button/Button";
+import { modalsList } from "../common/Modal/Modals";
 import * as S from "./ProductDetailStyle";
 export default function ProductDetail({
   storeName,
@@ -18,12 +20,11 @@ export default function ProductDetail({
   const productId = useRecoilValue(productIdAtom);
   const [productCnt, setProductCnt] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [productInfo, setProductInfo] = useState({
-    product_id: "",
-    quantity: 1,
-    check: false,
-  });
+  const [productAddForm, setProductAddForm] =
+    useRecoilState(productAddFormAtom);
   const navigate = useNavigate();
+  const { openModal, closeModal } = useModal();
+
   useEffect(() => {
     setTotalPrice(productPrice);
   }, [productPrice]);
@@ -39,22 +40,53 @@ export default function ProductDetail({
     setProductCnt(productCnt + 1);
     setTotalPrice(totalPrice + productPrice);
   };
+  const handleModalOpen = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // 로그인한 경우
+      try {
+        await handleAddCart();
+        openModal(modalsList.addCart, {
+          onKeepShopping: () => {
+            closeModal(modalsList.addCart);
+          },
+          onGoCart: () => {
+            navigate("/cart");
+            closeModal(modalsList.addCart);
+          },
+        });
+      } catch (err) {
+        console.error("장바구니 담기 에러: ", err);
+      }
+    } else {
+      // 로그인 안한 경우
+      openModal(modalsList.goLogin, {
+        onCancel: () => {
+          closeModal(modalsList.goLogin);
+        },
+        onGoLogin: () => {
+          navigate("/login");
+          closeModal(modalsList.goLogin);
+        },
+      });
+    }
+  };
 
   const handleAddCart = async () => {
     try {
-      const res = await addCart(productInfo);
+      const res = await addCart(productAddForm);
       console.log("장바구니 담기 성공: ", res);
-      navigate("/cart");
+      // navigate("/cart");
     } catch (err) {
       console.error("장바구니 담기 에러: ", err);
     }
   };
   useEffect(() => {
-    setProductInfo({ ...productInfo, quantity: productCnt });
+    setProductAddForm({ ...productAddForm, quantity: productCnt });
   }, [productCnt]);
 
   useEffect(() => {
-    setProductInfo({ ...productInfo, product_id: productId });
+    setProductAddForm({ ...productAddForm, product_id: productId });
   }, [productId]);
   return (
     <S.Wrapper>
@@ -121,7 +153,7 @@ export default function ProductDetail({
               fontSize="M"
               fontWeight="bold"
               content="장바구니"
-              onClick={handleAddCart}
+              onClick={handleModalOpen}
             ></Button>
           </S.BtnBuyContainer>
         </div>

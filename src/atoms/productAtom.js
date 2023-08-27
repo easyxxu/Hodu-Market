@@ -7,3 +7,8 @@ export const productIdAtom = atom({
   default: "",
   effects_UNSTABLE: [persistAtom],
 });
+export const productAddFormAtom = atom({
+  key: "productAddFrom",
+  default: { product_id: "", quantity: 1, check: false },
+  effects_UNSTABLE: [persistAtom],
+});

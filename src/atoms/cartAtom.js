@@ -8,11 +8,15 @@ export const cartItemAtom = atom({
   default: [],
   effects_UNSTABLE: [persistAtom],
 });
-
+export const cartInfoAtom = atom({
+  key: "cartInfoAtom",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});
 export const cartTotalAtom = atom({
   key: "cartTotalAtom",
-  default: { total: 0, shippingFee: 0 },
-  effect_UNSTABLE: [persistAtom],
+  default: { total: [], shippingFee: [] },
+  // effect_UNSTABLE: [persistAtom],
 });
 
 export const cartCheckedItemsAtom = atom({

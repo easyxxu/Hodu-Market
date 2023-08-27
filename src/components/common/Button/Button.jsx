@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import Minus from "../../../assets/icon-minus-line.svg";
-import Plus from "../../../assets/icon-plus-line.svg";
+
 export const ButtonStyle = styled.button`
   display: block;
   border-radius: 5px;
@@ -54,54 +53,7 @@ export const ButtonStyle = styled.button`
       padding: 11px 0;
     `}
 `;
-export const CountButtonStyle = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 36px;
-  padding: 13px;
-  width: 150px;
-  border: 1px solid var(--content-color-light);
-  border-radius: 5px;
-  /* margin: 30px 0; */
-  button {
-    width: 20px;
-    height: 20px;
-    &:first-child {
-      background: url(${Minus}) no-repeat center center;
-    }
-    &:last-child {
-      background: url(${Plus}) no-repeat center center;
-    }
-  }
-  p {
-    font-size: 18px;
-    position: relative;
-    &::before {
-      content: "";
-      position: absolute;
-      width: 1px;
-      height: 47px;
-      top: -14px;
-      left: -20px;
-      background-color: var(--content-color-light);
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      width: 1px;
-      height: 47px;
-      top: -14px;
-      right: -20px;
-      background-color: var(--content-color-light);
-    }
-  }
-`;
-// const BtnMinus = styled.button`
-//   background: url(${Minus}) no-repeat center center;
-// `;
-// const BtnPlus = styled.button`
-//   background: url(${Plus}) no-repeat center center;
-// `;
+
 export const TabButtonStyle = styled.button`
   width: 320px;
   box-sizing: content-box;
@@ -115,6 +67,7 @@ export const TabButtonStyle = styled.button`
       ? "var(--point-color)"
       : "var(--content-color-dark)"};
 `;
+
 export const TabMenuButtonStyle = styled.button`
   display: flex;
   justify-content: space-between;
@@ -176,15 +129,7 @@ export function Button({
     </ButtonStyle>
   );
 }
-export function CountButton({ onClick1, onClick2, productCnt }) {
-  return (
-    <CountButtonStyle>
-      <button onClick={onClick1} />
-      <p>{productCnt}</p>
-      <button onClick={onClick2} />
-    </CountButtonStyle>
-  );
-}
+
 export function TabButton({ type, content, onClick }) {
   return (
     <TabButtonStyle type={type} onClick={onClick}>

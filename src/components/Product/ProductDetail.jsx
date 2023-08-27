@@ -3,11 +3,14 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { addCart } from "../../apis/cartApi";
-import { productAddFormAtom, productIdAtom } from "../../atoms/productAtom";
+import { productIdAtom } from "../../atoms/productAtom";
+import { cartAddFormAtom } from "../../atoms/cartAddFormAtom";
 import useModal from "../../hooks/useModal";
-import { Button, CountButton } from "../common/Button/Button";
+import { Button } from "../common/Button/Button";
+import QuantityButton from "../common/Button/QuantityButton";
 import { modalsList } from "../common/Modal/Modals";
 import * as S from "./ProductDetailStyle";
+import { quantityAtom } from "../../atoms/quantityAtom";
 export default function ProductDetail({
   storeName,
   productName,
@@ -18,28 +21,14 @@ export default function ProductDetail({
   productDescription,
 }) {
   const productId = useRecoilValue(productIdAtom);
-  const [productCnt, setProductCnt] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [productAddForm, setProductAddForm] =
-    useRecoilState(productAddFormAtom);
+  const [cartAddForm, setCartAddForm] = useRecoilState(cartAddFormAtom);
+  const [quantity, setQuantity] = useRecoilState(quantityAtom);
   const navigate = useNavigate();
   const { openModal, closeModal } = useModal();
+  const totalPrice =
+    productPrice && (productPrice * quantity).toLocaleString("ko-KR");
 
-  useEffect(() => {
-    setTotalPrice(productPrice);
-  }, [productPrice]);
-
-  // 상품 수량 handler
-  const handleBtnMinus = () => {
-    if (productCnt > 1) {
-      setProductCnt(productCnt - 1);
-      setTotalPrice(totalPrice - productPrice);
-    }
-  };
-  const handleBtnPlus = () => {
-    setProductCnt(productCnt + 1);
-    setTotalPrice(totalPrice + productPrice);
-  };
+  // 장바구니 담기 모달 오픈
   const handleModalOpen = async () => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -71,23 +60,26 @@ export default function ProductDetail({
       });
     }
   };
-
+  // 장바구니 담기 API
   const handleAddCart = async () => {
     try {
-      const res = await addCart(productAddForm);
+      const res = await addCart(cartAddForm);
       console.log("장바구니 담기 성공: ", res);
-      // navigate("/cart");
     } catch (err) {
       console.error("장바구니 담기 에러: ", err);
     }
   };
+  // 수량 변경됨에 따라 CartAddForm에 저장함
   useEffect(() => {
-    setProductAddForm({ ...productAddForm, quantity: productCnt });
-  }, [productCnt]);
+    setCartAddForm({ ...cartAddForm, quantity: quantity });
+  }, [quantity]);
 
+  // 홈페이지에서 상품 디테일로 가는 경우 productId가 달라짐에 따라 CartAddForm에 저장함
   useEffect(() => {
-    setProductAddForm({ ...productAddForm, product_id: productId });
+    setCartAddForm({ ...cartAddForm, product_id: productId });
   }, [productId]);
+
+  console.log("cartAddForm: ", cartAddForm);
   return (
     <S.Wrapper>
       <S.DetailContainer>
@@ -97,40 +89,29 @@ export default function ProductDetail({
           <S.ProductName>{productName}</S.ProductName>
           <S.ProductPrice>
             <strong>
-              {productPrice
-                ? productPrice.toLocaleString("ko-KR")
-                : productPrice}
+              {productPrice && productPrice.toLocaleString("ko-KR")}
             </strong>
             원
           </S.ProductPrice>
           <S.Delivery>
             {productShippingMethod === "DELIVERY" ? "택배배송" : "직접배송"} /
             &nbsp;
-            {productShippingFee
-              ? productShippingFee.toLocaleString("ko-Kr")
-              : productShippingFee}
+            {productShippingFee && productShippingFee.toLocaleString("ko-KR")}
             &nbsp; 원
           </S.Delivery>
           <hr />
           <S.CountBtnContainer>
-            <CountButton
-              onClick1={handleBtnMinus}
-              onClick2={handleBtnPlus}
-              productCnt={productCnt}
-            />
+            <QuantityButton />
           </S.CountBtnContainer>
           <hr />
           <S.TotalContainer>
             <S.Total>총 상품 금액</S.Total>
             <S.TotalCntContainer>
               <p>
-                총 수량 <strong>{productCnt}</strong>개
+                총 수량 <strong>{quantity}</strong>개
               </p>
               <S.TotalPrice>
-                <strong>
-                  {totalPrice ? totalPrice.toLocaleString("ko-KR") : totalPrice}
-                </strong>
-                원
+                <strong>{totalPrice}</strong>원
               </S.TotalPrice>
             </S.TotalCntContainer>
           </S.TotalContainer>

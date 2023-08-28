@@ -1,18 +1,22 @@
-import React from "react";
-import { useRecoilState } from "recoil";
+import React, { useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import Minus from "../../../assets/icon-minus-line.svg";
 import Plus from "../../../assets/icon-plus-line.svg";
-import { quantityAtom } from "../../../atoms/quantityAtom";
 
-export default function QuantityButton() {
-  const [quantity, setQuantity] = useRecoilState(quantityAtom);
+export default function QuantityButton({ cartQuantity }) {
+  const [quantity, setQuantity] = useState(1);
   const handleQuantityPlus = () => {
     setQuantity(quantity + 1);
   };
   const handleQuantityMinus = () => {
-    setQuantity(quantity - 1);
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
   };
+  useEffect(() => {
+    if (cartQuantity !== undefined) setQuantity(cartQuantity);
+  }, []);
   return (
     <CountButtonStyle>
       <button type="button" onClick={handleQuantityMinus} />

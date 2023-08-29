@@ -10,19 +10,21 @@ export default function ProductAdd() {
   const [product, setProduct] = useState({
     product_name: "",
     image: "",
-    price: "",
-    shipping_method: "",
-    shipping_fee: "",
-    stock: "",
+    price: 0,
+    shipping_method: "DELIVERY",
+    shipping_fee: 0,
+    stock: 0,
     product_info: "",
   });
   const inputImgRef = useRef(null);
+  const [shippingMethod, setShippingMethod] = useState("DELIVERY");
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await productAddApi(product);
+      console.log("상품등록 성공");
     } catch (err) {
-      console.error(err);
+      console.error("submit 에러: ", err);
     }
   };
   const handleInputChange = (e) => {
@@ -46,9 +48,11 @@ export default function ProductAdd() {
   };
   const handleShippingMethod = (e) => {
     if (e.target.textContent === "택배, 소포, 등기") {
-      setProduct({ ...product, shipping_method: "DELEVERY" });
+      setProduct({ ...product, shipping_method: "DELIVERY" });
+      setShippingMethod("DELIVERY");
     } else {
       setProduct({ ...product, shipping_method: "PARCEL" });
+      setShippingMethod("PARCEL");
     }
   };
   console.log(product);
@@ -112,6 +116,7 @@ export default function ProductAdd() {
                 id="productName"
                 name="product_name"
                 onChange={handleInputChange}
+                autoComplete="off"
               />
               <label htmlFor="productPrice">판매가</label>
               <InputFrameContainer>
@@ -120,6 +125,7 @@ export default function ProductAdd() {
                   id="productPrice"
                   name="price"
                   onChange={handleInputChange}
+                  autoComplete="off"
                 />
               </InputFrameContainer>
               <label htmlFor="deliveryMethod">배송방법</label>
@@ -130,7 +136,9 @@ export default function ProductAdd() {
                   content="택배, 소포, 등기"
                   width="L"
                   size="L"
-                  color="white"
+                  border={shippingMethod === "DELIVERY" ? null : "yes"}
+                  color={shippingMethod === "DELIVERY" ? "white" : null}
+                  bgcolor={shippingMethod === "DELIVERY" ? null : "light"}
                   onClick={handleShippingMethod}
                 />
                 <Button
@@ -139,8 +147,9 @@ export default function ProductAdd() {
                   content="직접배송(화물배달)"
                   width="L"
                   size="L"
-                  border="yes"
-                  bgcolor="light"
+                  border={shippingMethod === "PARCEL" ? null : "yes"}
+                  color={shippingMethod === "PARCEL" ? "white" : null}
+                  bgcolor={shippingMethod === "PARCEL" ? null : "light"}
                   onClick={handleShippingMethod}
                 />
               </DeliveryBtnContainer>
@@ -149,8 +158,9 @@ export default function ProductAdd() {
                 <input
                   type="text"
                   id="deliveryStandardPrice"
-                  name="shipping_method"
+                  name="shipping_fee"
                   onChange={handleInputChange}
+                  autoComplete="off"
                 />
               </InputFrameContainer>
               <label htmlFor="stock">재고</label>
@@ -160,22 +170,23 @@ export default function ProductAdd() {
                   id="stock"
                   name="stock"
                   onChange={handleInputChange}
+                  autoComplete="off"
                 />
               </InputFrameCntContainer>
             </ProductInfo>
           </ProductAddContainer>
           <ProductDetailContainer>
             <label htmlFor="productInfo">상품 상세 정보</label>
-            <textarea type="text" id="productInfo" name="product_info" />
+            <textarea
+              type="text"
+              id="productInfo"
+              name="product_info"
+              onChange={handleInputChange}
+            />
           </ProductDetailContainer>
           <FormBtnContainer>
             <Button width="200px" bgcolor="light" border="yes" content="취소" />
-            <Button
-              width="200px"
-              color="white"
-              content="저장하기"
-              type="button"
-            />
+            <Button width="200px" color="white" content="저장하기" />
           </FormBtnContainer>
         </form>
       </ProductAddMain>

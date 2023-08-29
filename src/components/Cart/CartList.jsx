@@ -1,20 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 import CartItem from "./CartItem";
-import { useRecoilValue } from "recoil";
-import { cartItemAtom } from "../../atoms/cartAtom";
+import { useRecoilState } from "recoil";
+import { cartListAtom } from "../../atoms/cartAtom";
 export default function CartList() {
-  const cartItemList = useRecoilValue(cartItemAtom);
-  const CartList = styled.ul`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  `;
+  const [cartList, setCartList] = useRecoilState(cartListAtom);
   return (
-    <CartList>
-      {cartItemList.map((item) => {
+    <CartListStyle>
+      {cartList.map((item) => {
         return <CartItem item={item} key={item.data.product_id} />;
       })}
-    </CartList>
+    </CartListStyle>
   );
 }
+
+const CartListStyle = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;

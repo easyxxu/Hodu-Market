@@ -1,7 +1,7 @@
 import { axiosInstance, privateInstance } from "./axiosInstance";
 import { loadProductDetail } from "./productApi";
 
-export const cartList = async () => {
+export const cartListApi = async () => {
   const res = await privateInstance.get("/cart/");
   const cart = res.data.results;
   const cartProudctInfoList = await Promise.all(

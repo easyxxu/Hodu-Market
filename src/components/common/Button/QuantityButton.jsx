@@ -4,14 +4,21 @@ import styled from "styled-components";
 import Minus from "../../../assets/icon-minus-line.svg";
 import Plus from "../../../assets/icon-plus-line.svg";
 
-export default function QuantityButton({ cartQuantity }) {
+export default function QuantityButton({
+  cartQuantity,
+  cartAddForm,
+  setCartAddForm,
+}) {
   const [quantity, setQuantity] = useState(1);
+  // console.log("cartAddForm: ", cartAddForm);
   const handleQuantityPlus = () => {
     setQuantity(quantity + 1);
+    setCartAddForm({ ...cartAddForm, quantity: quantity + 1 });
   };
   const handleQuantityMinus = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
+      setCartAddForm({ ...cartAddForm, quantity: quantity - 1 });
     }
   };
   useEffect(() => {

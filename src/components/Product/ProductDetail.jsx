@@ -28,7 +28,8 @@ export default function ProductDetail({
   const navigate = useNavigate();
   const { openModal, closeModal } = useModal();
   const totalPrice =
-    productPrice && (productPrice * quantity).toLocaleString("ko-KR");
+    productPrice &&
+    (productPrice * cartAddForm.quantity).toLocaleString("ko-KR");
   const cartItemList = useRecoilValue(cartListAtom);
   const inCart = cartItemList.filter(
     (item) => item.data.product_id === parseInt(productId)
@@ -101,9 +102,9 @@ export default function ProductDetail({
     }
   };
   // 수량 변경됨에 따라 CartAddForm에 저장함
-  useEffect(() => {
-    setCartAddForm({ ...cartAddForm, quantity: quantity });
-  }, [quantity]);
+  // useEffect(() => {
+  //   setCartAddForm({ ...cartAddForm, quantity: quantity });
+  // }, [quantity]);
 
   // 홈페이지에서 상품 디테일로 가는 경우 productId가 달라짐에 따라 CartAddForm에 저장함
   useEffect(() => {
@@ -132,14 +133,17 @@ export default function ProductDetail({
           </S.Delivery>
           <hr />
           <S.CountBtnContainer>
-            <QuantityButton />
+            <QuantityButton
+              cartAddForm={cartAddForm}
+              setCartAddForm={setCartAddForm}
+            />
           </S.CountBtnContainer>
           <hr />
           <S.TotalContainer>
             <S.Total>총 상품 금액</S.Total>
             <S.TotalCntContainer>
               <p>
-                총 수량 <strong>{quantity}</strong>개
+                총 수량 <strong>{cartAddForm.quantity}</strong>개
               </p>
               <S.TotalPrice>
                 <strong>{totalPrice}</strong>원

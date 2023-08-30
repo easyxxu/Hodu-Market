@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import styled from "styled-components";
+import { updateQuantity } from "../../../apis/cartApi";
 import Minus from "../../../assets/icon-minus-line.svg";
 import Plus from "../../../assets/icon-plus-line.svg";
 
@@ -8,22 +9,52 @@ export default function QuantityButton({
   cartQuantity,
   cartAddForm,
   setCartAddForm,
+  cartItemId,
+  productId,
 }) {
   const [quantity, setQuantity] = useState(1);
-  // console.log("cartAddForm: ", cartAddForm);
+  const [quantityUpdateForm, setQuantityUpdateForm] = useState({
+    product_id: productId,
+    quantity: quantity,
+    is_active: true,
+  });
   const handleQuantityPlus = () => {
     setQuantity(quantity + 1);
-    setCartAddForm({ ...cartAddForm, quantity: quantity + 1 });
+    setQuantityUpdateForm({ ...quantityUpdateForm, quantity: quantity + 1 });
+    if (setCartAddForm) {
+      setCartAddForm({ ...cartAddForm, quantity: quantity + 1 });
+    } else {
+      quantityUpdate();
+    }
   };
   const handleQuantityMinus = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
-      setCartAddForm({ ...cartAddForm, quantity: quantity - 1 });
+      setQuantityUpdateForm({ ...quantityUpdateForm, quantity: quantity - 1 });
+      if (setCartAddForm) {
+        setCartAddForm({ ...cartAddForm, quantity: quantity - 1 });
+      } else {
+        quantityUpdate();
+      }
     }
   };
+
+  // 장바구니 수량 업뎃
+  const quantityUpdate = async () => {
+    try {
+      console.log("**", quantityUpdateForm);
+      const res = await updateQuantity(cartItemId, quantityUpdateForm);
+    } catch (err) {
+      console.error("장바구니 수량 업뎃 에러: ", err);
+    }
+  };
+  // useEffect(() => {
+  //   setQuantity()
+  // })
   useEffect(() => {
     if (cartQuantity !== undefined) setQuantity(cartQuantity);
   }, []);
+
   return (
     <CountButtonStyle>
       <button type="button" onClick={handleQuantityMinus} />

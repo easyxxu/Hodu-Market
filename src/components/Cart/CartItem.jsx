@@ -10,7 +10,7 @@ import {
   cartTotalAtom,
 } from "../../atoms/cartAtom";
 import { useEffect } from "react";
-import { deleteCart } from "../../apis/cartApi";
+import { deleteCart, updateQuantity } from "../../apis/cartApi";
 import useModal from "../../hooks/useModal";
 import { modalsList } from "../common/Modal/Modals";
 
@@ -25,11 +25,7 @@ export default function CartItem({ item }) {
   const [totalCheckedItems, setTotalCheckedItems] = useState([]); // 장바구니에 담긴 아이템 중에 체크된 아이템만 담겨있는 배열(총 가격 계산을 위함)
   const [cartAllItem, setCartAllItem] = useState([]); // cart에 담긴 모든 상품의 수량, 가격, 배송비
   const { openModal, closeModal } = useModal();
-  // const [cartItemForm, setCartItemForm] = useState({
-  //   product_id: "",
-  //   quantity: 1,
-  //   check: false,
-  // });
+  console.log("cartInfo", cartInfo);
   useEffect(() => {
     const updatedCartAllItem = cartInfo.map((cartItem) => {
       const { product_id, quantity } = cartItem;
@@ -59,11 +55,13 @@ export default function CartItem({ item }) {
         total.push(item);
       }
     });
+    console.log("total:", total);
     setTotalCheckedItems(total);
     cartTotalPrice();
   };
   // 체크된 아이템의 총 가격 계산
   const cartTotalPrice = () => {
+    console.log("실행됨");
     let total = [];
     totalCheckedItems.forEach((item) => {
       let itemTotal = item.price * item.quantity;
@@ -82,11 +80,19 @@ export default function CartItem({ item }) {
   };
 
   useEffect(() => {
+    checkItems.includes(cartItemInfo.product_id)
+      ? setIsChecked(true)
+      : setIsChecked(false);
     cartTotalCheckedItems();
+    // cartTotalPrice();
   }, [checkItems, isChecked]);
 
-  console.log("totalCheckedItems: ", totalCheckedItems);
-  console.log("TotalPrice: ", totalPrice);
+  useEffect(() => {
+    cartTotalPrice();
+    console.log("TotalPrice: ", totalPrice);
+    console.log("totalCheckedItems: ", totalCheckedItems);
+  }, [totalCheckedItems]);
+
   // cart 아이템 삭제
   const handleDeleteItem = async (id) => {
     try {
@@ -118,12 +124,10 @@ export default function CartItem({ item }) {
     });
   };
 
-  // checkItems에 상품이 담겨있는지 확인
   useEffect(() => {
-    checkItems.includes(cartItemInfo.product_id)
-      ? setIsChecked(true)
-      : setIsChecked(false);
-  }, [checkItems]);
+    return () => setCheckItems([]); // unmount 시점에 checkItems 초기화
+  }, []);
+
   return (
     <S.CartItemContainer>
       <S.ToggleCheckBox
@@ -154,6 +158,14 @@ export default function CartItem({ item }) {
         cartQuantity={
           cartInfo.find((x) => x.product_id === cartItemInfo.product_id)
             ?.quantity
+        }
+        cartItemId={
+          cartInfo.find((x) => x.product_id === cartItemInfo.product_id)
+            ?.cart_item_id
+        }
+        productId={
+          cartInfo.find((x) => x.product_id === cartItemInfo.product_id)
+            ?.product_id
         }
       />
       <S.ProductPriceContainer>

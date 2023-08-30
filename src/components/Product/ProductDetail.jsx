@@ -11,6 +11,7 @@ import QuantityButton from "../common/Button/QuantityButton";
 import { modalsList } from "../common/Modal/Modals";
 import * as S from "./ProductDetailStyle";
 import { quantityAtom } from "../../atoms/quantityAtom";
+import { cartListAtom } from "../../atoms/cartAtom";
 export default function ProductDetail({
   storeName,
   productName,
@@ -28,6 +29,10 @@ export default function ProductDetail({
   const { openModal, closeModal } = useModal();
   const totalPrice =
     productPrice && (productPrice * quantity).toLocaleString("ko-KR");
+  const cartItemList = useRecoilValue(cartListAtom);
+  const inCart = cartItemList.filter(
+    (item) => item.data.product_id === parseInt(productId)
+  ).length;
 
   // 주문하기 모달 오픈
   const handleOrderModalOpen = () => {
@@ -47,7 +52,7 @@ export default function ProductDetail({
   };
   // 장바구니 담기 모달 오픈
   const handleCartModalOpen = async () => {
-    if (token) {
+    if (token && inCart === 0) {
       // 로그인한 경우
       try {
         await handleAddCart();
@@ -63,6 +68,16 @@ export default function ProductDetail({
       } catch (err) {
         console.error("장바구니 담기 에러: ", err);
       }
+    } else if (token && inCart > 0) {
+      openModal(modalsList.alreadyCart, {
+        onCancel: () => {
+          closeModal(modalsList.alreadyCart);
+        },
+        onGoCart: () => {
+          navigate("/cart");
+          closeModal(modalsList.alreadyCart);
+        },
+      });
     } else {
       // 로그인 안한 경우
       openModal(modalsList.goLogin, {

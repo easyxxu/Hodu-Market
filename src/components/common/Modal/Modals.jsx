@@ -4,35 +4,31 @@ import { useState } from "react";
 import useModal from "../../../hooks/useModal";
 import * as S from "./ModalsStyle";
 
-export const addCart = ({ open, onGoCart, onKeepShopping }) => {
+export const addCart = ({ onGoCart, onKeepShopping }) => {
   return (
     <>
-      {open && (
-        <>
-          <S.ModalContent>장바구니에 담겼습니다.</S.ModalContent>
-          <S.BtnContainer>
-            <Button
-              type="button"
-              width="130px"
-              color="white"
-              content="계속 쇼핑하기"
-              onClick={onKeepShopping}
-            />
-            <Button
-              type="button"
-              width="130px"
-              bgcolor="light"
-              border="yes"
-              content="장바구니 가기"
-              onClick={onGoCart}
-            />
-          </S.BtnContainer>
-        </>
-      )}
+      <S.ModalContent>장바구니에 담겼습니다.</S.ModalContent>
+      <S.BtnContainer>
+        <Button
+          type="button"
+          width="130px"
+          color="white"
+          content="계속 쇼핑하기"
+          onClick={onKeepShopping}
+        />
+        <Button
+          type="button"
+          width="130px"
+          bgcolor="light"
+          border="yes"
+          content="장바구니 가기"
+          onClick={onGoCart}
+        />
+      </S.BtnContainer>
     </>
   );
 };
-export const alreadyCart = () => {
+export const alreadyCart = ({ onCancel, onGoCart }) => {
   return (
     <>
       <S.ModalContent>
@@ -46,8 +42,15 @@ export const alreadyCart = () => {
           bgcolor="light"
           border="yes"
           content="아니오"
+          onClick={onCancel}
         />
-        <Button type="button" width="100px" color="white" content="예" />
+        <Button
+          type="button"
+          width="100px"
+          color="white"
+          content="예"
+          onClick={onGoCart}
+        />
       </S.BtnContainer>
     </>
   );

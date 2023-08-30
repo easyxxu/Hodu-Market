@@ -116,7 +116,6 @@ export const modalsList = {
 
 export const Modals = () => {
   const { modals, closeModal } = useModal();
-  console.log(modals);
   return (
     <>
       {modals.map(({ Component, props }, idx) => {

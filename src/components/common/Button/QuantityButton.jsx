@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { updateQuantity } from "../../../apis/cartApi";
+import { updateQuantity, cartListApi } from "../../../apis/cartApi";
 import Minus from "../../../assets/icon-minus-line.svg";
 import Plus from "../../../assets/icon-plus-line.svg";
+import { cartInfoAtom } from "../../../atoms/cartAtom";
 
 export default function QuantityButton({
   cartQuantity,
@@ -12,19 +14,18 @@ export default function QuantityButton({
   cartItemId,
   productId,
 }) {
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(cartQuantity || 1);
   const [quantityUpdateForm, setQuantityUpdateForm] = useState({
     product_id: productId,
-    quantity: quantity,
+    quantity: cartQuantity,
     is_active: true,
   });
+  const [cartInfo, setCartInfo] = useRecoilState(cartInfoAtom);
   const handleQuantityPlus = () => {
     setQuantity(quantity + 1);
     setQuantityUpdateForm({ ...quantityUpdateForm, quantity: quantity + 1 });
     if (setCartAddForm) {
       setCartAddForm({ ...cartAddForm, quantity: quantity + 1 });
-    } else {
-      quantityUpdate();
     }
   };
   const handleQuantityMinus = () => {
@@ -33,27 +34,31 @@ export default function QuantityButton({
       setQuantityUpdateForm({ ...quantityUpdateForm, quantity: quantity - 1 });
       if (setCartAddForm) {
         setCartAddForm({ ...cartAddForm, quantity: quantity - 1 });
-      } else {
-        quantityUpdate();
       }
     }
   };
-
   // 장바구니 수량 업뎃
   const quantityUpdate = async () => {
     try {
-      console.log("**", quantityUpdateForm);
-      const res = await updateQuantity(cartItemId, quantityUpdateForm);
+      await updateQuantity(cartItemId, quantityUpdateForm);
+      loadCartList();
     } catch (err) {
       console.error("장바구니 수량 업뎃 에러: ", err);
     }
   };
-  // useEffect(() => {
-  //   setQuantity()
-  // })
+  const loadCartList = async () => {
+    try {
+      const res = await cartListApi();
+      setCartInfo(res.cart);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   useEffect(() => {
-    if (cartQuantity !== undefined) setQuantity(cartQuantity);
-  }, []);
+    if (!setCartAddForm) {
+      quantityUpdate();
+    }
+  }, [quantityUpdateForm, cartItemId, setCartInfo]);
 
   return (
     <CountButtonStyle>

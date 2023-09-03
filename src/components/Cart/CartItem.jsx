@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as S from "./CartItemStyle";
 import { Button } from "../common/Button/Button";
 import QuantityButton from "../common/Button/QuantityButton";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   cartCheckedItemsAtom,
   cartInfoAtom,
@@ -10,34 +10,31 @@ import {
   cartTotalAtom,
 } from "../../atoms/cartAtom";
 import { useEffect } from "react";
-import { deleteCart, updateQuantity } from "../../apis/cartApi";
+import { deleteCart } from "../../apis/cartApi";
 import useModal from "../../hooks/useModal";
 import { modalsList } from "../common/Modal/Modals";
 
 export default function CartItem({ item }) {
   const cartItemInfo = item.data; // cart에 담긴 아이템의 상세 정보
   const [cartList, setCartList] = useRecoilState(cartListAtom); // cartItemInfo map돌리기전 전체 데이터
-  const [cartInfo, setCartInfo] = useRecoilState(cartInfoAtom); // cart에 담긴 모든 아이템의 cart_item_id, is_active, product_id, my_cart, quantity
+  const cartInfo = useRecoilValue(cartInfoAtom); // cart에 담긴 모든 아이템의 cart_item_id, is_active, product_id, my_cart, quantity
   const [totalPrice, setTotalPrice] = useRecoilState(cartTotalAtom);
-  const [itemPrice, setItemPrice] = useState(cartItemInfo.price);
   const [checkItems, setCheckItems] = useRecoilState(cartCheckedItemsAtom); // 선택된 아이템 배열
   const [isChecked, setIsChecked] = useState(true);
   const [totalCheckedItems, setTotalCheckedItems] = useState([]); // 장바구니에 담긴 아이템 중에 체크된 아이템만 담겨있는 배열(총 가격 계산을 위함)
   const [cartAllItem, setCartAllItem] = useState([]); // cart에 담긴 모든 상품의 수량, 가격, 배송비
   const { openModal, closeModal } = useModal();
-  console.log("cartInfo", cartInfo);
+
   useEffect(() => {
     const updatedCartAllItem = cartInfo.map((cartItem) => {
       const { product_id, quantity } = cartItem;
       const { price, shipping_fee } = cartList.find(
         (item) => item.data.product_id === product_id
       ).data;
-
       return { product_id, quantity, price, shipping_fee };
     });
-
     setCartAllItem(updatedCartAllItem);
-  }, []);
+  }, [cartInfo]);
 
   // Cart 아이템 선택
   const handleCartSingleSelect = (checked, id) => {
@@ -47,21 +44,22 @@ export default function CartItem({ item }) {
       setCheckItems(checkItems.filter((item) => item !== id));
     }
   };
+
   // 체크된 아이템만 결제하기 위해 배열에 담음
   const cartTotalCheckedItems = () => {
+    console.log("실행됨", cartAllItem);
     let total = [];
     cartAllItem.map((item) => {
       if (checkItems.includes(item.product_id)) {
         total.push(item);
       }
     });
-    console.log("total:", total);
     setTotalCheckedItems(total);
     cartTotalPrice();
   };
+
   // 체크된 아이템의 총 가격 계산
   const cartTotalPrice = () => {
-    console.log("실행됨");
     let total = [];
     totalCheckedItems.forEach((item) => {
       let itemTotal = item.price * item.quantity;
@@ -84,13 +82,10 @@ export default function CartItem({ item }) {
       ? setIsChecked(true)
       : setIsChecked(false);
     cartTotalCheckedItems();
-    // cartTotalPrice();
-  }, [checkItems, isChecked]);
+  }, [checkItems, isChecked, cartAllItem]);
 
   useEffect(() => {
     cartTotalPrice();
-    console.log("TotalPrice: ", totalPrice);
-    console.log("totalCheckedItems: ", totalCheckedItems);
   }, [totalCheckedItems]);
 
   // cart 아이템 삭제
@@ -169,7 +164,14 @@ export default function CartItem({ item }) {
         }
       />
       <S.ProductPriceContainer>
-        <p>{itemPrice.toLocaleString("ko-KR")}원</p>
+        <p>
+          {(
+            cartItemInfo.price *
+            cartInfo.find((x) => x.product_id === cartItemInfo.product_id)
+              ?.quantity
+          ).toLocaleString("ko-KR")}
+          원
+        </p>
         <Button width="130px" size="M" content="주문하기" />
       </S.ProductPriceContainer>
       <S.BtnClose onClick={handleModalOpen} />

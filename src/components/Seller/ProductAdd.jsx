@@ -6,6 +6,7 @@ import { productAddApi } from "../../apis/productApi";
 import Frame from "../../assets/frame.svg";
 import { Button } from "../common/Button/Button";
 import imgUploadBtn from "../../assets/icon-img.svg";
+import { useNavigate } from "react-router-dom";
 export default function ProductAdd() {
   const [product, setProduct] = useState({
     product_name: "",
@@ -19,11 +20,13 @@ export default function ProductAdd() {
   const inputImgRef = useRef(null);
   const [shippingMethod, setShippingMethod] = useState("DELIVERY");
   const [imgPrev, setImgPrev] = useState("");
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await productAddApi(product);
       console.log("상품등록 성공");
+      navigate("/sellercenter");
     } catch (err) {
       console.error("submit 에러: ", err.response.data);
     }

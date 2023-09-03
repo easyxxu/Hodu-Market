@@ -26,6 +26,10 @@ export const deleteCart = async (cartItemId) => {
   return res;
 };
 
+export const deleteAllCart = async () => {
+  const res = await privateInstance.delete(`/cart/`);
+  return res;
+};
 export const updateQuantity = async (cartItemId, req) => {
   const res = await privateInstance.put(`/cart/${cartItemId}/`, req);
   return res;

@@ -18,29 +18,43 @@ export default function ProductAdd() {
   });
   const inputImgRef = useRef(null);
   const [shippingMethod, setShippingMethod] = useState("DELIVERY");
+  const [imgPrev, setImgPrev] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await productAddApi(product);
       console.log("상품등록 성공");
     } catch (err) {
-      console.error("submit 에러: ", err);
+      console.error("submit 에러: ", err.response.data);
     }
   };
   const handleInputChange = (e) => {
-    setProduct({ ...product, [e.target.name]: e.target.value });
-    console.log(e);
+    const { name, value } = e.target;
+
+    // price, shipping_fee, stock 속성은 숫자로 변환하여 저장
+    let parsedValue = value;
+    if (name === "price" || name === "shipping_fee" || name === "stock") {
+      parsedValue = parseInt(value);
+      if (isNaN(parsedValue)) {
+        parsedValue = 0; // 숫자로 변환할 수 없는 경우 기본값으로 0 설정
+      }
+    }
+
+    setProduct({ ...product, [name]: parsedValue });
   };
+
   const handleImgChange = () => {
     const file = inputImgRef.current.files[0];
     // 파일 객체가 없는 경우 함수 종료
     if (!file) {
       return;
     }
+    console.log(file);
+    setProduct({ ...product, image: file });
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setProduct({ ...product, image: reader.result });
+      setImgPrev(reader.result);
     };
   };
   const onClickInput = () => {
@@ -93,16 +107,16 @@ export default function ProductAdd() {
                   type="file"
                   id="image"
                   name="image"
-                  accept=".jpg,.jpeg,.png,.gif"
+                  accept="image/jpg, image/jpeg, image/png"
                   ref={inputImgRef}
                   onChange={handleImgChange}
                 />
                 <ProductImgInputBtn type="button" onClick={onClickInput}>
                   <img src={imgUploadBtn} alt="이미지 추가하기" />
                 </ProductImgInputBtn>
-                {product.image && (
+                {imgPrev && (
                   <ProductImgPreview
-                    src={product.image}
+                    src={imgPrev}
                     alt="상품 미리보기"
                     onClick={onClickInput}
                   />

@@ -14,3 +14,11 @@ export const privateInstance = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+export const imgPrivateInstance = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    Authorization: `JWT ${localStorage.getItem("token")}`,
+    "Content-Type": "multipart/form-data",
+  },
+});

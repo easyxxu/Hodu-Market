@@ -1,4 +1,8 @@
-import { axiosInstance, privateInstance } from "./axiosInstance";
+import {
+  axiosInstance,
+  imgPrivateInstance,
+  privateInstance,
+} from "./axiosInstance";
 
 export const loadAllProduct = async () => {
   const res = await axiosInstance.get("/products/?page=1");
@@ -16,6 +20,6 @@ export const loadProductDetail = async (productId) => {
 };
 
 export const productAddApi = async (product) => {
-  const res = await privateInstance.post("/products/", product);
+  const res = await imgPrivateInstance.post("/products/", product);
   return res;
 };

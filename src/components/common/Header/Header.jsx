@@ -30,6 +30,7 @@ export function HeaderType(type) {
   const navigate = useNavigate();
   const location = useLocation();
   const isCartPage = location.pathname === "/cart";
+
   // BUYER로 로그인한 상태
   if (type === "BUYER" && TOKEN) {
     return (
@@ -41,7 +42,7 @@ export function HeaderType(type) {
           />
           <p>장바구니</p>
         </S.ShoppingCartLink>
-        <S.HeaderLink to="/">
+        <S.HeaderLink to="/mypage">
           <img src={MyPage} alt="my-page" />
           <p>마이페이지</p>
         </S.HeaderLink>
@@ -51,7 +52,7 @@ export function HeaderType(type) {
     // SELLER로 로그인한 상태
     return (
       <S.Nav>
-        <S.HeaderLink to="/">
+        <S.HeaderLink to="/mypage">
           <img src={MyPage} alt="my-page" />
           <p>마이페이지</p>
         </S.HeaderLink>

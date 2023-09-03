@@ -37,3 +37,8 @@ export const loginApi = async (userInfo) => {
   const res = await axiosInstance.post("/accounts/login/", userInfo);
   return res;
 };
+
+export const logoutApi = async () => {
+  const res = await axiosInstance.post("/accounts/logout/");
+  return res;
+};

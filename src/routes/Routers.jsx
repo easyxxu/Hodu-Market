@@ -8,6 +8,7 @@ import ProductAddPage from "../pages/Seller/ProductAddPage";
 import ShoppingCart from "../pages/Cart/Cart";
 import OrderPage from "../pages/Order/OrderPage";
 import ProductDetailPage from "../pages/Product/ProductDetailPage";
+import MyPage from "../pages/MyPage/MyPage";
 export default function Routers() {
   return (
     <Routes>
@@ -17,6 +18,7 @@ export default function Routers() {
       <Route path="/product/detail/:id" element={<ProductDetailPage />} />
       <Route path="/cart" element={<ShoppingCart />} />
       <Route path="/order" element={<OrderPage />} />
+      <Route path="/mypage" element={<MyPage />} />
       <Route path="/sellercenter">
         <Route index element={<SellerDashBoardPage />} />
         <Route path="addproduct" element={<ProductAddPage />} />

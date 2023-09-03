@@ -1,16 +1,34 @@
 import React from "react";
-import PlusIcon from "../../assets/icon-plus.svg";
-import { Button, TabMenuButton } from "../common/Button/Button";
-import ProductImg from "../../assets/product2.svg";
+import PlusIcon from "../../../assets/icon-plus.svg";
+import { Button, TabMenuButton } from "../../common/Button/Button";
+
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { loadSellerProduct } from "../../../apis/productApi";
+import { useState } from "react";
+import DashboardItem from "./DashboardItem";
 export default function SellerDashboard() {
   const navigate = useNavigate();
+  const [productList, setProductList] = useState([]);
+  useEffect(() => {
+    const loadSellerProductList = async () => {
+      try {
+        const res = await loadSellerProduct();
+        setProductList(res.data.results);
+        console.log(res);
+      } catch (err) {
+        console.error("load error", err);
+      }
+    };
+    loadSellerProductList();
+  }, []);
+  console.log(productList);
   return (
     <div>
       <DashBoardTop>
         <h3>
-          대시보드 <strong>회사이름</strong>
+          대시보드 <strong>{productList && productList[0].store_name}</strong>
         </h3>
         <Button
           type="button"
@@ -28,7 +46,10 @@ export default function SellerDashboard() {
         <TabMenuBar>
           <ul>
             <li>
-              <TabMenuButton type="on" content="판매중인 상품(3)" />
+              <TabMenuButton
+                type="on"
+                content={`판매중인 상품 (${productList.length})`}
+              />
             </li>
             <li>
               <TabMenuButton content="주문/배송" cnt="2" />
@@ -56,52 +77,18 @@ export default function SellerDashboard() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <ProductInfo>
-                      <img src={ProductImg} alt="상품이미지" />
-                      <div>
-                        <p>딥러닝 개발자 무릎 담요</p>
-                        <p>재고: 370개</p>
-                      </div>
-                    </ProductInfo>
-                  </td>
-                  <td>17500원</td>
-                  <td>
-                    <Button width="70px" color="white" content="수정" />
-                  </td>
-                  <td>
-                    <Button
-                      width="70px"
-                      bgcolor="light"
-                      border="yes"
-                      content="삭제"
+                {productList.map((product) => {
+                  return (
+                    <DashboardItem
+                      key={product.product_id}
+                      productId={product.product_id}
+                      image={product.image}
+                      productName={product.product_name}
+                      stock={product.stock}
+                      price={product.price}
                     />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <ProductInfo>
-                      <img src={ProductImg} alt="상품이미지" />
-                      <div>
-                        <p>딥러닝 개발자 무릎 담요</p>
-                        <p>재고: 370개</p>
-                      </div>
-                    </ProductInfo>
-                  </td>
-                  <td>17500원</td>
-                  <td>
-                    <Button width="70px" color="white" content="수정" />
-                  </td>
-                  <td>
-                    <Button
-                      width="70px"
-                      bgcolor="light"
-                      border="yes"
-                      content="삭제"
-                    />
-                  </td>
-                </tr>
+                  );
+                })}
               </tbody>
             </table>
           </ProductList>
@@ -169,20 +156,6 @@ const ProductList = styled.div`
       button {
         margin: 0 auto;
       }
-    }
-  }
-`;
-const ProductInfo = styled.div`
-  padding: 16px 30px;
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  div {
-    p:first-child {
-      margin-bottom: 10px;
-    }
-    p:last-child {
-      color: var(--content-color-dark);
     }
   }
 `;

@@ -10,8 +10,8 @@ export const loadAllProduct = async () => {
 };
 
 export const loadSellerProduct = async () => {
-  const res = await axiosInstance.get("/seller/");
-  return res.data;
+  const res = await privateInstance.get("/seller/");
+  return res;
 };
 
 export const loadProductDetail = async (productId) => {

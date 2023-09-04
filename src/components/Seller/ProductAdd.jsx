@@ -16,10 +16,10 @@ export default function ProductAdd() {
   const [product, setProduct] = useState({
     product_name: "",
     image: "",
-    price: 0,
+    price: "",
     shipping_method: "DELIVERY",
-    shipping_fee: 0,
-    stock: 0,
+    shipping_fee: "",
+    stock: "",
     product_info: "",
   });
   const inputImgRef = useRef(null);
@@ -182,7 +182,7 @@ export default function ProductAdd() {
                 name="product_name"
                 onChange={handleInputChange}
                 autoComplete="off"
-                value={type === "modify" ? product.product_name : ""}
+                value={product.product_name}
               />
               <label htmlFor="productPrice">판매가</label>
               <InputFrameContainer>
@@ -192,7 +192,7 @@ export default function ProductAdd() {
                   name="price"
                   onChange={handleInputChange}
                   autoComplete="off"
-                  value={type === "modify" ? product.price : ""}
+                  value={product.price}
                 />
               </InputFrameContainer>
               <label htmlFor="deliveryMethod">배송방법</label>
@@ -228,7 +228,7 @@ export default function ProductAdd() {
                   name="shipping_fee"
                   onChange={handleInputChange}
                   autoComplete="off"
-                  value={type === "modify" ? product.shipping_fee : ""}
+                  value={product.shipping_fee}
                 />
               </InputFrameContainer>
               <label htmlFor="stock">재고</label>
@@ -239,7 +239,7 @@ export default function ProductAdd() {
                   name="stock"
                   onChange={handleInputChange}
                   autoComplete="off"
-                  value={type === "modify" ? product.stock : ""}
+                  value={product.stock}
                 />
               </InputFrameCntContainer>
             </ProductInfo>
@@ -251,7 +251,7 @@ export default function ProductAdd() {
               id="productInfo"
               name="product_info"
               onChange={handleInputChange}
-              value={type === "modify" ? product.product_info : ""}
+              value={product.product_info}
             />
           </ProductDetailContainer>
           <FormBtnContainer>

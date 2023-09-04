@@ -2,11 +2,16 @@ import React from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import { productAddApi } from "../../apis/productApi";
+import {
+  loadProductDetail,
+  productAddApi,
+  productModifyApi,
+} from "../../apis/productApi";
 import Frame from "../../assets/frame.svg";
 import { Button } from "../common/Button/Button";
 import imgUploadBtn from "../../assets/icon-img.svg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 export default function ProductAdd() {
   const [product, setProduct] = useState({
     product_name: "",
@@ -18,14 +23,23 @@ export default function ProductAdd() {
     product_info: "",
   });
   const inputImgRef = useRef(null);
-  const [shippingMethod, setShippingMethod] = useState("DELIVERY");
+  const [shippingMethod, setShippingMethod] = useState(product.shipping_method);
   const [imgPrev, setImgPrev] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const type = location.state.type;
+  const productId = location.state.productId;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await productAddApi(product);
-      console.log("상품등록 성공");
+      if (type === "add") {
+        await productAddApi(product);
+        console.log("상품등록 성공");
+      } else if (type === "modify") {
+        await productModifyApi(productId, product);
+        console.log("상품수정 성공");
+      }
       navigate("/sellercenter");
     } catch (err) {
       console.error("submit 에러: ", err.response.data);
@@ -72,10 +86,44 @@ export default function ProductAdd() {
       setShippingMethod("PARCEL");
     }
   };
+
+  useEffect(() => {
+    if (type === "modify") {
+      const getProductDetail = async () => {
+        try {
+          const res = await loadProductDetail(productId);
+          const {
+            product_name,
+            image,
+            price,
+            shipping_method,
+            shipping_fee,
+            stock,
+            product_info,
+          } = res.data;
+
+          setProduct({
+            product_name,
+            image,
+            price,
+            shipping_method,
+            shipping_fee,
+            stock,
+            product_info,
+          });
+          setImgPrev(image);
+        } catch (err) {
+          console.error("getProductDetail실패:", err);
+        }
+      };
+      getProductDetail();
+    }
+  }, []);
+
   console.log(product);
   return (
     <div>
-      <Title>상품 등록</Title>
+      <Title>{type === "add" ? "상품 등록" : "상품 수정"}</Title>
       <ProductAddMain>
         <div>
           <ProductCautionTitle>* 상품 등록 주의사항</ProductCautionTitle>
@@ -134,6 +182,7 @@ export default function ProductAdd() {
                 name="product_name"
                 onChange={handleInputChange}
                 autoComplete="off"
+                value={type === "modify" ? product.product_name : ""}
               />
               <label htmlFor="productPrice">판매가</label>
               <InputFrameContainer>
@@ -143,6 +192,7 @@ export default function ProductAdd() {
                   name="price"
                   onChange={handleInputChange}
                   autoComplete="off"
+                  value={type === "modify" ? product.price : ""}
                 />
               </InputFrameContainer>
               <label htmlFor="deliveryMethod">배송방법</label>
@@ -178,6 +228,7 @@ export default function ProductAdd() {
                   name="shipping_fee"
                   onChange={handleInputChange}
                   autoComplete="off"
+                  value={type === "modify" ? product.shipping_fee : ""}
                 />
               </InputFrameContainer>
               <label htmlFor="stock">재고</label>
@@ -188,6 +239,7 @@ export default function ProductAdd() {
                   name="stock"
                   onChange={handleInputChange}
                   autoComplete="off"
+                  value={type === "modify" ? product.stock : ""}
                 />
               </InputFrameCntContainer>
             </ProductInfo>
@@ -199,6 +251,7 @@ export default function ProductAdd() {
               id="productInfo"
               name="product_info"
               onChange={handleInputChange}
+              value={type === "modify" ? product.product_info : ""}
             />
           </ProductDetailContainer>
           <FormBtnContainer>

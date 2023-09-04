@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { Button } from "../../common/Button/Button";
 export default function DashboardItem({
@@ -8,8 +9,13 @@ export default function DashboardItem({
   stock,
   price,
 }) {
+  const navigate = useNavigate();
   const productPrice = price.toLocaleString("ko-KR");
-  console.log(productId);
+  const handleProductModify = () => {
+    navigate(`/sellercenter/addproduct`, {
+      state: { productId, type: "modify" },
+    });
+  };
   return (
     <tr>
       <td>
@@ -23,7 +29,12 @@ export default function DashboardItem({
       </td>
       <td>{productPrice}원</td>
       <td>
-        <Button width="70px" color="white" content="수정" />
+        <Button
+          width="70px"
+          color="white"
+          content="수정"
+          onClick={handleProductModify}
+        />
       </td>
       <td>
         <Button width="70px" bgcolor="light" border="yes" content="삭제" />

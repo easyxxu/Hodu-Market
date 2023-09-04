@@ -1,7 +1,6 @@
 import React from "react";
 import PlusIcon from "../../../assets/icon-plus.svg";
 import { Button, TabMenuButton } from "../../common/Button/Button";
-
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -28,7 +27,11 @@ export default function SellerDashboard() {
     <div>
       <DashBoardTop>
         <h3>
-          대시보드 <strong>{productList && productList[0].store_name}</strong>
+          대시보드 {""}
+          <strong>
+            {(productList.length > 0 && productList[0].store_name) ||
+              "회사이름"}
+          </strong>
         </h3>
         <Button
           type="button"
@@ -38,7 +41,7 @@ export default function SellerDashboard() {
           img={PlusIcon}
           content="상품업로드"
           onClick={() => {
-            navigate("/sellercenter/addproduct");
+            navigate("/sellercenter/addproduct", { state: { type: "add" } });
           }}
         />
       </DashBoardTop>

@@ -23,13 +23,13 @@ export default function ProductAdd() {
     product_info: "",
   });
   const inputImgRef = useRef(null);
-  const [shippingMethod, setShippingMethod] = useState(product.shipping_method);
+  // const [shippingMethod, setShippingMethod] = useState(product.shipping_method);
   const [imgPrev, setImgPrev] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const type = location.state.type;
   const productId = location.state.productId;
-
+  // console.log("shippingMethod: ", shippingMethod);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -80,10 +80,10 @@ export default function ProductAdd() {
   const handleShippingMethod = (e) => {
     if (e.target.textContent === "택배, 소포, 등기") {
       setProduct({ ...product, shipping_method: "DELIVERY" });
-      setShippingMethod("DELIVERY");
+      // setShippingMethod("DELIVERY");
     } else {
       setProduct({ ...product, shipping_method: "PARCEL" });
-      setShippingMethod("PARCEL");
+      // setShippingMethod("PARCEL");
     }
   };
 
@@ -203,9 +203,13 @@ export default function ProductAdd() {
                   content="택배, 소포, 등기"
                   width="L"
                   size="L"
-                  border={shippingMethod === "DELIVERY" ? null : "yes"}
-                  color={shippingMethod === "DELIVERY" ? "white" : null}
-                  bgcolor={shippingMethod === "DELIVERY" ? null : "light"}
+                  border={product.shipping_method === "DELIVERY" ? null : "yes"}
+                  color={
+                    product.shipping_method === "DELIVERY" ? "white" : null
+                  }
+                  bgcolor={
+                    product.shipping_method === "DELIVERY" ? null : "light"
+                  }
                   onClick={handleShippingMethod}
                 />
                 <Button
@@ -214,9 +218,11 @@ export default function ProductAdd() {
                   content="직접배송(화물배달)"
                   width="L"
                   size="L"
-                  border={shippingMethod === "PARCEL" ? null : "yes"}
-                  color={shippingMethod === "PARCEL" ? "white" : null}
-                  bgcolor={shippingMethod === "PARCEL" ? null : "light"}
+                  border={product.shipping_method === "PARCEL" ? null : "yes"}
+                  color={product.shipping_method === "PARCEL" ? "white" : null}
+                  bgcolor={
+                    product.shipping_method === "PARCEL" ? null : "light"
+                  }
                   onClick={handleShippingMethod}
                 />
               </DeliveryBtnContainer>

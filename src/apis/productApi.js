@@ -19,7 +19,20 @@ export const loadProductDetail = async (productId) => {
   return res;
 };
 
-export const productAddApi = async (product) => {
-  const res = await imgPrivateInstance.post("/products/", product);
+export const productAddApi = async (productForm) => {
+  const res = await imgPrivateInstance.post("/products/", productForm);
+  return res;
+};
+
+export const productModifyApi = async (productId, productForm) => {
+  const res = await imgPrivateInstance.put(
+    `/products/${productId}/`,
+    productForm
+  );
+  return res;
+};
+
+export const productDeleteApi = async (productId) => {
+  const res = await privateInstance.delete(`/products/${productId}`);
   return res;
 };

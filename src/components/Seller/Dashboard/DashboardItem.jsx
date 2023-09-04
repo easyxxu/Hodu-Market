@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
+import { productDeleteApi } from "../../../apis/productApi";
 import { Button } from "../../common/Button/Button";
 export default function DashboardItem({
   image,
@@ -8,6 +9,7 @@ export default function DashboardItem({
   productId,
   stock,
   price,
+  setProductList,
 }) {
   const navigate = useNavigate();
   const productPrice = price.toLocaleString("ko-KR");
@@ -15,6 +17,17 @@ export default function DashboardItem({
     navigate(`/sellercenter/addproduct`, {
       state: { productId, type: "modify" },
     });
+  };
+  const handleProductDelete = async () => {
+    try {
+      const res = await productDeleteApi(productId);
+      setProductList((prevProductList) =>
+        prevProductList.filter((product) => product.product_id !== productId)
+      );
+      console.log("상품 삭제 완료: ", res);
+    } catch (err) {
+      console.error("상품 삭제 실패: ", err.response);
+    }
   };
   return (
     <tr>
@@ -37,7 +50,13 @@ export default function DashboardItem({
         />
       </td>
       <td>
-        <Button width="70px" bgcolor="light" border="yes" content="삭제" />
+        <Button
+          width="70px"
+          bgcolor="light"
+          border="yes"
+          content="삭제"
+          onClick={handleProductDelete}
+        />
       </td>
     </tr>
   );

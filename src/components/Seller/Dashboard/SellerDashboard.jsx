@@ -89,6 +89,7 @@ export default function SellerDashboard() {
                       productName={product.product_name}
                       stock={product.stock}
                       price={product.price}
+                      setProductList={setProductList}
                     />
                   );
                 })}

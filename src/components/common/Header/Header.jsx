@@ -94,7 +94,9 @@ export function SellerHeader() {
             <img src={Logo} alt="호두 로고" />
           </Link>
         </h1>
-        <h2>판매자센터</h2>
+        <h2>
+          <Link to="/sellercenter">판매자센터</Link>
+        </h2>
       </S.SellerHeaderDiv>
     </S.HeaderDiv>
   );

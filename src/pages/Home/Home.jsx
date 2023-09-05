@@ -1,6 +1,6 @@
 import React from "react";
 import Banner from "../../components/Banner/Banner";
-import Product from "../../components/Product/Product";
+import ProductList from "../../components/Product/ProductList";
 import { MainLayout } from "../../components/Layout/Layout";
 
 export default function Home() {
@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <MainLayout type={userType}>
       <Banner />
-      <Product />
+      <ProductList />
     </MainLayout>
   );
 }

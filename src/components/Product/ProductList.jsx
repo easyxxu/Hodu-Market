@@ -1,23 +1,23 @@
 import React from "react";
 import {
-  ProductList,
+  ProductUl,
   ProductImg,
   ProductLink,
   ProductCorporation,
   ProductName,
   ProductPrice,
   ProductWon,
-} from "./ProductStyle";
+} from "./ProductListStyle";
 import { useState } from "react";
 import { loadAllProduct } from "../../apis/productApi";
 import { useEffect } from "react";
 
-export default function ProductItem() {
-  const [productList, setProductList] = useState([]);
+export default function ProductList() {
+  const [productListData, setProductListData] = useState([]);
   const getProductList = async () => {
     try {
       const res = await loadAllProduct();
-      setProductList(res.results);
+      setProductListData(res.results);
     } catch (err) {
       console.error("getProductList Error: ", err);
     }
@@ -26,8 +26,8 @@ export default function ProductItem() {
     getProductList();
   }, []);
   return (
-    <ProductList>
-      {productList.map((product) => (
+    <ProductUl>
+      {productListData.map((product) => (
         <li key={product.product_id}>
           <ProductLink to={`/product/detail/${product.product_id}`}>
             <ProductImg src={product.image} alt="상품이미지" />
@@ -40,6 +40,6 @@ export default function ProductItem() {
           </ProductLink>
         </li>
       ))}
-    </ProductList>
+    </ProductUl>
   );
 }

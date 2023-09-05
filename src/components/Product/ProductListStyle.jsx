@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const ProductList = styled.ul`
+const ProductUl = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 70px;
@@ -37,7 +37,7 @@ const ProductWon = styled.span`
   font-weight: 400;
 `;
 export {
-  ProductList,
+  ProductUl,
   ProductImg,
   ProductLink,
   ProductCorporation,

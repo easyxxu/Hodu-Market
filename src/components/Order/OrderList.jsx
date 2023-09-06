@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import ProductImg from "../../assets/product2.svg";
+import OrderItem from "./OrderItem";
 export default function OrderList() {
+  const location = useLocation();
+  const productData = location.state;
   return (
     <>
       <Title>주문/결제하기</Title>
@@ -15,42 +18,11 @@ export default function OrderList() {
           </tr>
         </thead>
         <tbody>
-          <tr />
-          <tr>
-            <td>
-              <ProductItem>
-                <img src={ProductImg} alt="상품사진" />
-                <div>
-                  <p>백엔드글로벌</p>
-                  <p>딥러닝 개발자 무릎 담요</p>
-                  <p>수량 : 1개</p>
-                </div>
-              </ProductItem>
-            </td>
-            <td>-</td>
-            <td>무료배송</td>
-            <td>17500</td>
-          </tr>
-          <tr />
-          <tr>
-            <td>
-              <ProductItem>
-                <img src={ProductImg} alt="상품사진" />
-                <div>
-                  <p>백엔드글로벌</p>
-                  <p>딥러닝 개발자 무릎 담요</p>
-                  <p>수량 : 1개</p>
-                </div>
-              </ProductItem>
-            </td>
-            <td>-</td>
-            <td>무료배송</td>
-            <td>17500</td>
-          </tr>
+          <OrderItem />
         </tbody>
       </OrderTable>
       <Total>
-        총 주문금액 <strong>46500원</strong>
+        총 주문금액 <strong>{productData.totalPrice} 원</strong>
       </Total>
     </>
   );
@@ -60,6 +32,7 @@ const Title = styled.h2`
   font-weight: 700;
   text-align: center;
   margin-bottom: 52px;
+  margin-top: 54px;
 `;
 const OrderTable = styled.table`
   width: 1280px;
@@ -104,29 +77,6 @@ const OrderTable = styled.table`
   }
 `;
 
-const ProductItem = styled.div`
-  display: flex;
-  gap: 36px;
-  padding: 8px 8px 12px;
-  img {
-    width: 104px;
-    height: 104px;
-    border-radius: 10px;
-  }
-  div {
-    padding: 12px 0;
-    p:nth-child(1) {
-      margin-bottom: 6px;
-      color: var(--content-color-dark);
-    }
-    p:nth-child(2) {
-      margin-bottom: 10px;
-    }
-    p:nth-child(3) {
-      color: var(--content-color-dark);
-    }
-  }
-`;
 const Total = styled.p`
   float: right;
   margin-top: 30px;

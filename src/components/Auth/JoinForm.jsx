@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   companyRegistrationNumApi,
   idDuplicateCheckApi,
@@ -85,50 +85,40 @@ export default function JoinForm() {
       setJoinType("seller");
     }
   };
-  // 전화번호 업데이트
-  const updatePhoneInfo = () => {
-    if (phoneFirst && phoneSecond && phoneThird) {
-      if (joinType === "buyer") {
-        setBuyerInfo({
-          ...buyerInfo,
-          phone_number: `${phoneFirst}${phoneSecond}${phoneThird}`,
-        });
-      } else if (joinType === "seller") {
-        setSellerInfo({
-          ...sellerInfo,
-          phone_number: `${phoneFirst}${phoneSecond}${phoneThird}`,
-        });
-      }
-    }
-  };
 
+  // 전화번호 설정
   const handlePhoneListItemClick = (e) => {
     setPhoneFirst(e.target.textContent);
     setPhoneListVisible(false);
-    updatePhoneInfo(); // 호출 추가
   };
 
   const handlePhoneSecondChange = (e) => {
     setPhoneSecond(e.target.value);
-    updatePhoneInfo(); // 호출 추가
   };
 
   const handlePhoneThirdChange = (e) => {
     setPhoneThird(e.target.value);
-    updatePhoneInfo(); // 호출 추가
-  };
-  const handleAgreeChange = (e) => {
-    setJoinAgree(e.target.checked);
   };
 
-  // onChange 발생
-  const handleInputChange = (e) => {
-    if (joinType === "buyer") {
-      setBuyerInfo({ ...buyerInfo, [e.target.name]: e.target.value });
-    } else if (joinType === "seller") {
-      setSellerInfo({ ...sellerInfo, [e.target.name]: e.target.value });
-    }
-  };
+  useEffect(() => {
+    // 전화번호 업데이트
+    const updatePhoneInfo = () => {
+      if (phoneFirst && phoneSecond && phoneThird) {
+        if (joinType === "buyer") {
+          setBuyerInfo({
+            ...buyerInfo,
+            phone_number: `${phoneFirst}${phoneSecond}${phoneThird}`,
+          });
+        } else if (joinType === "seller") {
+          setSellerInfo({
+            ...sellerInfo,
+            phone_number: `${phoneFirst}${phoneSecond}${phoneThird}`,
+          });
+        }
+      }
+    };
+    updatePhoneInfo();
+  }, [phoneFirst, phoneSecond, phoneThird]);
 
   const phoneFirstList = ["010", "011", "016", "017", "018", "019"];
 
@@ -141,6 +131,18 @@ export default function JoinForm() {
       ))}
     </ul>
   );
+  const handleAgreeChange = (e) => {
+    setJoinAgree(e.target.checked);
+  };
+
+  // onChange 발생
+  const handleInputChange = (e) => {
+    if (joinType === "buyer") {
+      setBuyerInfo({ ...buyerInfo, [e.target.name]: e.target.value });
+    } else if (joinType === "seller") {
+      setSellerInfo({ ...sellerInfo, [e.target.name]: e.target.value });
+    }
+  };
 
   // onBlur 발생
   const idValidCheck = (e) => {

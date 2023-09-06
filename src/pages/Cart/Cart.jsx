@@ -16,6 +16,7 @@ import { MainLayout } from "../../components/Layout/Layout";
 
 export default function Cart() {
   const userType = localStorage.getItem("user_type");
+  const token = localStorage.getItem("token");
   const [cartList, setCartList] = useRecoilState(cartListAtom);
   const [cartInfo, setCartInfo] = useRecoilState(cartInfoAtom);
 
@@ -32,7 +33,11 @@ export default function Cart() {
   };
 
   useEffect(() => {
-    loadCartList();
+    if (token && userType === "BUYER") {
+      loadCartList();
+    } else if (!token || userType === "SELLER") {
+      setCartList([]);
+    }
   }, []);
 
   return (

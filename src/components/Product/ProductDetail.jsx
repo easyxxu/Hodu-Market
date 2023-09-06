@@ -38,7 +38,19 @@ export default function ProductDetail({
   // 주문하기 모달 오픈
   const handleOrderModalOpen = () => {
     if (token) {
-      navigate("/order");
+      navigate("/order", {
+        state: {
+          productId,
+          quantity: cartAddForm.quantity,
+          totalPrice: productPrice * cartAddForm.quantity,
+          storeName,
+          productName,
+          productImg,
+          productPrice,
+          productShippingFee,
+          orderKind: "direct_order",
+        },
+      });
     } else {
       openModal(modalsList.goLogin, {
         onCancel: () => {

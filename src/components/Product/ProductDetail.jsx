@@ -22,6 +22,7 @@ export default function ProductDetail({
   productDescription,
 }) {
   const token = localStorage.getItem("token");
+  const userType = localStorage.getItem("user_type");
   const productId = useRecoilValue(productIdAtom);
   const [cartAddForm, setCartAddForm] = useRecoilState(cartAddFormAtom);
   const [quantity, setQuantity] = useRecoilState(quantityAtom);
@@ -65,7 +66,7 @@ export default function ProductDetail({
   };
   // 장바구니 담기 모달 오픈
   const handleCartModalOpen = async () => {
-    if (token && inCart === 0) {
+    if (token && inCart === 0 && userType === "BUYER") {
       // 로그인한 경우
       try {
         await handleAddCart();
@@ -81,7 +82,7 @@ export default function ProductDetail({
       } catch (err) {
         console.error("장바구니 담기 에러: ", err);
       }
-    } else if (token && inCart > 0) {
+    } else if (token && inCart > 0 && userType === "BUYER") {
       openModal(modalsList.alreadyCart, {
         onCancel: () => {
           closeModal(modalsList.alreadyCart);
@@ -91,8 +92,8 @@ export default function ProductDetail({
           closeModal(modalsList.alreadyCart);
         },
       });
-    } else {
-      // 로그인 안한 경우
+    } else if (!token || userType === "SELLER") {
+      // 로그인 안한 경우 또는 SELLER의 경우
       openModal(modalsList.goLogin, {
         onCancel: () => {
           closeModal(modalsList.goLogin);

@@ -80,13 +80,22 @@ export const productDelete = ({ onCancel, onDelete }) => {
   );
 };
 export const goLogin = ({ onCancel, onGoLogin }) => {
+  const userType = localStorage.getItem("user_type");
   return (
     <>
-      <S.ModalContent>
-        로그인이 필요한 서비스입니다.
-        <br />
-        로그인 하시겠습니까?
-      </S.ModalContent>
+      {userType === "SELLER" ? (
+        <S.ModalContent>
+          구매회원으로 로그인해주세요.
+          <br />
+          로그인 하시겠습니까?
+        </S.ModalContent>
+      ) : (
+        <S.ModalContent>
+          로그인이 필요한 서비스입니다.
+          <br />
+          로그인 하시겠습니까?
+        </S.ModalContent>
+      )}
       <S.BtnContainer>
         <Button
           type="button"

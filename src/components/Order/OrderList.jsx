@@ -22,7 +22,8 @@ export default function OrderList() {
         </tbody>
       </OrderTable>
       <Total>
-        총 주문금액 <strong>{productData.totalPrice} 원</strong>
+        총 주문금액{" "}
+        <strong>{productData.totalPrice.toLocaleString("ko-KR")} 원</strong>
       </Total>
     </>
   );

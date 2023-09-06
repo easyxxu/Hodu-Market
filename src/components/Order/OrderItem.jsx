@@ -8,7 +8,7 @@ export default function OrderItem() {
   const shippingFee =
     productData.productShippingFee === 0
       ? "무료배송"
-      : `${productData.productShippingFee}`;
+      : `${productData.productShippingFee.toLocaleString("ko-KR")}`;
   return (
     <>
       <tr />
@@ -25,7 +25,7 @@ export default function OrderItem() {
         </td>
         <td>-</td>
         <td>{shippingFee}</td>
-        <td>{productData.totalPrice}</td>
+        <td>{productData.totalPrice.toLocaleString("ko-KR")}</td>
       </tr>
     </>
   );

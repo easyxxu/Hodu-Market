@@ -327,7 +327,10 @@ export default function Payment() {
               <S.FinalPaymentDetail>
                 <p>- 상품금액</p>
                 <p>
-                  <strong>{productData.productPrice}</strong>원
+                  <strong>
+                    {productData.productPrice.toLocaleString("ko-KR")}
+                  </strong>
+                  원
                 </p>
               </S.FinalPaymentDetail>
               <S.FinalPaymentDetail>
@@ -339,13 +342,16 @@ export default function Payment() {
               <S.FinalPaymentDetail>
                 <p>- 배송비</p>
                 <p>
-                  <strong>{productData.productShippingFee}</strong>원
+                  <strong>
+                    {productData.productShippingFee.toLocaleString("ko-KR")}
+                  </strong>
+                  원
                 </p>
               </S.FinalPaymentDetail>
               <hr />
               <S.FinalPayment>
                 <p>- 결제금액</p>
-                <strong>{total} 원</strong>
+                <strong>{total.toLocaleString("ko-KR")} 원</strong>
               </S.FinalPayment>
               <S.FinalAgreementContainer>
                 <label>

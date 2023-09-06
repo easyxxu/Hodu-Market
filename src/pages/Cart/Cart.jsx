@@ -8,6 +8,11 @@ import {
   cartListAtom,
   cartTotalAtom,
 } from "../../atoms/cartAtom";
+import {
+  CartLoginSeller,
+  CartNoItemBuyer,
+  CartNoLogin,
+} from "../../components/Cart/CartContent";
 import CartHeader from "../../components/Cart/CartHeader";
 import CartList from "../../components/Cart/CartList";
 import CartTotal from "../../components/Cart/CartTotal";
@@ -43,6 +48,13 @@ export default function Cart() {
   return (
     <MainLayout type={userType}>
       <CartHeaderStyle />
+      {!token ? (
+        <CartNoLogin />
+      ) : token && userType === "SELLER" ? (
+        <CartLoginSeller />
+      ) : token && userType === "BUYER" && cartList.length === 0 ? (
+        <CartNoItemBuyer />
+      ) : null}
       <CartList />
       <CartTotalStyle />
       <ButtonStyle>

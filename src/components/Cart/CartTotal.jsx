@@ -9,7 +9,7 @@ export default function CartTotal({ className }) {
     (a, b) => a + b,
     0
   );
-  console.log(totalPriceList, totalPrice);
+  // console.log(totalPriceList, totalPrice);
   return (
     <S.TotalContainer className={className}>
       <S.TotalBox>

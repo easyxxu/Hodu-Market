@@ -10,7 +10,7 @@ import {
   cartTotalAtom,
 } from "../../atoms/cartAtom";
 import { useEffect } from "react";
-import { deleteCart } from "../../apis/cartApi";
+import { deleteCart, updateQuantity } from "../../apis/cartApi";
 import useModal from "../../hooks/useModal";
 import { modalsList } from "../common/Modal/Modals";
 
@@ -24,30 +24,83 @@ export default function CartItem({ item }) {
   const [totalCheckedItems, setTotalCheckedItems] = useState([]); // 장바구니에 담긴 아이템 중에 체크된 아이템만 담겨있는 배열(총 가격 계산을 위함)
   const [cartAllItem, setCartAllItem] = useState([]); // cart에 담긴 모든 상품의 수량, 가격, 배송비
   const { openModal, closeModal } = useModal();
+  const cartItemId = cartInfo.find(
+    (x) => x.product_id === cartItemInfo.product_id
+  )?.cart_item_id;
+  const cartQuantity = cartInfo.find(
+    (x) => x.product_id === cartItemInfo.product_id
+  )?.quantity;
+  const [checkedForm, setCheckedForm] = useState({
+    product_id: "",
+    quantity: "",
+    is_active: true,
+  });
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 모든 상품의 아이디를 checkItems 배열에 추가
+    const allProductIds = cartInfo.map((item) => item.product_id);
+    setCheckItems(allProductIds);
 
+    return () => {
+      setCheckItems([]); // 컴포넌트가 언마운트될 때 checkItems 초기화
+    };
+  }, []);
+  console.log("cartInfo: ", cartInfo);
   useEffect(() => {
     const updatedCartAllItem = cartInfo.map((cartItem) => {
       const { product_id, quantity } = cartItem;
-      const { price, shipping_fee } = cartList.find(
+      const cartListItem = cartList.find(
         (item) => item.data.product_id === product_id
-      ).data;
-      return { product_id, quantity, price, shipping_fee };
+      );
+      if (cartListItem) {
+        const { price, shipping_fee } = cartListItem.data;
+        return { product_id, quantity, price, shipping_fee };
+      }
+      return null; // 혹은 원하는 값을 반환하세요.
     });
-    setCartAllItem(updatedCartAllItem);
-  }, [cartInfo]);
-
+    setCartAllItem(updatedCartAllItem.filter(Boolean)); // null 값 제거
+  }, [cartInfo, cartList]);
   // Cart 아이템 선택
-  const handleCartSingleSelect = (checked, id) => {
-    if (checked) {
-      setCheckItems((prev) => [...prev, id]);
-    } else {
-      setCheckItems(checkItems.filter((item) => item !== id));
+  const handleCartSingleSelect = async (checked, id) => {
+    try {
+      if (checked) {
+        setCheckItems((prev) => [...prev, id]);
+        setCheckedForm({
+          ...checkedForm,
+          product_id: id,
+          quantity: cartQuantity,
+          is_active: true,
+        });
+        // setIsChecked(true);
+      } else {
+        setCheckItems(checkItems.filter((item) => item !== id));
+        setCheckedForm({
+          ...checkedForm,
+          product_id: id,
+          quantity: cartQuantity,
+          is_active: false,
+        });
+        // setIsChecked(false);
+      }
+    } catch (err) {
+      console.error("is_active 변경 에러:", err);
     }
   };
-
+  useEffect(() => {
+    const updateIsActive = async () => {
+      try {
+        console.log("체크 통신 폼:", checkedForm);
+        const res = await updateQuantity(cartItemId, checkedForm);
+        console.log("체크 통신 완료:", res.data);
+      } catch (err) {
+        console.error("체크 통신 실패:", err);
+      }
+    };
+    updateIsActive();
+  }, [checkedForm, cartItemId]);
+  // console.log("!!!!", checkedForm);
+  // console.log("너는: ", cartInfo);
   // 체크된 아이템만 결제하기 위해 배열에 담음
   const cartTotalCheckedItems = () => {
-    console.log("실행됨", cartAllItem);
     let total = [];
     cartAllItem.map((item) => {
       if (checkItems.includes(item.product_id)) {
@@ -63,9 +116,9 @@ export default function CartItem({ item }) {
     let total = [];
     totalCheckedItems.forEach((item) => {
       let itemTotal = item.price * item.quantity;
-      console.log(
-        `아이템 계산: ${item.price} * ${item.quantity} = ${itemTotal}`
-      );
+      // console.log(
+      //   `아이템 계산: ${item.price} * ${item.quantity} = ${itemTotal}`
+      // );
       total.push(itemTotal);
     });
 
@@ -98,7 +151,7 @@ export default function CartItem({ item }) {
         }
       });
       const res = await deleteCart(productId);
-      console.log(res);
+      console.log("삭제 성공: ", res.data);
       setCartList((prevItems) =>
         prevItems.filter((item) => item.data.product_id !== id)
       ); // 장바구니 리스트 업데이트
@@ -119,10 +172,10 @@ export default function CartItem({ item }) {
     });
   };
 
-  useEffect(() => {
-    return () => setCheckItems([]); // unmount 시점에 checkItems 초기화
-  }, []);
-
+  // useEffect(() => {
+  //   return () => setCheckItems([]); // unmount 시점에 checkItems 초기화
+  // }, []);
+  console.log("!!", checkItems, cartAllItem);
   return (
     <S.CartItemContainer>
       <S.ToggleCheckBox
@@ -150,14 +203,8 @@ export default function CartItem({ item }) {
         </S.ProductInfoWrapper>
       </S.ProductInfo>
       <QuantityButton
-        cartQuantity={
-          cartInfo.find((x) => x.product_id === cartItemInfo.product_id)
-            ?.quantity
-        }
-        cartItemId={
-          cartInfo.find((x) => x.product_id === cartItemInfo.product_id)
-            ?.cart_item_id
-        }
+        cartQuantity={cartQuantity}
+        cartItemId={cartItemId}
         productId={
           cartInfo.find((x) => x.product_id === cartItemInfo.product_id)
             ?.product_id

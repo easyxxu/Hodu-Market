@@ -12,6 +12,7 @@ import { modalsList } from "../common/Modal/Modals";
 import * as S from "./ProductDetailStyle";
 import { quantityAtom } from "../../atoms/quantityAtom";
 import { cartListAtom } from "../../atoms/cartAtom";
+import useStockCheck from "../../hooks/useStockCheck";
 export default function ProductDetail({
   storeName,
   productName,
@@ -28,6 +29,7 @@ export default function ProductDetail({
   const [quantity, setQuantity] = useRecoilState(quantityAtom);
   const navigate = useNavigate();
   const { openModal, closeModal } = useModal();
+  const { getStock, stockCheck } = useStockCheck();
   const totalPrice =
     productPrice &&
     (productPrice * cartAddForm.quantity).toLocaleString("ko-KR");
@@ -37,8 +39,14 @@ export default function ProductDetail({
   ).length;
 
   // 주문하기 모달 오픈
-  const handleOrderModalOpen = () => {
-    if (token) {
+  const handleOrderModalOpen = async () => {
+    const stock = await getStock(productId);
+    const stockCheckResult = stockCheck(stock, cartAddForm.quantity);
+    if (!stockCheckResult) {
+      alert(`해당 상품의 최대 주문 수량은 ${stock}개입니다.`);
+      return;
+    }
+    if (stockCheckResult && token && userType === "BUYER") {
       navigate("/order", {
         state: {
           productId,
@@ -52,7 +60,8 @@ export default function ProductDetail({
           orderKind: "direct_order",
         },
       });
-    } else {
+    } else if (!token || userType === "SELLER") {
+      // 로그인 안한 경우 또는 SELLER의 경우
       openModal(modalsList.goLogin, {
         onCancel: () => {
           closeModal(modalsList.goLogin);
@@ -63,6 +72,17 @@ export default function ProductDetail({
         },
       });
     }
+    //  else {
+    //   openModal(modalsList.goLogin, {
+    //     onCancel: () => {
+    //       closeModal(modalsList.goLogin);
+    //     },
+    //     onGoLogin: () => {
+    //       navigate("/login");
+    //       closeModal(modalsList.goLogin);
+    //     },
+    //   });
+    // }
   };
   // 장바구니 담기 모달 오픈
   const handleCartModalOpen = async () => {

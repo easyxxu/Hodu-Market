@@ -34,13 +34,14 @@ export default function ProductDetailPage() {
   return (
     <MainLayout type={userType}>
       <ProductDetail
-        storeName={productInfo.store_name}
-        productName={productInfo.product_name}
-        productImg={productInfo.image}
-        productPrice={productInfo.price}
-        productShippingMethod={productInfo.shipping_method}
-        productShippingFee={productInfo.shipping_fee}
-        productDescription={productInfo.product_info}
+        productInfo={productInfo}
+        // storeName={productInfo.store_name}
+        // productName={productInfo.product_name}
+        // productImg={productInfo.image}
+        // productPrice={productInfo.price}
+        // productShippingMethod={productInfo.shipping_method}
+        // productShippingFee={productInfo.shipping_fee}
+        // productDescription={productInfo.product_info}
       />
     </MainLayout>
   );

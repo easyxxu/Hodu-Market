@@ -2,30 +2,32 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { styled } from "styled-components";
 
-export default function OrderItem() {
+export default function OrderItem({ item, itemQuantity }) {
   const location = useLocation();
-  const productData = location.state;
+  const data = location.state;
+  const quantity = data.quantity;
+  console.log("hey!", item, quantity, itemQuantity);
   const shippingFee =
-    productData.productShippingFee === 0
-      ? "무료배송"
-      : `${productData.productShippingFee.toLocaleString("ko-KR")}`;
+    item.shipping_fee === 0 ? "무료배송" : `${item.shipping_fee}`;
   return (
     <>
       <tr />
       <tr>
         <td>
           <ProductItem>
-            <img src={productData.productImg} alt="상품사진" />
+            <img src={item.image} alt="상품사진" />
             <div>
-              <p>{productData.storeName}</p>
-              <p>{productData.productName}</p>
-              <p>수량 : {productData.quantity}개</p>
+              <p>{item.store_name}</p>
+              <p>{item.product_name}</p>
+              <p>수량 : {quantity || itemQuantity}개</p>
             </div>
           </ProductItem>
         </td>
         <td>-</td>
         <td>{shippingFee}</td>
-        <td>{productData.totalPrice.toLocaleString("ko-KR")}</td>
+        <td>
+          {itemQuantity ? itemQuantity * item.price : quantity * item.price}
+        </td>
       </tr>
     </>
   );

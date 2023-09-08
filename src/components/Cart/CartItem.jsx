@@ -185,18 +185,13 @@ export default function CartItem({ item }) {
       navigate("/order", {
         state: {
           orderKind: "cart_one_order",
-          productId: cartItemInfo.product_id,
+          orderList: cartItemInfo,
           quantity: cartQuantity,
           totalPrice: cartItemInfo.price * cartQuantity,
-          storeName: cartItemInfo.store_name,
-          productName: cartItemInfo.product_name,
-          productImg: cartItemInfo.image,
-          productPrice: cartItemInfo.price,
-          productShippingFee: cartItemInfo.shipping_fee,
         },
       });
     } else {
-      alert(`해당 상품의 최대 주문 수량은 ${stock}입니다.`);
+      alert(`해당 상품의 최대 주문 수량은 ${stock}개입니다.`);
     }
   };
 

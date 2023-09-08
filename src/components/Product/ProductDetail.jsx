@@ -13,17 +13,18 @@ import * as S from "./ProductDetailStyle";
 import { quantityAtom } from "../../atoms/quantityAtom";
 import { cartListAtom } from "../../atoms/cartAtom";
 import useStockCheck from "../../hooks/useStockCheck";
-export default function ProductDetail({
-  storeName,
-  productName,
-  productImg,
-  productPrice,
-  productShippingMethod,
-  productShippingFee,
-  productDescription,
-}) {
+export default function ProductDetail({ productInfo }) {
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("user_type");
+  const {
+    store_name,
+    product_name,
+    image,
+    price,
+    shipping_method,
+    shipping_fee,
+    product_info,
+  } = productInfo;
   const productId = useRecoilValue(productIdAtom);
   const [cartAddForm, setCartAddForm] = useRecoilState(cartAddFormAtom);
   const [quantity, setQuantity] = useRecoilState(quantityAtom);
@@ -31,8 +32,7 @@ export default function ProductDetail({
   const { openModal, closeModal } = useModal();
   const { getStock, stockCheck } = useStockCheck();
   const totalPrice =
-    productPrice &&
-    (productPrice * cartAddForm.quantity).toLocaleString("ko-KR");
+    price && (price * cartAddForm.quantity).toLocaleString("ko-KR");
   const cartItemList = useRecoilValue(cartListAtom);
   const inCart = cartItemList.filter(
     (item) => item.data.product_id === parseInt(productId)
@@ -49,15 +49,10 @@ export default function ProductDetail({
     if (stockCheckResult && token && userType === "BUYER") {
       navigate("/order", {
         state: {
-          productId,
-          quantity: cartAddForm.quantity,
-          totalPrice: productPrice * cartAddForm.quantity,
-          storeName,
-          productName,
-          productImg,
-          productPrice,
-          productShippingFee,
           orderKind: "direct_order",
+          orderList: productInfo,
+          quantity: cartAddForm.quantity,
+          totalPrice: price * cartAddForm.quantity,
         },
       });
     } else if (!token || userType === "SELLER") {
@@ -148,20 +143,16 @@ export default function ProductDetail({
   return (
     <S.Wrapper>
       <S.DetailContainer>
-        <S.ProductImg src={productImg} alt="상품이미지" />
+        <S.ProductImg src={image} alt="상품이미지" />
         <div>
-          <S.ProductCompany>{storeName}</S.ProductCompany>
-          <S.ProductName>{productName}</S.ProductName>
+          <S.ProductCompany>{store_name}</S.ProductCompany>
+          <S.ProductName>{product_name}</S.ProductName>
           <S.ProductPrice>
-            <strong>
-              {productPrice && productPrice.toLocaleString("ko-KR")}
-            </strong>
-            원
+            <strong>{price && price.toLocaleString("ko-KR")}</strong>원
           </S.ProductPrice>
           <S.Delivery>
-            {productShippingMethod === "DELIVERY" ? "택배배송" : "직접배송"} /
-            &nbsp;
-            {productShippingFee && productShippingFee.toLocaleString("ko-KR")}
+            {shipping_method === "DELIVERY" ? "택배배송" : "직접배송"} / &nbsp;
+            {shipping_fee && shipping_fee.toLocaleString("ko-KR")}
             &nbsp; 원
           </S.Delivery>
           <hr />
@@ -214,7 +205,7 @@ export default function ProductDetail({
         <S.BtnDetailInfoUnActive>Q&A</S.BtnDetailInfoUnActive>
         <S.BtnDetailInfoUnActive>반품/교환정보</S.BtnDetailInfoUnActive>
       </S.DetailTabContainer>
-      <S.DetailInfo>{productDescription}</S.DetailInfo>
+      <S.DetailInfo>{product_info}</S.DetailInfo>
     </S.Wrapper>
   );
 }

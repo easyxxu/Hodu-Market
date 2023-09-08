@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { cartInfoAtom, cartListAtom } from "../../atoms/cartAtom";
 import OrderItem from "./OrderItem";
 export default function OrderList() {
   const location = useLocation();
-  const productData = location.state;
+  const data = location.state;
+  const { orderList, totalPrice, cartInfo } = data;
+  const cartList = useRecoilValue(cartListAtom);
+  const cartInformation = useRecoilValue(cartInfoAtom);
+  console.log("!!", cartList);
   return (
     <>
       <Title>주문/결제하기</Title>
@@ -18,12 +24,23 @@ export default function OrderList() {
           </tr>
         </thead>
         <tbody>
-          <OrderItem />
+          {orderList ? (
+            <OrderItem item={orderList} />
+          ) : (
+            cartList.map((item, idx) => {
+              return (
+                <OrderItem
+                  key={item.id}
+                  item={item.data}
+                  itemQuantity={cartInformation[idx].quantity}
+                />
+              );
+            })
+          )}
         </tbody>
       </OrderTable>
       <Total>
-        총 주문금액{" "}
-        <strong>{productData.totalPrice.toLocaleString("ko-KR")} 원</strong>
+        총 주문금액 <strong>{totalPrice.toLocaleString("ko-KR")} 원</strong>
       </Total>
     </>
   );

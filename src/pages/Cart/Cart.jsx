@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { cartListApi } from "../../apis/cartApi";
 import {
-  cartCheckedItemsAtom,
   cartInfoAtom,
   cartListAtom,
   cartTotalAtom,
@@ -24,7 +24,13 @@ export default function Cart() {
   const token = localStorage.getItem("token");
   const [cartList, setCartList] = useRecoilState(cartListAtom);
   const [cartInfo, setCartInfo] = useRecoilState(cartInfoAtom);
-
+  const totalPriceList = useRecoilValue(cartTotalAtom);
+  const totalPrice = totalPriceList.total.reduce((a, b) => a + b, 0);
+  const totalShippingFee = totalPriceList.shippingFee.reduce(
+    (a, b) => a + b,
+    0
+  );
+  const navigate = useNavigate();
   // 장바구니 리스트 로드 API
   const loadCartList = async () => {
     try {
@@ -35,6 +41,18 @@ export default function Cart() {
     } catch (err) {
       console.error("loadCartList Error: ", err);
     }
+  };
+  console.log("cartInfo:", cartInfo);
+  console.log("cartlist:", cartList);
+  // 체크된 상품 주문하기
+  const handleIsCheckedOrder = () => {
+    console.log("실행됨");
+    navigate("/order", {
+      state: {
+        orderKind: "cart_order",
+        totalPrice: totalPrice,
+      },
+    });
   };
 
   useEffect(() => {
@@ -66,6 +84,7 @@ export default function Cart() {
           color="white"
           fontSize="L"
           fontWeight="bold"
+          onClick={handleIsCheckedOrder}
         />
       </ButtonStyle>
     </MainLayout>

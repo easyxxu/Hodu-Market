@@ -21,6 +21,7 @@ export default function QuantityButton({
     is_active: true,
   });
   const [cartInfo, setCartInfo] = useRecoilState(cartInfoAtom);
+
   const handleQuantityPlus = () => {
     setQuantity(quantity + 1);
     setQuantityUpdateForm({ ...quantityUpdateForm, quantity: quantity + 1 });
@@ -44,6 +45,17 @@ export default function QuantityButton({
       loadCartList();
     } catch (err) {
       console.error("장바구니 수량 업뎃 에러: ", err);
+      if (
+        err.response.data.FAIL_message ===
+        "현재 재고보다 더 많은 수량을 담을 수 없습니다."
+      ) {
+        alert("현재 재고보다 더 많은 수량을 담을 수 없습니다.");
+        setQuantity((prev) => prev - 1);
+        setQuantityUpdateForm({
+          ...quantityUpdateForm,
+          quantity: (prev) => prev - 1,
+        });
+      }
     }
   };
   const loadCartList = async () => {

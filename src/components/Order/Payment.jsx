@@ -1,17 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { orderDirect } from "../../apis/orderApi";
+import { useRecoilValue } from "recoil";
+import { orderCart, orderDirect } from "../../apis/orderApi";
+import { cartListAtom } from "../../atoms/cartAtom";
 import { Button } from "../common/Button/Button";
 import * as S from "./PaymentStyle";
 export default function Payment() {
   const location = useLocation();
-  const productData = location.state;
-  const total = productData.totalPrice + productData.productShippingFee;
+  const data = location.state;
+  const { orderList, orderKind, quantity, totalPrice } = data;
+  console.log("여기요!", orderList, totalPrice);
+  const cartList = useRecoilValue(cartListAtom);
+  const allTotal = cartList
+    .map((item) => item.data.shipping_fee)
+    .reduce((a, b) => a + b);
+  const productId = orderList && orderList.productId;
+  const total =
+    (orderList && totalPrice + orderList.shipping_fee) ?? totalPrice + allTotal;
+  const totalShippingFee = (orderList && orderList.shipping_fee) || allTotal;
   const [orderAgree, setOrderAgree] = useState(false);
   const [orderForm, setOrderForm] = useState({
-    product_id: parseInt(productData.productId),
-    quantity: productData.quantity,
-    order_kind: productData.orderKind,
+    product_id: productId || "",
+    quantity: quantity,
+    order_kind: orderKind,
     total_price: total,
     receiver: "",
     receiver_phone_number: "",
@@ -50,10 +61,19 @@ export default function Payment() {
   const handleSubmitOrderForm = async (e) => {
     e.preventDefault();
     try {
-      const res = await orderDirect(orderForm);
+      let res;
+      if (
+        orderForm.order_kind === "direct_order" ||
+        orderForm.order_kind === "cart_one_order"
+      ) {
+        res = await orderDirect(orderForm);
+      } else if (orderForm.order_kind === "cart_order") {
+        const { product_id, quantity, ...rest } = orderForm;
+        res = await orderCart(rest);
+      }
       console.log("주문 성공: ", res.data);
     } catch (err) {
-      console.error("주문 실패", err);
+      console.error("주문 실패", err.response.data);
     }
   };
   const handleInputChange = (e) => {
@@ -327,10 +347,7 @@ export default function Payment() {
               <S.FinalPaymentDetail>
                 <p>- 상품금액</p>
                 <p>
-                  <strong>
-                    {productData.productPrice.toLocaleString("ko-KR")}
-                  </strong>
-                  원
+                  <strong>{totalPrice}</strong>원
                 </p>
               </S.FinalPaymentDetail>
               <S.FinalPaymentDetail>
@@ -342,10 +359,7 @@ export default function Payment() {
               <S.FinalPaymentDetail>
                 <p>- 배송비</p>
                 <p>
-                  <strong>
-                    {productData.productShippingFee.toLocaleString("ko-KR")}
-                  </strong>
-                  원
+                  <strong>{totalShippingFee}</strong>원
                 </p>
               </S.FinalPaymentDetail>
               <hr />

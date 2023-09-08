@@ -11,10 +11,12 @@ export default function Payment() {
   const { orderList, orderKind, quantity, totalPrice } = data;
   console.log("여기요!", orderList, totalPrice);
   const cartList = useRecoilValue(cartListAtom);
-  const allTotal = cartList
-    .map((item) => item.data.shipping_fee)
-    .reduce((a, b) => a + b);
-  const productId = orderList && orderList.productId;
+  const allTotal =
+    cartList.length > 0
+      ? cartList.map((item) => item.data.shipping_fee).reduce((a, b) => a + b)
+      : 0;
+
+  const productId = orderList && orderList.product_id;
   const total =
     (orderList && totalPrice + orderList.shipping_fee) ?? totalPrice + allTotal;
   const totalShippingFee = (orderList && orderList.shipping_fee) || allTotal;

@@ -83,8 +83,8 @@ export default function ProductDetail({ productInfo }) {
   const handleCartModalOpen = async () => {
     if (token && inCart === 0 && userType === "BUYER") {
       // 로그인한 경우
-      try {
-        await handleAddCart();
+      const res = await handleAddCart();
+      if (res.data.my_cart) {
         openModal(modalsList.addCart, {
           onKeepShopping: () => {
             closeModal(modalsList.addCart);
@@ -94,8 +94,11 @@ export default function ProductDetail({ productInfo }) {
             closeModal(modalsList.addCart);
           },
         });
-      } catch (err) {
-        console.error("장바구니 담기 에러: ", err);
+      } else if (
+        res.data.FAIL_message ===
+        "현재 재고보다 더 많은 수량을 담을 수 없습니다."
+      ) {
+        alert("현재 재고보다 더 많은 수량을 담을 수 없습니다.");
       }
     } else if (token && inCart > 0 && userType === "BUYER") {
       openModal(modalsList.alreadyCart, {
@@ -125,8 +128,10 @@ export default function ProductDetail({ productInfo }) {
     try {
       const res = await addCart(cartAddForm);
       console.log("장바구니 담기 성공: ", res);
+      return res;
     } catch (err) {
       console.error("장바구니 담기 에러: ", err);
+      return err.response;
     }
   };
   // 수량 변경됨에 따라 CartAddForm에 저장함

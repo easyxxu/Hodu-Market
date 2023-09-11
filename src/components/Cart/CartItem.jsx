@@ -111,17 +111,15 @@ export default function CartItem({ item }) {
       }
     });
     setTotalCheckedItems(total);
-    cartTotalPrice();
+    // cartTotalPrice();
   };
 
   // 체크된 아이템의 총 가격 계산
   const cartTotalPrice = () => {
+    console.log("총 가격 계산하기 함수 실행", totalCheckedItems);
     let total = [];
     totalCheckedItems.forEach((item) => {
       let itemTotal = item.price * item.quantity;
-      // console.log(
-      //   `아이템 계산: ${item.price} * ${item.quantity} = ${itemTotal}`
-      // );
       total.push(itemTotal);
     });
 
@@ -132,6 +130,7 @@ export default function CartItem({ item }) {
       shippingFee: shippingFees,
     });
   };
+  // console.log("총 가격", totalPrice);
 
   useEffect(() => {
     checkItems.includes(cartItemInfo.product_id)
@@ -145,23 +144,23 @@ export default function CartItem({ item }) {
   }, [totalCheckedItems]);
 
   // cart 아이템 삭제
-  const handleDeleteItem = async (id) => {
+  const handleDeleteItem = async (productId) => {
     try {
-      let productId;
+      let cartItemId;
       cartInfo.map((item) => {
-        if (item.product_id === id) {
-          productId = item.cart_item_id;
+        if (item.product_id === productId) {
+          cartItemId = item.cart_item_id;
         }
       });
-      const res = await deleteCart(productId);
-      console.log("삭제 성공: ", res.data);
+      await deleteCart(cartItemId);
       setCartList((prevItems) =>
-        prevItems.filter((item) => item.data.product_id !== id)
+        prevItems.filter((item) => item.data.product_id !== productId)
       ); // 장바구니 리스트 업데이트
     } catch (err) {
       console.error("장바구니 삭제 에러:", err);
     }
   };
+
   // 장바구니 삭제 모달 오픈
   const handleModalOpen = () => {
     openModal(modalsList.productDelete, {
@@ -238,7 +237,7 @@ export default function CartItem({ item }) {
           onClick={handleOneOrder}
         />
       </S.ProductPriceContainer>
-      <S.BtnClose onClick={handleModalOpen} />
+      <S.BtnDelete onClick={handleModalOpen} />
     </S.CartItemContainer>
   );
 }

@@ -73,7 +73,7 @@ const ProductPriceContainer = styled.div`
     color: #fff;
   }
 `;
-const BtnClose = styled.button`
+const BtnDelete = styled.button`
   position: absolute;
   background: url(${Close}) no-repeat center center;
   width: 22px;
@@ -88,5 +88,5 @@ export {
   ProductImg,
   ProductInfoWrapper,
   ProductPriceContainer,
-  BtnClose,
+  BtnDelete,
 };

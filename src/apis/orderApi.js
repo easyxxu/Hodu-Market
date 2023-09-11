@@ -1,6 +1,6 @@
 import { privateInstance } from "./axiosInstance";
 
-export const loadOrderList = async () => {
+export const fetchOrderList = async () => {
   const res = await privateInstance.get("/order/");
   return res;
 };

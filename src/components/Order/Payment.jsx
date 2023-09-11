@@ -9,7 +9,6 @@ export default function Payment() {
   const location = useLocation();
   const data = location.state;
   const { orderList, orderKind, quantity, totalPrice } = data;
-  console.log("여기요!", orderList, totalPrice);
   const cartList = useRecoilValue(cartListAtom);
   const allTotal =
     cartList.length > 0

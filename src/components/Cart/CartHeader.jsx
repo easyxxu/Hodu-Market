@@ -1,16 +1,12 @@
 import React from "react";
 import * as S from "./CartHeaderStyle";
 import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  cartListAtom,
-  cartCheckedItemsAtom,
-  cartTotalAtom,
-} from "../../atoms/cartAtom";
+import { cartListAtom, cartCheckedItemsAtom } from "../../atoms/cartAtom";
 import { useEffect } from "react";
 export default function CartHeader({ className }) {
   const cartList = useRecoilValue(cartListAtom);
   const [checkItems, setCheckItems] = useRecoilState(cartCheckedItemsAtom);
-  // const [totalPrice, setTotalPrice] = useRecoilState(cartTotalAtom);
+
   const handleAllSelect = (checked) => {
     if (checked) {
       const idArr = [];

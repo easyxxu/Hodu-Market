@@ -22,31 +22,42 @@ import { MainLayout } from "../../components/Layout/Layout";
 export default function Cart() {
   const userType = localStorage.getItem("user_type");
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
   const [cartList, setCartList] = useRecoilState(cartListAtom);
   const [cartInfo, setCartInfo] = useRecoilState(cartInfoAtom);
   const totalPriceList = useRecoilValue(cartTotalAtom);
   const totalPrice = totalPriceList.total.reduce((a, b) => a + b, 0);
-  const totalShippingFee = totalPriceList.shippingFee.reduce(
-    (a, b) => a + b,
-    0
-  );
-  const navigate = useNavigate();
-  // 장바구니 리스트 로드 API
-  const loadCartList = async () => {
-    try {
-      const { cart, cartProudctInfoList } = await cartListApi();
-      setCartList(cartProudctInfoList);
-      setCartInfo(cart);
-      // console.log("장바구니 리스트 API 결과: ", cartProudctInfoList);
-    } catch (err) {
-      console.error("loadCartList Error: ", err);
+
+  const cartContent = () => {
+    if (!token) {
+      return <CartNoLogin />;
+    } else if (token && userType === "SELLER") {
+      return <CartLoginSeller />;
+    } else if (token && userType === "BUYER" && cartList.length === 0) {
+      return <CartNoItemBuyer />;
+    } else if (token && userType === "BUYER" && cartList.length !== 0) {
+      return (
+        <>
+          <CartList />
+          <CartTotalStyle />
+          <ButtonStyle>
+            <Button
+              type="button"
+              content="주문하기"
+              width="L"
+              size="L"
+              color="white"
+              fontSize="L"
+              fontWeight="bold"
+              onClick={handleIsCheckedOrder}
+            />
+          </ButtonStyle>
+        </>
+      );
     }
   };
-  console.log("cartInfo:", cartInfo);
-  console.log("cartlist:", cartList);
   // 체크된 상품 주문하기
   const handleIsCheckedOrder = () => {
-    console.log("실행됨");
     navigate("/order", {
       state: {
         orderKind: "cart_order",
@@ -57,6 +68,17 @@ export default function Cart() {
 
   useEffect(() => {
     if (token && userType === "BUYER") {
+      // 장바구니 리스트 로드 API
+      const loadCartList = async () => {
+        try {
+          const { cart, cartProudctInfoList } = await cartListApi();
+          setCartList(cartProudctInfoList);
+          setCartInfo(cart);
+          // console.log("장바구니 리스트 API 결과: ", cartProudctInfoList);
+        } catch (err) {
+          console.error("loadCartList Error: ", err);
+        }
+      };
       loadCartList();
     } else if (!token || userType === "SELLER") {
       setCartList([]);
@@ -66,27 +88,7 @@ export default function Cart() {
   return (
     <MainLayout type={userType}>
       <CartHeaderStyle />
-      {!token ? (
-        <CartNoLogin />
-      ) : token && userType === "SELLER" ? (
-        <CartLoginSeller />
-      ) : token && userType === "BUYER" && cartList.length === 0 ? (
-        <CartNoItemBuyer />
-      ) : null}
-      <CartList />
-      <CartTotalStyle />
-      <ButtonStyle>
-        <Button
-          type="button"
-          content="주문하기"
-          width="L"
-          size="L"
-          color="white"
-          fontSize="L"
-          fontWeight="bold"
-          onClick={handleIsCheckedOrder}
-        />
-      </ButtonStyle>
+      {cartContent()}
     </MainLayout>
   );
 }

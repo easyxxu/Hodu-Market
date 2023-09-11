@@ -1,18 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { addCart } from "../../apis/cartApi";
-import { productIdAtom } from "../../atoms/productAtom";
 import { cartAddFormAtom } from "../../atoms/cartAddFormAtom";
 import useModal from "../../hooks/useModal";
 import { Button } from "../common/Button/Button";
 import QuantityButton from "../common/Button/QuantityButton";
 import { modalsList } from "../common/Modal/Modals";
 import * as S from "./ProductDetailStyle";
-import { quantityAtom } from "../../atoms/quantityAtom";
 import { cartListAtom } from "../../atoms/cartAtom";
 import useStockCheck from "../../hooks/useStockCheck";
+
 export default function ProductDetail({ productInfo }) {
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("user_type");
@@ -25,9 +24,8 @@ export default function ProductDetail({ productInfo }) {
     shipping_fee,
     product_info,
   } = productInfo;
-  const productId = useRecoilValue(productIdAtom);
+  const { productId } = useParams();
   const [cartAddForm, setCartAddForm] = useRecoilState(cartAddFormAtom);
-  const [quantity, setQuantity] = useRecoilState(quantityAtom);
   const navigate = useNavigate();
   const { openModal, closeModal } = useModal();
   const { getStock, stockCheck } = useStockCheck();
@@ -67,17 +65,6 @@ export default function ProductDetail({ productInfo }) {
         },
       });
     }
-    //  else {
-    //   openModal(modalsList.goLogin, {
-    //     onCancel: () => {
-    //       closeModal(modalsList.goLogin);
-    //     },
-    //     onGoLogin: () => {
-    //       navigate("/login");
-    //       closeModal(modalsList.goLogin);
-    //     },
-    //   });
-    // }
   };
   // 장바구니 담기 모달 오픈
   const handleCartModalOpen = async () => {
@@ -134,17 +121,12 @@ export default function ProductDetail({ productInfo }) {
       return err.response;
     }
   };
-  // 수량 변경됨에 따라 CartAddForm에 저장함
-  // useEffect(() => {
-  //   setCartAddForm({ ...cartAddForm, quantity: quantity });
-  // }, [quantity]);
 
   // 홈페이지에서 상품 디테일로 가는 경우 productId가 달라짐에 따라 CartAddForm에 저장함
   useEffect(() => {
-    setCartAddForm({ ...cartAddForm, product_id: productId });
+    setCartAddForm({ ...cartAddForm, product_id: productId, quantity: 1 });
   }, [productId]);
 
-  console.log("cartAddForm: ", cartAddForm);
   return (
     <S.Wrapper>
       <S.DetailContainer>

@@ -3,22 +3,21 @@ import Footer from "../common/Footer/Footer";
 import { Header, SellerHeader } from "../common/Header/Header";
 import styled from "styled-components";
 import { Modals } from "../common/Modal/Modals";
-export function MainLayout({ type, children }) {
+import Banner from "../Banner/Banner";
+export function MainLayout({ type, path, children }) {
   return (
     <Container>
-      {/* 쇼핑몰의 헤더(BUYER or SELLER) */}
       <Header type={type} />
       <ModalContainer>
         <Modals />
       </ModalContainer>
+      {path === "/" && <Banner />}
       <MainContainer>{children}</MainContainer>
       <Footer />
-      {/* 판매자의 관리자 페이지 헤더
-      <SellerHeader />
-      <MainContainer>{children}</MainContainer> */}
     </Container>
   );
 }
+
 export function SellerMainLayout({ children }) {
   return (
     <Container>

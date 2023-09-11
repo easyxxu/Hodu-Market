@@ -66,18 +66,18 @@ const MyPageTitle = styled.h2`
   margin: 30px 0;
 `;
 const MyPageContainer = styled.div`
-  height: 80vh;
   display: flex;
   justify-content: center;
   gap: 30px;
-  margin-bottom: 30px;
+  /* margin-bottom: 60px; */
+  padding-bottom: 300px;
 `;
 const MyPageMenu = styled.div`
   /* box-shadow: inset 0 0 10px red; */
   padding: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   flex: 2;
   h3 {
     font-size: 24px;
@@ -92,7 +92,12 @@ const MyPageMenu = styled.div`
     cursor: pointer;
   }
 `;
-const OrderMenu = styled.div``;
+const OrderMenu = styled.div`
+  h3 {
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--content-color-dark);
+  }
+`;
 const MyPageContent = styled.div`
   /* box-shadow: inset 0 0 10px red; */
   /* background-color: var(--content-color-light); */

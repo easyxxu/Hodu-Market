@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { orderCart, orderDirect } from "../../apis/orderApi";
 import { cartListAtom } from "../../atoms/cartAtom";
@@ -8,6 +8,7 @@ import * as S from "./PaymentStyle";
 export default function Payment() {
   const location = useLocation();
   const data = location.state;
+  const navigate = useNavigate();
   const { orderList, orderKind, quantity, totalPrice } = data;
   const cartList = useRecoilValue(cartListAtom);
   const allTotal =
@@ -73,6 +74,8 @@ export default function Payment() {
         res = await orderCart(rest);
       }
       console.log("주문 성공: ", res.data);
+      alert("주문이 완료되었습니다.");
+      navigate("/mypage");
     } catch (err) {
       console.error("주문 실패", err.response.data);
     }

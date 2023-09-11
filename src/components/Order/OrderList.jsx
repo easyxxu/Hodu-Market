@@ -1,16 +1,33 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { cartInfoAtom, cartListAtom } from "../../atoms/cartAtom";
+import {
+  cartCheckedItemsAtom,
+  cartInfoAtom,
+  cartListAtom,
+} from "../../atoms/cartAtom";
 import OrderItem from "./OrderItem";
 export default function OrderList() {
   const location = useLocation();
   const data = location.state;
   const { orderList, totalPrice, cartInfo } = data;
   const cartList = useRecoilValue(cartListAtom);
+  const cartIsCheckedList = useRecoilValue(cartCheckedItemsAtom);
   const cartInformation = useRecoilValue(cartInfoAtom);
-  console.log("!!", cartList);
+  const [checkedOrderList, setCheckedOrderList] = useState([]);
+
+  useEffect(() => {
+    const realOrderList = () => {
+      const result = cartList.filter((item) =>
+        cartIsCheckedList.includes(item.data.product_id)
+      );
+      setCheckedOrderList(result);
+    };
+    realOrderList();
+  }, []);
+
   return (
     <>
       <Title>주문/결제하기</Title>
@@ -27,7 +44,7 @@ export default function OrderList() {
           {orderList ? (
             <OrderItem item={orderList} />
           ) : (
-            cartList.map((item, idx) => {
+            checkedOrderList.map((item, idx) => {
               return (
                 <OrderItem
                   key={item.id}

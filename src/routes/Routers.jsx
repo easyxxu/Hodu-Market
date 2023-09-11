@@ -15,7 +15,10 @@ export default function Routers() {
       <Route path="/" element={<Home />} />
       <Route path="/join" element={<Join />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/product/detail/:id" element={<ProductDetailPage />} />
+      <Route
+        path="/product/detail/:productId"
+        element={<ProductDetailPage />}
+      />
       <Route path="/cart" element={<ShoppingCart />} />
       <Route path="/order" element={<OrderPage />} />
       <Route path="/mypage" element={<MyPage />} />

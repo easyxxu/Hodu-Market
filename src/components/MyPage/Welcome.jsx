@@ -27,6 +27,7 @@ const Container = styled.div`
     &:last-child {
       font-size: 28px;
       margin-top: 20px;
+      line-height: 1.5;
     }
   }
 `;

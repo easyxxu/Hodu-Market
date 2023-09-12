@@ -15,7 +15,6 @@ export const idDuplicateCheckApi = async (id) => {
   const inputId = {
     username: id,
   };
-  console.log(inputId, id);
   const res = await axiosInstance.post(
     "/accounts/signup/valid/username/",
     inputId

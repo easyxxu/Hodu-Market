@@ -28,7 +28,7 @@ export default function CartItem({ item }) {
   const { openModal, closeModal } = useModal();
   const { getStock, stockCheck } = useStockCheck();
   const navigate = useNavigate();
-
+  // console.log("checkItems:", checkItems);
   const cartItemId = cartInfo.find(
     (x) => x.product_id === cartItemInfo.product_id
   )?.cart_item_id;
@@ -116,7 +116,7 @@ export default function CartItem({ item }) {
 
   // 체크된 아이템의 총 가격 계산
   const cartTotalPrice = () => {
-    console.log("총 가격 계산하기 함수 실행", totalCheckedItems);
+    // console.log("총 가격 계산하기 함수 실행", totalCheckedItems);
     let total = [];
     totalCheckedItems.forEach((item) => {
       let itemTotal = item.price * item.quantity;

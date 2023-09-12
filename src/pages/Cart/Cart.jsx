@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { cartListApi } from "../../apis/cartApi";
+import { cartListApi, deleteAllCart } from "../../apis/cartApi";
 import {
   cartInfoAtom,
   cartListAtom,
@@ -27,7 +27,14 @@ export default function Cart() {
   const [cartInfo, setCartInfo] = useRecoilState(cartInfoAtom);
   const totalPriceList = useRecoilValue(cartTotalAtom);
   const totalPrice = totalPriceList.total.reduce((a, b) => a + b, 0);
-
+  const handleDeleteAll = async () => {
+    try {
+      await deleteAllCart();
+      setCartList([]);
+    } catch (err) {
+      console.error(err.response.data);
+    }
+  };
   const cartContent = () => {
     if (!token) {
       return <CartNoLogin />;
@@ -39,6 +46,17 @@ export default function Cart() {
       return (
         <>
           <CartList />
+          <AllDeleteBtn>
+            <Button
+              content="전체삭제"
+              type="button"
+              width="MS"
+              fontSize="M"
+              color="white"
+              bgcolor="disabled"
+              onClick={handleDeleteAll}
+            />
+          </AllDeleteBtn>
           <CartTotalStyle />
           <ButtonStyle>
             <Button
@@ -102,4 +120,8 @@ const ButtonStyle = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 150px;
+`;
+
+const AllDeleteBtn = styled(ButtonStyle)`
+  margin: 36px 0 0;
 `;

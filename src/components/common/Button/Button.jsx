@@ -112,7 +112,7 @@ export function Button({
 }) {
   return (
     <ButtonStyle
-      type={type ? "button" : "submit"}
+      type={type === "button" ? "button" : "submit"}
       size={size}
       width={width}
       bgcolor={bgcolor}

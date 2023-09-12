@@ -45,7 +45,8 @@ export default function JoinForm() {
   const navigate = useNavigate();
 
   // Form Submit API 통신
-  const handleSubmit = async (e) => {
+  const handleSubmitJoin = async (e) => {
+    console.log("click");
     e.preventDefault();
     try {
       if (joinType === "buyer") {
@@ -60,6 +61,7 @@ export default function JoinForm() {
       alert(err.response.data.phone_number[0]);
     }
   };
+  console.log("!!", buyerInfo);
   // 모든 input값 유효하다면 버튼 활성화
   const handleSubmitBtn = () => {
     if (joinType === "buyer") {
@@ -265,7 +267,7 @@ export default function JoinForm() {
           판매회원가입
         </S.SellerJoinBtn>
       </S.JoinTypeBtn>
-      <S.Form>
+      <S.Form onSubmit={handleSubmitJoin}>
         <S.JoinFormContainer>
           <label htmlFor="id">아이디</label>
           <S.IdContainer>
@@ -273,6 +275,7 @@ export default function JoinForm() {
               name="username"
               id="id"
               type="text"
+              autoComplete="off"
               onChange={handleInputChange}
               onBlur={idValidCheck}
               valid={
@@ -333,6 +336,7 @@ export default function JoinForm() {
             name="name"
             id="name"
             type="text"
+            autoComplete="off"
             onChange={handleInputChange}
           />
           <fieldset>
@@ -340,6 +344,7 @@ export default function JoinForm() {
             <S.PhoneContainer>
               <S.PhoneFirstBtn
                 type="button"
+                id="phone"
                 state={phoneListVisible ? "active" : null}
                 onClick={() => setPhoneListVisible(!phoneListVisible)}
               >
@@ -407,6 +412,7 @@ export default function JoinForm() {
           <S.AgreeInput
             type="checkbox"
             id="agree"
+            name="agree"
             value={joinAgree}
             onChange={handleAgreeChange}
             required
@@ -419,7 +425,6 @@ export default function JoinForm() {
           </S.AgreeLabel>
         </S.AgreeContainer>
         <Button
-          type="submit"
           size="M"
           width="M"
           bgcolor={!handleSubmitBtn() ? "disabled" : null}
@@ -428,7 +433,6 @@ export default function JoinForm() {
           fontWeight="bold"
           content="가입하기"
           disabled={!handleSubmitBtn()}
-          onClick={handleSubmit}
         />
       </S.Form>
     </S.JoinContainer>

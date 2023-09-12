@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   ProductUl,
   ProductImg,
@@ -11,20 +11,32 @@ import {
 import { useState } from "react";
 import { loadAllProduct } from "../../apis/productApi";
 import { useEffect } from "react";
+import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 
 export default function ProductList() {
   const [productListData, setProductListData] = useState([]);
-  const getProductList = async () => {
+  const [page, setPage] = useState(0);
+  const getProductList = async (page) => {
     try {
-      const res = await loadAllProduct();
-      setProductListData(res.results);
+      const res = await loadAllProduct(page);
+      setProductListData((prev) => [...prev, ...res.data.results]);
     } catch (err) {
       console.error("getProductList Error: ", err);
     }
   };
+
+  const targetRef = useIntersectionObserver(
+    () => {
+      setPage((prev) => prev + 1);
+    },
+    { threshold: 1 }
+  );
+
   useEffect(() => {
-    getProductList();
-  }, []);
+    if (page === 0) return;
+    getProductList(page);
+  }, [page]);
+
   return (
     <ProductUl>
       {productListData.map((product) => (
@@ -34,12 +46,13 @@ export default function ProductList() {
             <ProductCorporation>{product.store_name}</ProductCorporation>
             <ProductName>{product.product_name}</ProductName>
             <ProductPrice>
-              {product.price.toLocaleString("ko-KR")}
+              {product.price}
               <ProductWon>원</ProductWon>
             </ProductPrice>
           </ProductLink>
         </li>
       ))}
+      <div ref={targetRef} />
     </ProductUl>
   );
 }

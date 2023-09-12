@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "../../../assets/Logo-hodu.svg";
 import ShoppingCart from "../../../assets/icon-shopping-cart.svg";
 import ShoppingCartActive from "../../../assets/icon-shopping-cart-2.svg";
@@ -8,6 +8,16 @@ import { Button } from "../Button/Button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as S from "./HeaderStyle";
 export function Header({ type }) {
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const navigate = useNavigate();
+  const handleSubmitSearch = async (e) => {
+    e.preventDefault();
+    navigate(`/search/${searchKeyword}`);
+  };
+  const handleInputChange = (e) => {
+    setSearchKeyword(e.target.value);
+  };
+
   return (
     <S.HeaderDiv>
       <S.HeaderContainer>
@@ -16,9 +26,16 @@ export function Header({ type }) {
             <img src={Logo} alt="호두 로고" />
           </Link>
         </h1>
-        <S.SearchContainer>
-          <S.SearchInput type="text" placeholder="상품을 검색해보세요!" />
-          <S.SearchBtn aria-label="검색하기 버튼" />
+        <S.SearchContainer onSubmit={handleSubmitSearch}>
+          <label htmlFor="searchInput" />
+          <S.SearchInput
+            id="searchInput"
+            name="searchInput"
+            type="text"
+            placeholder="상품을 검색해보세요!"
+            onChange={handleInputChange}
+          />
+          <S.SearchBtn aria-label="검색하기" />
         </S.SearchContainer>
         {HeaderType(type)}
       </S.HeaderContainer>

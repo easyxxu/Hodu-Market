@@ -9,10 +9,12 @@ import ShoppingCart from "../pages/Cart/Cart";
 import OrderPage from "../pages/Order/OrderPage";
 import ProductDetailPage from "../pages/Product/ProductDetailPage";
 import MyPage from "../pages/MyPage/MyPage";
+import SearchResultPage from "../pages/Search/SearchResultPage";
 export default function Routers() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/search/:searchKeyword" element={<SearchResultPage />} />
       <Route path="/join" element={<Join />} />
       <Route path="/login" element={<Login />} />
       <Route

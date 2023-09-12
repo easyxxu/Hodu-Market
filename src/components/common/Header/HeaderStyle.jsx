@@ -17,7 +17,7 @@ const HeaderContainer = styled.header`
   position: relative;
 `;
 
-const SearchContainer = styled.div`
+const SearchContainer = styled.form`
   position: relative;
   width: 400px;
   min-width: 190px;

@@ -36,3 +36,10 @@ export const productDeleteApi = async (productId) => {
   const res = await privateInstance.delete(`/products/${productId}`);
   return res;
 };
+
+export const productSearch = async (page, searchKeyword) => {
+  const res = await axiosInstance.get(
+    `/products/?page=${page}&search=${searchKeyword}`
+  );
+  return res;
+};

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
   ProductUl,
   ProductImg,
@@ -8,35 +8,8 @@ import {
   ProductPrice,
   ProductWon,
 } from "./ProductListStyle";
-import { useState } from "react";
-import { loadAllProduct } from "../../apis/productApi";
-import { useEffect } from "react";
-import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 
-export default function ProductList() {
-  const [productListData, setProductListData] = useState([]);
-  const [page, setPage] = useState(0);
-  const getProductList = async (page) => {
-    try {
-      const res = await loadAllProduct(page);
-      setProductListData((prev) => [...prev, ...res.data.results]);
-    } catch (err) {
-      console.error("getProductList Error: ", err);
-    }
-  };
-
-  const targetRef = useIntersectionObserver(
-    () => {
-      setPage((prev) => prev + 1);
-    },
-    { threshold: 1 }
-  );
-
-  useEffect(() => {
-    if (page === 0) return;
-    getProductList(page);
-  }, [page]);
-
+export default function ProductList({ productListData }) {
   return (
     <ProductUl>
       {productListData.map((product) => (
@@ -52,7 +25,6 @@ export default function ProductList() {
           </ProductLink>
         </li>
       ))}
-      <div ref={targetRef} />
     </ProductUl>
   );
 }

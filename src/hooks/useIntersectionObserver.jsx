@@ -6,7 +6,11 @@ const defaultOption = {
   threshold: 0.5,
   rootMargin: "0px",
 };
-export default function useIntersectionObserver(onIntersect, options) {
+export default function useIntersectionObserver(
+  onIntersect,
+  options,
+  isLoading
+) {
   const targetRef = useRef(null);
   const checkIntersect = useCallback(([entry]) => {
     if (entry.isIntersecting) {
@@ -16,18 +20,17 @@ export default function useIntersectionObserver(onIntersect, options) {
 
   useEffect(() => {
     let io;
-    if (targetRef.current) {
+    if (targetRef.current && isLoading) {
       io = new IntersectionObserver(checkIntersect, {
         ...defaultOption,
         ...options,
       });
       io.observe(targetRef.current);
     }
-
     return () => {
       io && io.disconnect();
     };
-  }, [targetRef]);
+  }, [targetRef, isLoading]);
 
   return targetRef;
 }

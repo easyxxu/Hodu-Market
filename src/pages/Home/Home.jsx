@@ -25,12 +25,13 @@ export default function Home() {
     () => {
       setPage((prev) => prev + 1);
     },
-    { threshold: 1 }
+    { threshold: 1 },
+    isLoading
   );
-
+  console.log(isLoading);
   useEffect(() => {
     if (page === 0) return;
-    if (isLoading) getProductList(page);
+    getProductList(page);
   }, [page]);
 
   return (

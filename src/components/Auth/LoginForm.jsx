@@ -120,7 +120,7 @@ export default function LoginForm() {
 }
 
 const LoginContainer = styled.div`
-  max-width: 550px;
+  width: 550px;
   margin: 50px auto;
   border-radius: 10px;
 `;

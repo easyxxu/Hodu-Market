@@ -1,9 +1,11 @@
 import React from "react";
 import Footer from "../common/Footer/Footer";
-import { Header, SellerHeader } from "../common/Header/Header";
+import LogoIcon from "../../assets/Logo-hodu.svg";
+import { Logo, Header, SellerHeader } from "../common/Header/Header";
 import styled from "styled-components";
 import { Modals } from "../common/Modal/Modals";
 import Banner from "../Banner/Banner";
+
 export function MainLayout({ type, path, children }) {
   return (
     <Container>
@@ -29,8 +31,18 @@ export function SellerMainLayout({ children }) {
     </Container>
   );
 }
+
+export function AuthLayout({ children }) {
+  return (
+    <AuthContainer>
+      <Logo />
+      <MainContainer>{children}</MainContainer>
+    </AuthContainer>
+  );
+}
+
 const Container = styled.div`
-  width: 100%;
+  /* width: 100%; */
   position: relative;
 `;
 const MainContainer = styled.main`
@@ -43,4 +55,17 @@ const ModalContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 999;
+`;
+
+const AuthContainer = styled.div`
+  padding: 80px 0;
+  margin: 0 auto;
+  h1 {
+    text-align: center;
+    width: 550px;
+    margin: 0 auto;
+  }
+  img {
+    width: 200px;
+  }
 `;

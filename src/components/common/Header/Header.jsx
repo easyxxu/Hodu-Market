@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "../../../assets/Logo-hodu.svg";
+import LogoIcon from "../../../assets/Logo-hodu.svg";
 import ShoppingCart from "../../../assets/icon-shopping-cart.svg";
 import ShoppingCartActive from "../../../assets/icon-shopping-cart-2.svg";
 import MyPage from "../../../assets/icon-user.svg";
@@ -7,6 +7,17 @@ import ShoppingBag from "../../../assets/icon-shopping-bag.svg";
 import { Button } from "../Button/Button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as S from "./HeaderStyle";
+
+export function Logo() {
+  return (
+    <h1>
+      <Link to="/">
+        <img src={LogoIcon} alt="호두 로고" />
+      </Link>
+    </h1>
+  );
+}
+
 export function Header({ type }) {
   const [searchKeyword, setSearchKeyword] = useState("");
   const navigate = useNavigate();
@@ -21,11 +32,7 @@ export function Header({ type }) {
   return (
     <S.HeaderDiv>
       <S.HeaderContainer>
-        <h1>
-          <Link to="/">
-            <img src={Logo} alt="호두 로고" />
-          </Link>
-        </h1>
+        <Logo />
         <S.SearchContainer onSubmit={handleSubmitSearch}>
           <label htmlFor="searchInput" />
           <S.SearchInput
@@ -42,6 +49,7 @@ export function Header({ type }) {
     </S.HeaderDiv>
   );
 }
+
 export function HeaderType(type) {
   const TOKEN = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -101,6 +109,7 @@ export function HeaderType(type) {
     );
   }
 }
+
 // 판매자 센터 헤더
 export function SellerHeader() {
   return (

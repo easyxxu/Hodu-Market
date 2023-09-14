@@ -17,6 +17,7 @@ export default function SearchResultPage() {
     const getSearchResult = async () => {
       try {
         const res = await productSearch(page, searchKeyword);
+        console.log(res.data);
         setSearchResultData(res.data.results);
       } catch (err) {
         console.error("getSearchResult Error: ", err.response.data);
@@ -28,9 +29,13 @@ export default function SearchResultPage() {
     if (isLoading) getSearchResult(page);
   }, [page, searchKeyword, isLoading]);
 
-  const targetRef = useIntersectionObserver(() => setPage((prev) => prev + 1), {
-    threshold: 1,
-  });
+  const targetRef = useIntersectionObserver(
+    () => setPage((prev) => prev + 1),
+    {
+      threshold: 1,
+    },
+    isLoading
+  );
 
   return (
     <MainLayout type={userType}>

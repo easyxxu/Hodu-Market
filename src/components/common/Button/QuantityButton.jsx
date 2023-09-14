@@ -61,7 +61,7 @@ export default function QuantityButton({
   const loadCartList = async () => {
     try {
       const res = await cartListApi();
-      setCartInfo(res.cart);
+      setCartInfo(res.cartInfoList);
     } catch (err) {
       console.error(err);
     }

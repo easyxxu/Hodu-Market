@@ -89,9 +89,9 @@ export default function Cart() {
       // 장바구니 리스트 로드 API
       const loadCartList = async () => {
         try {
-          const { cart, cartProudctInfoList } = await cartListApi();
-          setCartList(cartProudctInfoList);
-          setCartInfo(cart);
+          const { cartInfoList, cartProuductInfoList } = await cartListApi();
+          setCartInfo(cartInfoList);
+          setCartList(cartProuductInfoList);
           // console.log("장바구니 리스트 API 결과: ", cartProudctInfoList);
         } catch (err) {
           console.error("loadCartList Error: ", err);
@@ -102,7 +102,7 @@ export default function Cart() {
       setCartList([]);
     }
   }, []);
-
+  console.log("!!", cartInfo);
   return (
     <MainLayout type={userType}>
       <CartHeaderStyle />

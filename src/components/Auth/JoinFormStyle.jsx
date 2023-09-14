@@ -4,9 +4,8 @@ import DownArrow from "../../assets/icon-down-arrow.svg";
 import CheckBoxIcon from "../../assets/icon-check.svg";
 import { ReactComponent as CheckIcon } from "../../assets/icon-check-off.svg";
 const JoinContainer = styled.div`
-  max-width: 550px;
+  width: 550px;
   margin: 50px auto;
-  /* border-radius: 10px; */
 `;
 const JoinTypeBtn = styled.div`
   display: flex;

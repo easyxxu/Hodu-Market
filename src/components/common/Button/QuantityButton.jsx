@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { updateQuantity, cartListApi } from "../../../apis/cartApi";
+import { updateQuantityApi, cartListApi } from "../../../apis/cartApi";
 import Minus from "../../../assets/icon-minus-line.svg";
 import Plus from "../../../assets/icon-plus-line.svg";
 import { cartInfoListAtom } from "../../../atoms/cartAtom";
@@ -41,7 +41,7 @@ export default function QuantityButton({
   // 장바구니 수량 업뎃
   const quantityUpdate = async () => {
     try {
-      await updateQuantity(cartItemId, quantityUpdateForm);
+      await updateQuantityApi(cartItemId, quantityUpdateForm);
       loadCartList();
     } catch (err) {
       console.error("장바구니 수량 업뎃 에러: ", err);

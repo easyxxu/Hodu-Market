@@ -16,21 +16,22 @@ export const cartListApi = async () => {
   };
 };
 
-export const addCart = async (productInfo) => {
+export const addCartApi = async (productInfo) => {
   const res = await privateInstance.post("/cart/", productInfo);
   return res;
 };
 
-export const deleteCart = async (cartItemId) => {
+export const deleteCartApi = async (cartItemId) => {
   const res = await privateInstance.delete(`/cart/${cartItemId}`);
   return res;
 };
 
-export const deleteAllCart = async () => {
+export const deleteAllCartApi = async () => {
   const res = await privateInstance.delete(`/cart/`);
   return res;
 };
-export const updateQuantity = async (cartItemId, req) => {
+
+export const updateQuantityApi = async (cartItemId, req) => {
   const res = await privateInstance.put(`/cart/${cartItemId}/`, req);
   return res;
 };

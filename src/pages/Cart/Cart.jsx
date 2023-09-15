@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { cartListApi, deleteAllCart } from "../../apis/cartApi";
+import { cartListApi, deleteAllCartApi } from "../../apis/cartApi";
 import {
   cartProductInfoListAtom,
   cartInfoListAtom,
@@ -32,7 +32,7 @@ export default function Cart() {
 
   const handleDeleteAll = async () => {
     try {
-      await deleteAllCart();
+      await deleteAllCartApi();
       setCartProductInfoList([]);
     } catch (err) {
       console.error(err.response.data);

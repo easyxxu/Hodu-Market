@@ -10,7 +10,7 @@ import {
   cartTotalAtom,
 } from "../../atoms/cartAtom";
 import { useEffect } from "react";
-import { deleteCart, updateQuantity } from "../../apis/cartApi";
+import { deleteCartApi, updateQuantityApi } from "../../apis/cartApi";
 import useModal from "../../hooks/useModal";
 import { modalsList } from "../common/Modal/Modals";
 import useStockCheck from "../../hooks/useStockCheck";
@@ -93,7 +93,7 @@ export default function CartItem({ item }) {
   useEffect(() => {
     const updateIsActive = async () => {
       try {
-        const res = await updateQuantity(cartItemId, checkedForm);
+        const res = await updateQuantityApi(cartItemId, checkedForm);
         console.log("체크 통신 완료:", res.data);
       } catch (err) {
         console.error("체크 통신 실패:", err.response.data);
@@ -154,7 +154,7 @@ export default function CartItem({ item }) {
           cartItemId = item.cart_item_id;
         }
       });
-      await deleteCart(cartItemId);
+      await deleteCartApi(cartItemId);
       setCartProductInfoList((prevItems) =>
         prevItems.filter((item) => item.data.product_id !== productId)
       ); // 장바구니 리스트 업데이트

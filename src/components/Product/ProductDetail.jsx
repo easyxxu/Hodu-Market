@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { addCart } from "../../apis/cartApi";
+import { addCartApi } from "../../apis/cartApi";
 import { cartAddFormAtom } from "../../atoms/cartAddFormAtom";
 import useModal from "../../hooks/useModal";
 import { Button } from "../common/Button/Button";
@@ -113,7 +113,7 @@ export default function ProductDetail({ productInfo }) {
   // 장바구니 담기 API
   const handleAddCart = async () => {
     try {
-      const res = await addCart(cartAddForm);
+      const res = await addCartApi(cartAddForm);
       console.log("장바구니 담기 성공: ", res);
       return res;
     } catch (err) {

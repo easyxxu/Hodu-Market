@@ -7,7 +7,8 @@ import {
 } from "../../atoms/cartAtom";
 export default function CartHeader({ className }) {
   const cartProductInfoList = useRecoilValue(cartProductInfoListAtom);
-  const [checkItems, setCheckItems] = useRecoilState(cartCheckedItemsAtom);
+  const [cartCheckedItems, setCartCheckItems] =
+    useRecoilState(cartCheckedItemsAtom);
 
   const handleAllSelect = (checked) => {
     if (checked) {
@@ -15,10 +16,10 @@ export default function CartHeader({ className }) {
       cartProductInfoList.forEach((cartItem) =>
         idArr.push(cartItem.data.product_id)
       );
-      setCheckItems(idArr);
+      setCartCheckItems(idArr);
       console.log("전체 선택");
     } else {
-      setCheckItems([]);
+      setCartCheckItems([]);
     }
   };
 
@@ -30,7 +31,9 @@ export default function CartHeader({ className }) {
           type="checkbox"
           onChange={(e) => handleAllSelect(e.target.checked)}
           checked={
-            checkItems.length === cartProductInfoList.length ? true : false
+            cartCheckedItems.length === cartProductInfoList.length
+              ? true
+              : false
           }
         />
         <p>상품정보</p>

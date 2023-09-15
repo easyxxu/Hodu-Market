@@ -1,16 +1,20 @@
 import React from "react";
 import * as S from "./CartHeaderStyle";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { cartListAtom, cartCheckedItemsAtom } from "../../atoms/cartAtom";
-import { useEffect } from "react";
+import {
+  cartProductInfoListAtom,
+  cartCheckedItemsAtom,
+} from "../../atoms/cartAtom";
 export default function CartHeader({ className }) {
-  const cartList = useRecoilValue(cartListAtom);
+  const cartProductInfoList = useRecoilValue(cartProductInfoListAtom);
   const [checkItems, setCheckItems] = useRecoilState(cartCheckedItemsAtom);
 
   const handleAllSelect = (checked) => {
     if (checked) {
       const idArr = [];
-      cartList.forEach((cartItem) => idArr.push(cartItem.data.product_id));
+      cartProductInfoList.forEach((cartItem) =>
+        idArr.push(cartItem.data.product_id)
+      );
       setCheckItems(idArr);
       console.log("전체 선택");
     } else {
@@ -25,7 +29,9 @@ export default function CartHeader({ className }) {
         <S.CartCheckBox
           type="checkbox"
           onChange={(e) => handleAllSelect(e.target.checked)}
-          checked={checkItems.length === cartList.length ? true : false}
+          checked={
+            checkItems.length === cartProductInfoList.length ? true : false
+          }
         />
         <p>상품정보</p>
         <p>수량</p>

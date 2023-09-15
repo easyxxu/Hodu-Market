@@ -4,8 +4,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { cartListApi, deleteAllCart } from "../../apis/cartApi";
 import {
-  cartInfoAtom,
-  cartListAtom,
+  cartProductInfoListAtom,
+  cartInfoListAtom,
   cartTotalAtom,
 } from "../../atoms/cartAtom";
 import {
@@ -23,26 +23,67 @@ export default function Cart() {
   const userType = localStorage.getItem("user_type");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
-  const [cartList, setCartList] = useRecoilState(cartListAtom);
-  const [cartInfo, setCartInfo] = useRecoilState(cartInfoAtom);
+  const [cartProductInfoList, setCartProductInfoList] = useRecoilState(
+    cartProductInfoListAtom
+  );
+  const [cartInfoList, setCartInfoList] = useRecoilState(cartInfoListAtom);
   const totalPriceList = useRecoilValue(cartTotalAtom);
   const totalPrice = totalPriceList.total.reduce((a, b) => a + b, 0);
+
   const handleDeleteAll = async () => {
     try {
       await deleteAllCart();
-      setCartList([]);
+      setCartProductInfoList([]);
     } catch (err) {
       console.error(err.response.data);
     }
   };
+
+  // 체크된 상품 주문하기
+  const handleIsCheckedOrder = () => {
+    navigate("/order", {
+      state: {
+        orderKind: "cart_order",
+        totalPrice: totalPrice,
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (token && userType === "BUYER") {
+      // 장바구니 리스트 로드 API
+      const loadCartList = async () => {
+        try {
+          const { cartInfoList, cartProuductInfoList } = await cartListApi();
+          setCartInfoList(cartInfoList);
+          setCartProductInfoList(cartProuductInfoList);
+          // console.log("장바구니 리스트 API 결과: ", cartProudctInfoList);
+        } catch (err) {
+          console.error("loadCartList Error: ", err);
+        }
+      };
+      loadCartList();
+    } else if (!token || userType === "SELLER") {
+      setCartProductInfoList([]);
+    }
+  }, []);
+
   const cartContent = () => {
     if (!token) {
       return <CartNoLogin />;
     } else if (token && userType === "SELLER") {
       return <CartLoginSeller />;
-    } else if (token && userType === "BUYER" && cartList.length === 0) {
+    } else if (
+      token &&
+      userType === "BUYER" &&
+      cartProductInfoList.length === 0
+    ) {
       return <CartNoItemBuyer />;
-    } else if (token && userType === "BUYER" && cartList.length !== 0) {
+    } else if (
+      token &&
+      userType === "BUYER" &&
+      cartProductInfoList.length !== 0
+    ) {
       return (
         <>
           <CartList />
@@ -74,35 +115,7 @@ export default function Cart() {
       );
     }
   };
-  // 체크된 상품 주문하기
-  const handleIsCheckedOrder = () => {
-    navigate("/order", {
-      state: {
-        orderKind: "cart_order",
-        totalPrice: totalPrice,
-      },
-    });
-  };
-
-  useEffect(() => {
-    if (token && userType === "BUYER") {
-      // 장바구니 리스트 로드 API
-      const loadCartList = async () => {
-        try {
-          const { cartInfoList, cartProuductInfoList } = await cartListApi();
-          setCartInfo(cartInfoList);
-          setCartList(cartProuductInfoList);
-          // console.log("장바구니 리스트 API 결과: ", cartProudctInfoList);
-        } catch (err) {
-          console.error("loadCartList Error: ", err);
-        }
-      };
-      loadCartList();
-    } else if (!token || userType === "SELLER") {
-      setCartList([]);
-    }
-  }, []);
-  console.log("!!", cartInfo);
+  // console.log("!!", cartInfoList);
   return (
     <MainLayout type={userType}>
       <CartHeaderStyle />

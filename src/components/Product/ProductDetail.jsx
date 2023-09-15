@@ -9,7 +9,7 @@ import { Button } from "../common/Button/Button";
 import QuantityButton from "../common/Button/QuantityButton";
 import { modalsList } from "../common/Modal/Modals";
 import * as S from "./ProductDetailStyle";
-import { cartListAtom } from "../../atoms/cartAtom";
+import { cartProductInfoListAtom } from "../../atoms/cartAtom";
 import useStockCheck from "../../hooks/useStockCheck";
 
 export default function ProductDetail({ productInfo }) {
@@ -31,8 +31,8 @@ export default function ProductDetail({ productInfo }) {
   const { getStock, stockCheck } = useStockCheck();
   const totalPrice =
     price && (price * cartAddForm.quantity).toLocaleString("ko-KR");
-  const cartItemList = useRecoilValue(cartListAtom);
-  const inCart = cartItemList.filter(
+  const cartProductInfoList = useRecoilValue(cartProductInfoListAtom);
+  const inCart = cartProductInfoList.filter(
     (item) => item.data.product_id === parseInt(productId)
   ).length;
 

@@ -5,8 +5,8 @@ import QuantityButton from "../common/Button/QuantityButton";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   cartCheckedItemsAtom,
-  cartInfoAtom,
-  cartListAtom,
+  cartInfoListAtom,
+  cartProductInfoListAtom,
   cartTotalAtom,
 } from "../../atoms/cartAtom";
 import { useEffect } from "react";
@@ -18,8 +18,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function CartItem({ item }) {
   const cartItemInfo = item.data; // cart에 담긴 아이템의 상세 정보
-  const [cartList, setCartList] = useRecoilState(cartListAtom); // cartItemInfo map돌리기전 전체 데이터
-  const cartInfo = useRecoilValue(cartInfoAtom); // cart에 담긴 모든 아이템의 cart_item_id, is_active, product_id, my_cart, quantity
+  const [cartProductInfoList, setCartProductInfoList] = useRecoilState(
+    cartProductInfoListAtom
+  ); // cartItemInfo map돌리기전 전체 데이터
+  const cartInfoList = useRecoilValue(cartInfoListAtom); // cart에 담긴 모든 아이템의 cart_item_id, is_active, product_id, my_cart, quantity
   const [totalPrice, setTotalPrice] = useRecoilState(cartTotalAtom);
   const [checkItems, setCheckItems] = useRecoilState(cartCheckedItemsAtom); // 선택된 아이템 배열
   const [isChecked, setIsChecked] = useState(true);
@@ -29,10 +31,10 @@ export default function CartItem({ item }) {
   const { getStock, stockCheck } = useStockCheck();
   const navigate = useNavigate();
   // console.log("checkItems:", checkItems);
-  const cartItemId = cartInfo.find(
+  const cartItemId = cartInfoList.find(
     (x) => x.product_id === cartItemInfo.product_id
   )?.cart_item_id;
-  const cartQuantity = cartInfo.find(
+  const cartQuantity = cartInfoList.find(
     (x) => x.product_id === cartItemInfo.product_id
   )?.quantity;
   const [checkedForm, setCheckedForm] = useState({
@@ -43,7 +45,7 @@ export default function CartItem({ item }) {
 
   useEffect(() => {
     // 컴포넌트가 마운트될 때 모든 상품의 아이디를 checkItems 배열에 추가
-    const allProductIds = cartInfo.map((item) => item.product_id);
+    const allProductIds = cartInfoList.map((item) => item.product_id);
     setCheckItems(allProductIds);
     return () => {
       setCheckItems([]); // 컴포넌트가 언마운트될 때 checkItems 초기화
@@ -51,9 +53,9 @@ export default function CartItem({ item }) {
   }, []);
 
   useEffect(() => {
-    const updatedCartAllItem = cartInfo.map((cartItem) => {
+    const updatedCartAllItem = cartInfoList.map((cartItem) => {
       const { product_id, quantity } = cartItem;
-      const cartListItem = cartList.find(
+      const cartListItem = cartProductInfoList.find(
         (item) => item.data.product_id === product_id
       );
       if (cartListItem) {
@@ -63,7 +65,7 @@ export default function CartItem({ item }) {
       return null; // 혹은 원하는 값을 반환하세요.
     });
     setCartAllItem(updatedCartAllItem.filter(Boolean)); // null 값 제거
-  }, [cartInfo, cartList]);
+  }, [cartInfoList, cartProductInfoList]);
 
   // Cart 아이템 선택
   const handleCartSingleSelect = (checked, id) => {
@@ -147,13 +149,13 @@ export default function CartItem({ item }) {
   const handleDeleteItem = async (productId) => {
     try {
       let cartItemId;
-      cartInfo.map((item) => {
+      cartInfoList.map((item) => {
         if (item.product_id === productId) {
           cartItemId = item.cart_item_id;
         }
       });
       await deleteCart(cartItemId);
-      setCartList((prevItems) =>
+      setCartProductInfoList((prevItems) =>
         prevItems.filter((item) => item.data.product_id !== productId)
       ); // 장바구니 리스트 업데이트
     } catch (err) {
@@ -224,7 +226,7 @@ export default function CartItem({ item }) {
         cartQuantity={cartQuantity}
         cartItemId={cartItemId}
         productId={
-          cartInfo.find((x) => x.product_id === cartItemInfo.product_id)
+          cartInfoList.find((x) => x.product_id === cartItemInfo.product_id)
             ?.product_id
         }
       />

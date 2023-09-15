@@ -2,12 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import CartItem from "./CartItem";
 import { useRecoilState } from "recoil";
-import { cartListAtom } from "../../atoms/cartAtom";
+import { cartProductInfoListAtom } from "../../atoms/cartAtom";
 export default function CartList() {
-  const [cartList, setCartList] = useRecoilState(cartListAtom);
+  const [cartProductInfoList, setCartProductInfoList] = useRecoilState(
+    cartProductInfoListAtom
+  );
   return (
     <CartListStyle>
-      {cartList.map((item) => {
+      {cartProductInfoList.map((item) => {
         return <CartItem item={item} key={item.data.product_id} />;
       })}
     </CartListStyle>

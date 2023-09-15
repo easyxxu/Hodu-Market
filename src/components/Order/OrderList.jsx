@@ -5,22 +5,22 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import {
   cartCheckedItemsAtom,
-  cartInfoAtom,
-  cartListAtom,
+  cartInfoListAtom,
+  cartProductInfoListAtom,
 } from "../../atoms/cartAtom";
 import OrderItem from "./OrderItem";
 export default function OrderList() {
   const location = useLocation();
   const data = location.state;
   const { orderList, totalPrice, cartInfo } = data;
-  const cartList = useRecoilValue(cartListAtom);
+  const cartProductInfoList = useRecoilValue(cartProductInfoListAtom);
   const cartIsCheckedList = useRecoilValue(cartCheckedItemsAtom);
-  const cartInformation = useRecoilValue(cartInfoAtom);
+  const cartInformation = useRecoilValue(cartInfoListAtom);
   const [checkedOrderList, setCheckedOrderList] = useState([]);
 
   useEffect(() => {
     const realOrderList = () => {
-      const result = cartList.filter((item) =>
+      const result = cartProductInfoList.filter((item) =>
         cartIsCheckedList.includes(item.data.product_id)
       );
       setCheckedOrderList(result);

@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import CartItem from "./CartItem";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { cartProductInfoListAtom } from "../../atoms/cartAtom";
 export default function CartList() {
-  const [cartProductInfoList, setCartProductInfoList] = useRecoilState(
-    cartProductInfoListAtom
-  );
+  const cartProductInfoList = useRecoilValue(cartProductInfoListAtom);
   return (
     <CartListStyle>
       {cartProductInfoList.map((item) => {

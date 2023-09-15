@@ -17,7 +17,7 @@ export default function OrderList() {
   const cartIsCheckedList = useRecoilValue(cartCheckedItemsAtom);
   const cartInformation = useRecoilValue(cartInfoListAtom);
   const [checkedOrderList, setCheckedOrderList] = useState([]);
-
+  console.log("checkedOrderList: ", checkedOrderList);
   useEffect(() => {
     const realOrderList = () => {
       const result = cartProductInfoList.filter((item) =>
@@ -47,7 +47,7 @@ export default function OrderList() {
             checkedOrderList.map((item, idx) => {
               return (
                 <OrderItem
-                  key={item.id}
+                  key={item.data.product_id}
                   item={item.data}
                   itemQuantity={cartInformation[idx].quantity}
                 />

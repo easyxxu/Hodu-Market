@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { updateQuantity, cartListApi } from "../../../apis/cartApi";
+import { updateQuantityApi, cartListApi } from "../../../apis/cartApi";
 import Minus from "../../../assets/icon-minus-line.svg";
 import Plus from "../../../assets/icon-plus-line.svg";
-import { cartInfoAtom } from "../../../atoms/cartAtom";
+import { cartInfoListAtom } from "../../../atoms/cartAtom";
 
 export default function QuantityButton({
   cartQuantity,
@@ -20,7 +20,7 @@ export default function QuantityButton({
     quantity: cartQuantity,
     is_active: true,
   });
-  const [cartInfo, setCartInfo] = useRecoilState(cartInfoAtom);
+  const [cartInfoList, setCartInfoList] = useRecoilState(cartInfoListAtom);
 
   const handleQuantityPlus = () => {
     setQuantity(quantity + 1);
@@ -41,7 +41,7 @@ export default function QuantityButton({
   // 장바구니 수량 업뎃
   const quantityUpdate = async () => {
     try {
-      await updateQuantity(cartItemId, quantityUpdateForm);
+      await updateQuantityApi(cartItemId, quantityUpdateForm);
       loadCartList();
     } catch (err) {
       console.error("장바구니 수량 업뎃 에러: ", err);
@@ -61,7 +61,7 @@ export default function QuantityButton({
   const loadCartList = async () => {
     try {
       const res = await cartListApi();
-      setCartInfo(res.cart);
+      setCartInfoList(res.cartInfoList);
     } catch (err) {
       console.error(err);
     }
@@ -70,7 +70,7 @@ export default function QuantityButton({
     if (!setCartAddForm) {
       quantityUpdate();
     }
-  }, [quantityUpdateForm, cartItemId, setCartInfo]);
+  }, [quantityUpdateForm, cartItemId, setCartInfoList]);
 
   return (
     <CountButtonStyle>

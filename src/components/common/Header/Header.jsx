@@ -115,11 +115,7 @@ export function SellerHeader() {
   return (
     <S.HeaderDiv>
       <S.SellerHeaderDiv>
-        <h1>
-          <Link to="/">
-            <img src={Logo} alt="호두 로고" />
-          </Link>
-        </h1>
+        <Logo />
         <h2>
           <Link to="/sellercenter">판매자센터</Link>
         </h2>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { orderCart, orderDirect } from "../../apis/orderApi";
-import { cartListAtom } from "../../atoms/cartAtom";
+import { cartProductInfoListAtom } from "../../atoms/cartAtom";
 import { Button } from "../common/Button/Button";
 import * as S from "./PaymentStyle";
 export default function Payment() {
@@ -10,10 +10,12 @@ export default function Payment() {
   const data = location.state;
   const navigate = useNavigate();
   const { orderList, orderKind, quantity, totalPrice } = data;
-  const cartList = useRecoilValue(cartListAtom);
+  const cartProductInfoList = useRecoilValue(cartProductInfoListAtom);
   const allTotal =
-    cartList.length > 0
-      ? cartList.map((item) => item.data.shipping_fee).reduce((a, b) => a + b)
+    cartProductInfoList.length > 0
+      ? cartProductInfoList
+          .map((item) => item.data.shipping_fee)
+          .reduce((a, b) => a + b)
       : 0;
 
   const productId = orderList && orderList.product_id;

@@ -2,14 +2,14 @@ import React from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { addCart } from "../../apis/cartApi";
+import { addCartApi } from "../../apis/cartApi";
 import { cartAddFormAtom } from "../../atoms/cartAddFormAtom";
 import useModal from "../../hooks/useModal";
 import { Button } from "../common/Button/Button";
 import QuantityButton from "../common/Button/QuantityButton";
 import { modalsList } from "../common/Modal/Modals";
 import * as S from "./ProductDetailStyle";
-import { cartListAtom } from "../../atoms/cartAtom";
+import { cartProductInfoListAtom } from "../../atoms/cartAtom";
 import useStockCheck from "../../hooks/useStockCheck";
 
 export default function ProductDetail({ productInfo }) {
@@ -23,6 +23,7 @@ export default function ProductDetail({ productInfo }) {
     shipping_method,
     shipping_fee,
     product_info,
+    stock,
   } = productInfo;
   const { productId } = useParams();
   const [cartAddForm, setCartAddForm] = useRecoilState(cartAddFormAtom);
@@ -31,8 +32,8 @@ export default function ProductDetail({ productInfo }) {
   const { getStock, stockCheck } = useStockCheck();
   const totalPrice =
     price && (price * cartAddForm.quantity).toLocaleString("ko-KR");
-  const cartItemList = useRecoilValue(cartListAtom);
-  const inCart = cartItemList.filter(
+  const cartProductInfoList = useRecoilValue(cartProductInfoListAtom);
+  const inCart = cartProductInfoList.filter(
     (item) => item.data.product_id === parseInt(productId)
   ).length;
 
@@ -113,7 +114,7 @@ export default function ProductDetail({ productInfo }) {
   // 장바구니 담기 API
   const handleAddCart = async () => {
     try {
-      const res = await addCart(cartAddForm);
+      const res = await addCartApi(cartAddForm);
       console.log("장바구니 담기 성공: ", res);
       return res;
     } catch (err) {
@@ -162,27 +163,43 @@ export default function ProductDetail({ productInfo }) {
             </S.TotalCntContainer>
           </S.TotalContainer>
           <S.BtnBuyContainer>
-            <Button
-              type="button"
-              size="M"
-              width="416px"
-              color="white"
-              fontSize="M"
-              fontWeight="bold"
-              content="바로구매"
-              onClick={handleOrderModalOpen}
-            ></Button>
-            <Button
-              type="button"
-              size="M"
-              width="200px"
-              color="white"
-              bgcolor="dark"
-              fontSize="M"
-              fontWeight="bold"
-              content="장바구니"
-              onClick={handleCartModalOpen}
-            ></Button>
+            {stock === 0 ? (
+              <Button
+                content="품절"
+                disabled="true"
+                type="button"
+                width="629px"
+                bgcolor="disabled"
+                color="white"
+                fontSize="L"
+                fontWeight="bold"
+              />
+            ) : (
+              <>
+                <Button
+                  type="button"
+                  size="M"
+                  width="416px"
+                  color="white"
+                  fontSize="M"
+                  fontWeight="bold"
+                  content="바로구매"
+                  disabled={true}
+                  onClick={handleOrderModalOpen}
+                ></Button>
+                <Button
+                  type="button"
+                  size="M"
+                  width="200px"
+                  color="white"
+                  bgcolor="dark"
+                  fontSize="M"
+                  fontWeight="bold"
+                  content="장바구니"
+                  onClick={handleCartModalOpen}
+                ></Button>
+              </>
+            )}
           </S.BtnBuyContainer>
         </div>
       </S.DetailContainer>

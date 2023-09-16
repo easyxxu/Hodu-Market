@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 const Wrapper = styled.div`
   max-width: 1280px;
   width: 100%;
@@ -7,6 +8,7 @@ const Wrapper = styled.div`
 const DetailContainer = styled.div`
   display: flex;
   margin-bottom: 140px;
+  position: relative;
 `;
 const ProductImg = styled.img`
   width: 600px;
@@ -99,6 +101,7 @@ const DetailInfo = styled.div`
   margin-top: 20px;
   text-align: center;
 `;
+
 export {
   Wrapper,
   DetailContainer,

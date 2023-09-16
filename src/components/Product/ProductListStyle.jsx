@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
+import SoldOutIcon from "../../assets/sold-out.svg";
 const ProductUl = styled.ul`
   display: flex;
   flex-wrap: wrap;
@@ -8,6 +8,9 @@ const ProductUl = styled.ul`
   max-width: 1200px;
   width: 100%;
   margin: 70px auto 130px;
+  li {
+    position: relative;
+  }
 `;
 const ProductImg = styled.img`
   width: 350px;
@@ -15,6 +18,14 @@ const ProductImg = styled.img`
   border-radius: 10px;
   border: 1px solid #c4c4c4;
   margin-bottom: 6px;
+`;
+const SoldOut = styled.div`
+  position: absolute;
+  width: 106px;
+  height: 106px;
+  top: -6px;
+  left: -6px;
+  background: url(${SoldOutIcon}) no-repeat center center;
 `;
 const ProductLink = styled(Link)`
   display: flex;
@@ -36,6 +47,7 @@ const ProductWon = styled.span`
   font-size: 16px;
   font-weight: 400;
 `;
+
 export {
   ProductUl,
   ProductImg,
@@ -44,4 +56,5 @@ export {
   ProductName,
   ProductPrice,
   ProductWon,
+  SoldOut,
 };

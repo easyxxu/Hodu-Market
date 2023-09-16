@@ -23,6 +23,7 @@ export default function ProductDetail({ productInfo }) {
     shipping_method,
     shipping_fee,
     product_info,
+    stock,
   } = productInfo;
   const { productId } = useParams();
   const [cartAddForm, setCartAddForm] = useRecoilState(cartAddFormAtom);
@@ -162,27 +163,43 @@ export default function ProductDetail({ productInfo }) {
             </S.TotalCntContainer>
           </S.TotalContainer>
           <S.BtnBuyContainer>
-            <Button
-              type="button"
-              size="M"
-              width="416px"
-              color="white"
-              fontSize="M"
-              fontWeight="bold"
-              content="바로구매"
-              onClick={handleOrderModalOpen}
-            ></Button>
-            <Button
-              type="button"
-              size="M"
-              width="200px"
-              color="white"
-              bgcolor="dark"
-              fontSize="M"
-              fontWeight="bold"
-              content="장바구니"
-              onClick={handleCartModalOpen}
-            ></Button>
+            {stock === 0 ? (
+              <Button
+                content="품절"
+                disabled="true"
+                type="button"
+                width="629px"
+                bgcolor="disabled"
+                color="white"
+                fontSize="L"
+                fontWeight="bold"
+              />
+            ) : (
+              <>
+                <Button
+                  type="button"
+                  size="M"
+                  width="416px"
+                  color="white"
+                  fontSize="M"
+                  fontWeight="bold"
+                  content="바로구매"
+                  disabled={true}
+                  onClick={handleOrderModalOpen}
+                ></Button>
+                <Button
+                  type="button"
+                  size="M"
+                  width="200px"
+                  color="white"
+                  bgcolor="dark"
+                  fontSize="M"
+                  fontWeight="bold"
+                  content="장바구니"
+                  onClick={handleCartModalOpen}
+                ></Button>
+              </>
+            )}
           </S.BtnBuyContainer>
         </div>
       </S.DetailContainer>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { styled } from "styled-components";
+import { styled, css } from "styled-components";
 import { logoutApi } from "../../apis/authApi";
 import { Button } from "../../components/common/Button/Button";
 import { MainLayout } from "../../components/Layout/Layout";
@@ -30,29 +30,43 @@ export default function MyPage() {
     <MainLayout type={userType}>
       <MyPageTitle>마이페이지</MyPageTitle>
       <MyPageContainer>
-        <MyPageMenu>
-          <OrderMenu>
-            <h3>주문관리</h3>
-            <ul>
-              <li onClick={handleOrderLookUp}>주문 조회</li>
-              <li>관심 상품</li>
-              <li>쿠폰 조회</li>
-              <li>적립금 내역</li>
-            </ul>
-          </OrderMenu>
-          <h3>
-            <Button
-              content="로그아웃"
-              onClick={handleLogout}
-              width="150px"
-              color="white"
-              fontSize="M"
-            />
-          </h3>
-        </MyPageMenu>
-        <MyPageContent>
-          {view === "welcome" && <Welcome name="625" />}
+        {userType === "BUYER" && (
+          <MyPageMenu>
+            <OrderMenu>
+              <h3>주문관리</h3>
+              <ul>
+                <li onClick={handleOrderLookUp}>주문 조회</li>
+                <li>관심 상품</li>
+                <li>쿠폰 조회</li>
+                <li>적립금 내역</li>
+              </ul>
+            </OrderMenu>
+            <h3>
+              <Button
+                content="로그아웃"
+                onClick={handleLogout}
+                width="150px"
+                color="white"
+                fontSize="M"
+              />
+            </h3>
+          </MyPageMenu>
+        )}
+
+        <MyPageContent center={userType === "SELLER" ? "true" : "false"}>
+          {view === "welcome" && <Welcome />}
           {view === "order-lookup" && <OrderList />}
+          {userType === "SELLER" && (
+            <>
+              <Button
+                content="로그아웃"
+                onClick={handleLogout}
+                width="150px"
+                color="white"
+                fontSize="M"
+              />
+            </>
+          )}
         </MyPageContent>
       </MyPageContainer>
     </MainLayout>
@@ -99,7 +113,13 @@ const OrderMenu = styled.div`
   }
 `;
 const MyPageContent = styled.div`
-  /* box-shadow: inset 0 0 10px red; */
-  /* background-color: var(--content-color-light); */
   flex: 8;
+  ${(props) =>
+    props.center === "true" &&
+    css`
+      flex: inherit;
+      button {
+        margin: 50px auto;
+      }
+    `}
 `;

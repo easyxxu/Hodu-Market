@@ -11,8 +11,14 @@ import { modalsList } from "../common/Modal/Modals";
 import * as S from "./ProductDetailStyle";
 import { cartProductInfoListAtom } from "../../atoms/cartAtom";
 import useStockCheck from "../../hooks/useStockCheck";
-
-export default function ProductDetail({ productInfo }) {
+import { Product } from "../../types/product";
+import axios from "axios";
+interface ProductDetailProps {
+  data?: any;
+  productInfo: Product;
+  item?: Product[];
+}
+export default function ProductDetail({ productInfo }: ProductDetailProps) {
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("user_type");
   const {
@@ -26,6 +32,7 @@ export default function ProductDetail({ productInfo }) {
     stock,
   } = productInfo;
   const { productId } = useParams();
+  const product_id: number = parseInt(productId!);
   const [cartAddForm, setCartAddForm] = useRecoilState(cartAddFormAtom);
   const navigate = useNavigate();
   const { openModal, closeModal } = useModal();
@@ -34,7 +41,7 @@ export default function ProductDetail({ productInfo }) {
     price && (price * cartAddForm.quantity).toLocaleString("ko-KR");
   const cartProductInfoList = useRecoilValue(cartProductInfoListAtom);
   const inCart = cartProductInfoList.filter(
-    (item) => item.data.product_id === parseInt(productId)
+    (item: ProductDetailProps) => item.data.product_id === parseInt(productId!)
   ).length;
 
   // 주문하기 모달 오픈
@@ -72,7 +79,7 @@ export default function ProductDetail({ productInfo }) {
     if (token && inCart === 0 && userType === "BUYER") {
       // 로그인한 경우
       const res = await handleAddCart();
-      if (res.data.my_cart) {
+      if (res?.data.my_cart) {
         openModal(modalsList.addCart, {
           onKeepShopping: () => {
             closeModal(modalsList.addCart);
@@ -83,7 +90,7 @@ export default function ProductDetail({ productInfo }) {
           },
         });
       } else if (
-        res.data.FAIL_message ===
+        res?.data.FAIL_message ===
         "현재 재고보다 더 많은 수량을 담을 수 없습니다."
       ) {
         alert("현재 재고보다 더 많은 수량을 담을 수 없습니다.");
@@ -118,14 +125,20 @@ export default function ProductDetail({ productInfo }) {
       console.log("장바구니 담기 성공: ", res);
       return res;
     } catch (err) {
-      console.error("장바구니 담기 에러: ", err);
-      return err.response;
+      if (axios.isAxiosError(err)) {
+        console.error("장바구니 담기 에러: ", err);
+        return err.response;
+      }
     }
   };
 
   // 홈페이지에서 상품 디테일로 가는 경우 productId가 달라짐에 따라 CartAddForm에 저장함
   useEffect(() => {
-    setCartAddForm({ ...cartAddForm, product_id: productId, quantity: 1 });
+    setCartAddForm({
+      ...cartAddForm,
+      product_id,
+      quantity: 1,
+    });
   }, [productId]);
 
   return (
@@ -166,7 +179,7 @@ export default function ProductDetail({ productInfo }) {
             {stock === 0 ? (
               <Button
                 content="품절"
-                disabled="true"
+                disabled={true}
                 type="button"
                 width="629px"
                 bgcolor="disabled"
@@ -184,7 +197,6 @@ export default function ProductDetail({ productInfo }) {
                   fontSize="M"
                   fontWeight="bold"
                   content="바로구매"
-                  disabled={true}
                   onClick={handleOrderModalOpen}
                 ></Button>
                 <Button

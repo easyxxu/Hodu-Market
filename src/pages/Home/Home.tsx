@@ -4,23 +4,31 @@ import { useLocation } from "react-router-dom";
 import { loadAllProduct } from "../../apis/productApi";
 import React, { useState, useEffect } from "react";
 import useIntersectionObserver from "../../hooks/useIntersectionObserver";
+import { Product } from "../../types/product";
+import axios from "axios";
+
 export default function Home() {
   const userType = localStorage.getItem("user_type");
   const location = useLocation();
   const path = location.pathname;
-  const [productListData, setProductListData] = useState([]);
+  const [productListData, setProductListData] = useState<Product[]>([]);
   const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const getProductList = async (page) => {
+
+  const getProductList = async (page: number) => {
     try {
       const res = await loadAllProduct(page);
       setProductListData((prev) => [...prev, ...res.data.results]);
     } catch (err) {
-      console.error("getProductList Error: ", err);
-      if (err.response.data.detail === "페이지가 유효하지 않습니다.")
-        setIsLoading(false);
+      if (axios.isAxiosError(err)) {
+        console.error("getProductList Error: ", err);
+        if (err.response?.data?.detail === "페이지가 유효하지 않습니다.") {
+          setIsLoading(false);
+        }
+      }
     }
   };
+  console.log(productListData);
   const targetRef = useIntersectionObserver(
     () => {
       setPage((prev) => prev + 1);
@@ -28,7 +36,9 @@ export default function Home() {
     { threshold: 1 },
     isLoading
   );
-  console.log(isLoading);
+
+  console.log(page);
+
   useEffect(() => {
     if (page === 0) return;
     getProductList(page);

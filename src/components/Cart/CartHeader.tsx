@@ -5,16 +5,20 @@ import {
   cartProductInfoListAtom,
   cartCheckedItemsAtom,
 } from "../../atoms/cartAtom";
-export default function CartHeader({ className }) {
+interface CartHeaderProps {
+  className?: string;
+}
+export default function CartHeader({ className }: CartHeaderProps) {
   const cartProductInfoList = useRecoilValue(cartProductInfoListAtom);
   const [cartCheckedItems, setCartCheckItems] =
     useRecoilState(cartCheckedItemsAtom);
 
-  const handleAllSelect = (checked) => {
+  const idArr: number[] = [];
+  const handleAllSelect = (checked: boolean) => {
     if (checked) {
-      const idArr = [];
-      cartProductInfoList.forEach((cartItem) =>
-        idArr.push(cartItem.data.product_id)
+      cartProductInfoList.forEach(
+        (cartItem: { data: { product_id: number } }) =>
+          idArr.push(cartItem.data.product_id)
       );
       setCartCheckItems(idArr);
       console.log("전체 선택");

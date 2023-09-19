@@ -2,7 +2,10 @@ import React from "react";
 import { useRecoilValue } from "recoil";
 import { cartTotalAtom } from "../../atoms/cartAtom";
 import * as S from "./CartTotalStyle";
-export default function CartTotal({ className }) {
+interface CartTotalProps {
+  className?: string;
+}
+export default function CartTotal({ className }: CartTotalProps) {
   const totalPriceList = useRecoilValue(cartTotalAtom);
   const totalPrice = totalPriceList.total.reduce((a, b) => a + b, 0);
   const totalShippingFee = totalPriceList.shippingFee.reduce(

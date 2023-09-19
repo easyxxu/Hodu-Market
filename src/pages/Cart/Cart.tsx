@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -35,7 +36,7 @@ export default function Cart() {
       await deleteAllCartApi();
       setCartProductInfoList([]);
     } catch (err) {
-      console.error(err.response.data);
+      if (axios.isAxiosError(err)) console.error(err.response?.data);
     }
   };
 

@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Join from "../pages/Join/Join";
+import Join from "../pages/Join/JoinPage";
 import Home from "../pages/Home/Home";
-import Login from "../pages/Login/Login";
+import Login from "../pages/Login/LoginPage";
 import SellerDashBoardPage from "../pages/Seller/SellerDashBoardPage";
 import ProductAddPage from "../pages/Seller/ProductAddPage";
 import ShoppingCart from "../pages/Cart/Cart";

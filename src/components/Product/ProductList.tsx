@@ -1,8 +1,10 @@
 import React from "react";
 import * as S from "./ProductListStyle";
-
-export default function ProductList({ productListData }) {
-  console.log(productListData);
+import { Product } from "../../types/product";
+interface ProductListData {
+  productListData: Product[];
+}
+export default function ProductList({ productListData }: ProductListData) {
   return (
     <S.ProductUl>
       {productListData.map((product) => (

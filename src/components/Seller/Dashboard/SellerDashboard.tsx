@@ -7,9 +7,11 @@ import { useEffect } from "react";
 import { loadSellerProduct } from "../../../apis/productApi";
 import { useState } from "react";
 import DashboardItem from "./DashboardItem";
+import { Product } from "../../../types/product";
+
 export default function SellerDashboard() {
   const navigate = useNavigate();
-  const [productList, setProductList] = useState([]);
+  const [productList, setProductList] = useState<Product[]>([]);
   useEffect(() => {
     const loadSellerProductList = async () => {
       try {
@@ -50,21 +52,21 @@ export default function SellerDashboard() {
           <ul>
             <li>
               <TabMenuButton
-                type="on"
+                active="on"
                 content={`판매중인 상품 (${productList.length})`}
               />
             </li>
             <li>
-              <TabMenuButton content="주문/배송" cnt="2" />
+              <TabMenuButton active="off" content="주문/배송" cnt={2} />
             </li>
             <li>
-              <TabMenuButton content="문의/리뷰" cnt="1" />
+              <TabMenuButton active="off" content="문의/리뷰" cnt={1} />
             </li>
             <li>
-              <TabMenuButton content="통계" />
+              <TabMenuButton active="off" content="통계" />
             </li>
             <li>
-              <TabMenuButton content="스토어 설정" />
+              <TabMenuButton active="off" content="스토어 설정" />
             </li>
           </ul>
         </TabMenuBar>

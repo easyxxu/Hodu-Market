@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
@@ -7,13 +8,20 @@ import Minus from "../../../assets/icon-minus-line.svg";
 import Plus from "../../../assets/icon-plus-line.svg";
 import { cartInfoListAtom } from "../../../atoms/cartAtom";
 
+interface QuantityButtonProps {
+  cartQuantity?: number;
+  cartAddForm?: any;
+  setCartAddForm?: any;
+  cartItemId?: number;
+  productId?: number;
+}
 export default function QuantityButton({
   cartQuantity,
   cartAddForm,
   setCartAddForm,
   cartItemId,
   productId,
-}) {
+}: QuantityButtonProps) {
   const [quantity, setQuantity] = useState(cartQuantity || 1);
   const [quantityUpdateForm, setQuantityUpdateForm] = useState({
     product_id: productId,
@@ -44,17 +52,19 @@ export default function QuantityButton({
       await updateQuantityApi(cartItemId, quantityUpdateForm);
       loadCartList();
     } catch (err) {
-      console.error("장바구니 수량 업뎃 에러: ", err);
-      if (
-        err.response.data.FAIL_message ===
-        "현재 재고보다 더 많은 수량을 담을 수 없습니다."
-      ) {
-        alert("현재 재고보다 더 많은 수량을 담을 수 없습니다.");
-        setQuantity((prev) => prev - 1);
-        setQuantityUpdateForm({
-          ...quantityUpdateForm,
-          quantity: (prev) => prev - 1,
-        });
+      if (axios.isAxiosError(err)) {
+        console.error("장바구니 수량 업뎃 에러: ", err);
+        if (
+          err.response?.data.FAIL_message ===
+          "현재 재고보다 더 많은 수량을 담을 수 없습니다."
+        ) {
+          alert("현재 재고보다 더 많은 수량을 담을 수 없습니다.");
+          setQuantity((prev) => prev - 1);
+          setQuantityUpdateForm({
+            ...quantityUpdateForm,
+            quantity: quantity - 1,
+          });
+        }
       }
     }
   };
@@ -71,7 +81,7 @@ export default function QuantityButton({
       quantityUpdate();
     }
   }, [quantityUpdateForm, cartItemId, setCartInfoList]);
-
+  console.log(quantityUpdateForm);
   return (
     <CountButtonStyle>
       <button type="button" onClick={handleQuantityMinus} />

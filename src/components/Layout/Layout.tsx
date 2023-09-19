@@ -1,12 +1,21 @@
 import React from "react";
 import Footer from "../common/Footer/Footer";
-import LogoIcon from "../../assets/Logo-hodu.svg";
 import { Logo, Header, SellerHeader } from "../common/Header/Header";
 import styled from "styled-components";
 import { Modals } from "../common/Modal/Modals";
 import Banner from "../Banner/Banner";
+interface CommonLayoutProps {
+  children: React.ReactNode;
+}
 
-export function MainLayout({ type, path, children }) {
+interface MainLayoutProps extends CommonLayoutProps {
+  type: string | null;
+  path?: string;
+}
+interface SellerMainLayoutProps extends CommonLayoutProps {}
+interface AuthLayoutProps extends CommonLayoutProps {}
+
+export function MainLayout({ type, path, children }: MainLayoutProps) {
   return (
     <Container>
       <Header type={type} />
@@ -20,7 +29,7 @@ export function MainLayout({ type, path, children }) {
   );
 }
 
-export function SellerMainLayout({ children }) {
+export function SellerMainLayout({ children }: SellerMainLayoutProps) {
   return (
     <Container>
       <SellerHeader />
@@ -32,7 +41,7 @@ export function SellerMainLayout({ children }) {
   );
 }
 
-export function AuthLayout({ children }) {
+export function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <AuthContainer>
       <Logo />

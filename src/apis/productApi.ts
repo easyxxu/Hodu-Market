@@ -4,7 +4,7 @@ import {
   privateInstance,
 } from "./axiosInstance";
 
-export const loadAllProduct = async (page) => {
+export const loadAllProduct = async (page: number) => {
   const res = await axiosInstance.get(`/products/?page=${page}`);
   return res;
 };
@@ -14,17 +14,17 @@ export const loadSellerProduct = async () => {
   return res;
 };
 
-export const loadProductDetail = async (productId) => {
+export const loadProductDetail = async (productId: number) => {
   const res = await axiosInstance.get(`/products/${productId}`);
   return res;
 };
 
-export const productAddApi = async (productForm) => {
+export const productAddApi = async (productForm: {}) => {
   const res = await imgPrivateInstance.post("/products/", productForm);
   return res;
 };
 
-export const productModifyApi = async (productId, productForm) => {
+export const productModifyApi = async (productId: number, productForm: {}) => {
   const res = await imgPrivateInstance.put(
     `/products/${productId}/`,
     productForm
@@ -32,12 +32,12 @@ export const productModifyApi = async (productId, productForm) => {
   return res;
 };
 
-export const productDeleteApi = async (productId) => {
+export const productDeleteApi = async (productId: number) => {
   const res = await privateInstance.delete(`/products/${productId}`);
   return res;
 };
 
-export const productSearch = async (page, searchKeyword) => {
+export const productSearch = async (page: number, searchKeyword: string) => {
   const res = await axiosInstance.get(
     `/products/?page=${page}&search=${searchKeyword}`
   );

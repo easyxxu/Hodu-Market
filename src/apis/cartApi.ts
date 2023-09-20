@@ -5,7 +5,7 @@ export const cartListApi = async () => {
   const res = await privateInstance.get("/cart/");
   const cartInfoList = res.data.results;
   const cartProuductInfoList = await Promise.all(
-    cartInfoList.map(async (cartItem) => {
+    cartInfoList.map(async (cartItem: { product_id: number }) => {
       return await loadProductDetail(cartItem.product_id);
     })
   );
@@ -16,12 +16,12 @@ export const cartListApi = async () => {
   };
 };
 
-export const addCartApi = async (productInfo) => {
+export const addCartApi = async (productInfo: {}) => {
   const res = await privateInstance.post("/cart/", productInfo);
   return res;
 };
 
-export const deleteCartApi = async (cartItemId) => {
+export const deleteCartApi = async (cartItemId: number) => {
   const res = await privateInstance.delete(`/cart/${cartItemId}`);
   return res;
 };
@@ -31,7 +31,7 @@ export const deleteAllCartApi = async () => {
   return res;
 };
 
-export const updateQuantityApi = async (cartItemId, req) => {
+export const updateQuantityApi = async (cartItemId: number, req: {}) => {
   const res = await privateInstance.put(`/cart/${cartItemId}/`, req);
   return res;
 };

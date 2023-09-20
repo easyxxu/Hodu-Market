@@ -5,17 +5,17 @@ export const fetchOrderList = async () => {
   return res;
 };
 
-export const orderDirect = async (orderForm) => {
+export const orderDirect = async (orderForm: {}) => {
   const res = await privateInstance.post("/order/", orderForm);
   return res;
 };
 
-export const orderCart = async (orderForm) => {
+export const orderCart = async (orderForm: {}) => {
   const res = await privateInstance.post("/order/", orderForm);
   return res;
 };
 
-export const orderCartOne = async (orderForm) => {
+export const orderCartOne = async (orderForm: {}) => {
   const res = await privateInstance.post("/order/", orderForm);
   return res;
 };

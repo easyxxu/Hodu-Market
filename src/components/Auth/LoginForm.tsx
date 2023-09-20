@@ -10,41 +10,35 @@ export default function LoginForm() {
     login_type: "BUYER",
   });
   const [loginErrorMsg, setLoginErrorMsg] = useState("");
-  // const [idErrorMsg, setIdErrorMsg] = useState("");
-  // const [pwErrorMsg, setPwErrorMsg] = useState("");
-  // const [idValid, setIdValid] = useState(false);
-  // const [pwValid, setPwValid] = useState(false);
-  // const [loginValid, setLoginValid] = useState(false);
   const navigate = useNavigate();
 
   // 로그인 타입 설정
-  const handleLoginTypeChange = (e) => {
-    if (e.target.name === "buyer") {
+  const handleLoginTypeChange = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const button = e.target as HTMLButtonElement;
+    if (button.name === "buyer") {
       setLoginInfo({ ...loginInfo, login_type: "BUYER" });
-    } else if (e.target.name === "seller") {
+    } else if (button.name === "seller") {
       setLoginInfo({ ...loginInfo, login_type: "SELLER" });
     }
   };
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
   };
-  const idCheck = (e) => {
+  const idCheck = (e: React.FocusEvent<HTMLInputElement>) => {
     if (e.target.value.length < 1) {
       setLoginErrorMsg("아이디를 입력해주세요.");
     } else {
       setLoginErrorMsg("");
-      // setIdValid(true);
     }
   };
-  const pwCheck = (e) => {
+  const pwCheck = (e: React.FocusEvent<HTMLInputElement>) => {
     if (e.target.value.length < 1) {
       setLoginErrorMsg("비밀번호를 입력해주세요.");
     } else {
       setLoginErrorMsg("");
-      // setPwValid(true);
     }
   };
-  const loginSubmit = async (e) => {
+  const loginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loginInfo.username.length < 1 && loginInfo.password.length < 1) {
       setLoginErrorMsg("아이디와 비밀번호를 입력해주세요.");
@@ -70,14 +64,14 @@ export default function LoginForm() {
         <BuyerLoginBtn
           name="buyer"
           onClick={handleLoginTypeChange}
-          type={loginInfo.login_type === "BUYER" ? "active" : null}
+          active={loginInfo.login_type === "BUYER" ? "active" : "inactive"}
         >
           구매회원 로그인
         </BuyerLoginBtn>
         <SellerLoginBtn
           name="seller"
           onClick={handleLoginTypeChange}
-          type={loginInfo.login_type === "SELLER" ? "active" : null}
+          active={loginInfo.login_type === "SELLER" ? "active" : "inactive"}
         >
           판매회원 로그인
         </SellerLoginBtn>
@@ -103,6 +97,7 @@ export default function LoginForm() {
         />
         <ErrorMsg>{loginErrorMsg}</ErrorMsg>
         <Button
+          type="button"
           size="M"
           width="M"
           color="white"
@@ -132,9 +127,9 @@ const LoginTypeBtn = styled.div`
     padding: 20px 76px 38px;
   }
 `;
-const BuyerLoginBtn = styled.button`
+const BuyerLoginBtn = styled.button<{ active: string }>`
   ${(props) =>
-    props.type === "active"
+    props.active === "active"
       ? css`
           z-index: 2;
           background-color: #fff;
@@ -149,9 +144,9 @@ const BuyerLoginBtn = styled.button`
           border-radius: 10px;
         `}
 `;
-const SellerLoginBtn = styled.button`
+const SellerLoginBtn = styled.button<{ active: string }>`
   ${(props) =>
-    props.type === "active"
+    props.active === "active"
       ? css`
           z-index: 2;
           background-color: #fff;

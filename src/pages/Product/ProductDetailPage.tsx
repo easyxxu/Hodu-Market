@@ -9,14 +9,14 @@ import ProductDetail from "../../components/Product/ProductDetail";
 import { Product } from "../../types/product";
 
 export default function ProductDetailPage() {
-  const { productId } = useParams();
+  const { productId } = useParams() as { productId: string };
   const [productInfo, setProductInfo] = useState<Product | null>(null);
   const userType = localStorage.getItem("user_type");
 
   useEffect(() => {
-    const getProductDetail = async (productId: string | undefined) => {
+    const getProductDetail = async () => {
       try {
-        const res = await loadProductDetail(productId);
+        const res = await loadProductDetail(parseInt(productId));
         setProductInfo(res.data);
       } catch (err) {
         if (axios.isAxiosError(err)) {
@@ -24,7 +24,7 @@ export default function ProductDetailPage() {
         }
       }
     };
-    getProductDetail(productId);
+    getProductDetail();
   }, [productId]);
 
   return (

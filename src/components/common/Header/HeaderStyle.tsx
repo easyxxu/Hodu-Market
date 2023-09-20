@@ -51,7 +51,7 @@ const Nav = styled.nav`
   align-items: center;
 `;
 
-const ShoppingCartLink = styled(Link)`
+const ShoppingCartLink = styled(Link)<{ active: string }>`
   text-align: center;
   color: #767676;
   font-size: 12px;

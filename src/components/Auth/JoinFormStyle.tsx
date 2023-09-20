@@ -15,9 +15,9 @@ const JoinTypeBtn = styled.div`
     padding: 20px 76px 38px;
   }
 `;
-const BuyerJoinBtn = styled.button`
+const BuyerJoinBtn = styled.button<{ active: string }>`
   ${(props) =>
-    props.type === "active"
+    props.active === "active"
       ? css`
           z-index: 2;
           background-color: #fff;
@@ -32,9 +32,9 @@ const BuyerJoinBtn = styled.button`
           border-radius: 10px;
         `}
 `;
-const SellerJoinBtn = styled.button`
+const SellerJoinBtn = styled.button<{ active: string }>`
   ${(props) =>
-    props.type === "active"
+    props.active === "active"
       ? css`
           z-index: 2;
           background-color: #fff;
@@ -73,7 +73,7 @@ const JoinFormContainer = styled.div`
     position: relative;
   }
 `;
-const Input = styled.input`
+const Input = styled.input<{ valid?: string }>`
   width: 480px;
   padding: 17px 10px;
   border: ${(props) =>
@@ -97,7 +97,7 @@ const IdContainer = styled.div`
     font-size: 16px;
   }
 `;
-const SmInput = styled(Input)`
+const SmInput = styled(Input)<{ valid: string }>`
   width: 346px;
   border: ${(props) =>
     props.valid === "false"
@@ -133,10 +133,13 @@ const PhoneContainer = styled.div`
     background-color: #fff;
   }
   li {
-    padding: 10px;
     cursor: pointer;
     font-size: 16px;
     line-height: normal;
+    button {
+      padding: 10px;
+      width: 100%;
+    }
   }
   input {
     margin-bottom: 0px;
@@ -145,7 +148,7 @@ const PhoneContainer = styled.div`
 const PhoneInput = styled(Input)`
   width: 152px;
 `;
-const PhoneFirstBtn = styled.button`
+const PhoneFirstBtn = styled.button<{ state: string }>`
   width: 152px;
   height: 54px;
   font-size: 16px;
@@ -187,7 +190,7 @@ const AgreeLabel = styled.label`
   line-height: 18px;
   color: #767676;
 `;
-const ErrorMsg = styled.small`
+const ErrorMsg = styled.small<{ valid?: string }>`
   color: ${(props) =>
     props.valid === "success"
       ? "var(--point-color)"

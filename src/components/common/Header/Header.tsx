@@ -17,15 +17,17 @@ export function Logo() {
     </h1>
   );
 }
-
-export function Header({ type }) {
+interface HeaderProps {
+  type: string | null;
+}
+export function Header({ type }: HeaderProps) {
   const [searchKeyword, setSearchKeyword] = useState("");
   const navigate = useNavigate();
-  const handleSubmitSearch = async (e) => {
+  const handleSubmitSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate(`/search/${searchKeyword}`);
   };
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(e.target.value);
   };
 
@@ -49,8 +51,7 @@ export function Header({ type }) {
     </S.HeaderDiv>
   );
 }
-
-export function HeaderType(type) {
+function HeaderType(type: string | null) {
   const TOKEN = localStorage.getItem("token");
   const navigate = useNavigate();
   const location = useLocation();
@@ -82,6 +83,7 @@ export function HeaderType(type) {
           <p>마이페이지</p>
         </S.HeaderLink>
         <Button
+          type="button"
           width="MS"
           color="white"
           img={ShoppingBag}

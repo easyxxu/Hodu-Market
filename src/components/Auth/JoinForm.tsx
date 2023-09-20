@@ -8,6 +8,7 @@ import {
 } from "../../apis/authApi";
 import { Button } from "../common/Button/Button";
 import * as S from "./JoinFormStyle";
+import axios from "axios";
 export default function JoinForm() {
   const [buyerInfo, setBuyerInfo] = useState({
     username: "",
@@ -35,9 +36,9 @@ export default function JoinForm() {
   const [idDuplicateValid, setIdDuplicateValid] = useState(false);
   const [pwValid, setPwValid] = useState(false);
   const [pwDoubleValid, setPwDoubleValid] = useState(false);
-  const [phoneFirst, setPhoneFirst] = useState("010");
-  const [phoneSecond, setPhoneSecond] = useState("");
-  const [phoneThird, setPhoneThird] = useState("");
+  const [phoneFirst, setPhoneFirst] = useState<string>("010");
+  const [phoneSecond, setPhoneSecond] = useState<string>("");
+  const [phoneThird, setPhoneThird] = useState<string>("");
   const [phoneListVisible, setPhoneListVisible] = useState(false);
   const [companyRegistrationNumValid, setCompanyRegistrationNumValid] =
     useState(false);
@@ -45,7 +46,7 @@ export default function JoinForm() {
   const navigate = useNavigate();
 
   // Form Submit API 통신
-  const handleSubmitJoin = async (e) => {
+  const handleSubmitJoin = async (e: React.FormEvent<HTMLFormElement>) => {
     console.log("click");
     e.preventDefault();
     try {
@@ -57,11 +58,13 @@ export default function JoinForm() {
       navigate("/login");
       console.log("회원가입 성공!");
     } catch (err) {
-      console.error("회원가입 오류", err);
-      alert(err.response.data.phone_number[0]);
+      if (axios.isAxiosError(err)) {
+        console.error("회원가입 오류", err);
+        alert(err.response?.data.phone_number[0]);
+      }
     }
   };
-  console.log("!!", buyerInfo);
+
   // 모든 input값 유효하다면 버튼 활성화
   const handleSubmitBtn = () => {
     if (joinType === "buyer") {
@@ -80,25 +83,27 @@ export default function JoinForm() {
     }
   };
   // 회원가입 타입 설정
-  const handlerJoinTypeChange = (e) => {
-    if (e.target.name === "buyer") {
+  const handlerJoinTypeChange = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const button = e.target as HTMLButtonElement;
+    if (button.name === "buyer") {
       setJoinType("buyer");
-    } else if (e.target.name === "seller") {
+    } else if (button.name === "seller") {
       setJoinType("seller");
     }
   };
 
   // 전화번호 설정
-  const handlePhoneListItemClick = (e) => {
-    setPhoneFirst(e.target.textContent);
+  const handlePhoneListItemClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const button = e.target as HTMLButtonElement;
+    setPhoneFirst(button.textContent!);
     setPhoneListVisible(false);
   };
 
-  const handlePhoneSecondChange = (e) => {
+  const handlePhoneSecondChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneSecond(e.target.value);
   };
 
-  const handlePhoneThirdChange = (e) => {
+  const handlePhoneThirdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneThird(e.target.value);
   };
 
@@ -127,18 +132,20 @@ export default function JoinForm() {
   const phoneList = (
     <ul>
       {phoneFirstList.map((phonePrefix) => (
-        <li key={phonePrefix} onClick={handlePhoneListItemClick}>
-          {phonePrefix}
+        <li key={phonePrefix}>
+          <button type="button" onClick={handlePhoneListItemClick}>
+            {phonePrefix}
+          </button>
         </li>
       ))}
     </ul>
   );
-  const handleAgreeChange = (e) => {
+  const handleAgreeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setJoinAgree(e.target.checked);
   };
 
   // onChange 발생
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (joinType === "buyer") {
       setBuyerInfo({ ...buyerInfo, [e.target.name]: e.target.value });
     } else if (joinType === "seller") {
@@ -147,7 +154,7 @@ export default function JoinForm() {
   };
 
   // onBlur 발생
-  const idValidCheck = (e) => {
+  const idValidCheck = (e: React.FocusEvent<HTMLInputElement>) => {
     const regex = /^[a-zA-Z0-9]{1,20}$/;
     if (!regex.test(e.target.value) && e.target.value.length > 0) {
       setIdValidErrorMsg(
@@ -162,7 +169,7 @@ export default function JoinForm() {
     }
   };
   // ID 중복 검사 API
-  const idDuplicateCheck = async (id) => {
+  const idDuplicateCheck = async (id: string) => {
     try {
       const res = await idDuplicateCheckApi(id);
       if (
@@ -174,12 +181,14 @@ export default function JoinForm() {
         setIdDuplicateValid(true);
       }
     } catch (err) {
-      if (err.response.data.FAIL_Message === "이미 사용 중인 아이디입니다.")
-        setIdValidErrorMsg(err.response.data.FAIL_Message);
-      setIdDuplicateValid(false);
+      if (axios.isAxiosError(err)) {
+        if (err.response?.data.FAIL_Message === "이미 사용 중인 아이디입니다.")
+          setIdValidErrorMsg(err.response.data.FAIL_Message);
+        setIdDuplicateValid(false);
+      }
     }
   };
-  const pwValidCheck = (e) => {
+  const pwValidCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const regex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
     if (!regex.test(e.target.value) && e.target.value.length > 0) {
       console.log(e.target.value, regex.test(e.target.value));
@@ -196,7 +205,7 @@ export default function JoinForm() {
     }
   };
   // 비밀번호 재확인
-  const pwDoubleCheck = (e) => {
+  const pwDoubleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (joinType === "buyer") {
       if (
         (buyerInfo.password !== e.target.value &&
@@ -224,30 +233,31 @@ export default function JoinForm() {
     }
   };
   // 사업자번호 유효성 체크
-  const companyRegisterationNumCheck = async (registerNum) => {
+  const companyRegisterationNumCheck = async (registerNum: string) => {
     try {
       const res = await companyRegistrationNumApi(registerNum);
       setCompanyRegistrationNumMsg(res.data.Success);
       setCompanyRegistrationNumValid(true);
     } catch (err) {
-      console.error("사업자번호 유효성 오류: ", err);
-      if (
-        err.response.data.FAIL_Message === "이미 등록된 사업자등록번호입니다."
-      ) {
-        setCompanyRegistrationNumMsg("이미 등록된 사업자등록번호입니다.");
-      } else if (
-        err.response.data.FAIL_Message ===
-        "company_registration_number 필드를 추가해주세요 :)"
-      ) {
-        setCompanyRegistrationNumMsg(
+      if (axios.isAxiosError(err)) {
+        console.error("사업자번호 유효성 오류: ", err);
+        if (
+          err.response?.data.FAIL_Message ===
+          "이미 등록된 사업자등록번호입니다."
+        ) {
+          setCompanyRegistrationNumMsg("이미 등록된 사업자등록번호입니다.");
+        } else if (
+          err.response?.data.FAIL_Message ===
           "company_registration_number 필드를 추가해주세요 :)"
-        );
+        ) {
+          setCompanyRegistrationNumMsg(
+            "company_registration_number 필드를 추가해주세요 :)"
+          );
+        }
+        setCompanyRegistrationNumValid(false);
       }
-      setCompanyRegistrationNumValid(false);
     }
   };
-  // console.log("userInfo", userInfo);
-  // console.log("sellerInfo: ", sellerInfo);
   return (
     <S.JoinContainer>
       <h1 className="a11y-hidden">회원가입</h1>
@@ -255,14 +265,14 @@ export default function JoinForm() {
         <S.BuyerJoinBtn
           name="buyer"
           onClick={handlerJoinTypeChange}
-          type={joinType === "buyer" ? "active" : null}
+          active={joinType === "buyer" ? "active" : "inactive"}
         >
           구매회원가입
         </S.BuyerJoinBtn>
         <S.SellerJoinBtn
           name="seller"
           onClick={handlerJoinTypeChange}
-          type={joinType === "seller" ? "active" : null}
+          active={joinType === "seller" ? "active" : "inactive"}
         >
           판매회원가입
         </S.SellerJoinBtn>
@@ -279,7 +289,9 @@ export default function JoinForm() {
               onChange={handleInputChange}
               onBlur={idValidCheck}
               valid={
-                idValidErrorMsg.length > 0 && idValid === false ? "false" : null
+                idValidErrorMsg.length > 0 && idValid === false
+                  ? "false"
+                  : "true"
               }
             />
             <Button
@@ -292,7 +304,7 @@ export default function JoinForm() {
           </S.IdContainer>
           <S.ErrorMsg
             valid={
-              idValid === true && idDuplicateValid === true ? "success" : null
+              idValid === true && idDuplicateValid === true ? "success" : "fail"
             }
           >
             {idValidErrorMsg}
@@ -309,7 +321,7 @@ export default function JoinForm() {
             type="password"
             onChange={handleInputChange}
             onBlur={pwValidCheck}
-            valid={pwValidErrorMsg.length > 0 && !pwValid ? "false" : null}
+            valid={pwValidErrorMsg.length > 0 && !pwValid ? "false" : "true"}
           />
           <S.ErrorMsg>{pwValidErrorMsg}</S.ErrorMsg>
           <label htmlFor="password2">
@@ -327,7 +339,7 @@ export default function JoinForm() {
             valid={
               pwDoubleCheckErrorMsg.length > 0 && !pwDoubleValid
                 ? "false"
-                : null
+                : "true"
             }
           />
           <S.ErrorMsg>{pwDoubleCheckErrorMsg}</S.ErrorMsg>
@@ -345,7 +357,7 @@ export default function JoinForm() {
               <S.PhoneFirstBtn
                 type="button"
                 id="phone"
-                state={phoneListVisible ? "active" : null}
+                state={phoneListVisible ? "active" : "inactive"}
                 onClick={() => setPhoneListVisible(!phoneListVisible)}
               >
                 {phoneFirst || "010"}
@@ -355,14 +367,14 @@ export default function JoinForm() {
                 name="phoneSecond"
                 value={phoneSecond}
                 onChange={handlePhoneSecondChange}
-                maxLength="4"
+                maxLength={4}
                 type="text"
               />
               <S.PhoneInput
                 name="phoneThird"
                 value={phoneThird}
                 onChange={handlePhoneThirdChange}
-                maxLength="4"
+                maxLength={4}
                 type="text"
               />
             </S.PhoneContainer>
@@ -380,7 +392,7 @@ export default function JoinForm() {
                     companyRegistrationNumMsg.length > 0 &&
                     companyRegistrationNumValid === false
                       ? "false"
-                      : null
+                      : "true"
                   }
                 />
                 <Button
@@ -394,7 +406,7 @@ export default function JoinForm() {
                 />
               </S.SellerContainer>
               <S.ErrorMsg
-                valid={companyRegistrationNumValid ? "success" : null}
+                valid={companyRegistrationNumValid ? "success" : "fail"}
               >
                 {companyRegistrationNumMsg}
               </S.ErrorMsg>
@@ -413,7 +425,7 @@ export default function JoinForm() {
             type="checkbox"
             id="agree"
             name="agree"
-            value={joinAgree}
+            // value={joinAgree}
             onChange={handleAgreeChange}
             required
           />
@@ -425,9 +437,10 @@ export default function JoinForm() {
           </S.AgreeLabel>
         </S.AgreeContainer>
         <Button
+          type="button"
           size="M"
           width="M"
-          bgcolor={!handleSubmitBtn() ? "disabled" : null}
+          bgcolor={!handleSubmitBtn() ? "disabled" : undefined}
           color="white"
           fontSize="M"
           fontWeight="bold"

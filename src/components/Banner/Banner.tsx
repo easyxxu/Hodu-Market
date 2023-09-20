@@ -8,9 +8,9 @@ import bannerImg5 from "../../assets/img/banner_product5.jpg";
 import { useEffect } from "react";
 export default function Banner() {
   const imgArr = [bannerImg1, bannerImg2, bannerImg3, bannerImg4, bannerImg5];
-  const swiperRef = useRef(null);
+  const swiperRef = useRef<any>(null);
   const [swiperCurrentPosition, setSwiperCurrentPosition] = useState(0);
-  const [loop, setLoop] = useState(false);
+  const [loop, setLoop] = useState<any>(false);
   const Total_Slides = imgArr.length - 1;
   const nextSlide = () => {
     setSwiperCurrentPosition((prev) => {
@@ -37,7 +37,7 @@ export default function Banner() {
       nextSlide();
     }, 3000);
     setLoop(swiperLoop);
-    return clearTimeout(loop);
+    return () => clearTimeout(loop);
   }, [swiperCurrentPosition]);
 
   useEffect(() => {

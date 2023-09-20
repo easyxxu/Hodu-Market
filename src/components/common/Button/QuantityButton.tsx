@@ -49,6 +49,7 @@ export default function QuantityButton({
   // 장바구니 수량 업뎃
   const quantityUpdate = async () => {
     try {
+      if (!cartItemId) return;
       await updateQuantityApi(cartItemId, quantityUpdateForm);
       loadCartList();
     } catch (err) {

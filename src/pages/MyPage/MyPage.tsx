@@ -43,6 +43,7 @@ export default function MyPage() {
             </OrderMenu>
             <h3>
               <Button
+                type="button"
                 content="로그아웃"
                 onClick={handleLogout}
                 width="150px"
@@ -59,6 +60,7 @@ export default function MyPage() {
           {userType === "SELLER" && (
             <>
               <Button
+                type="button"
                 content="로그아웃"
                 onClick={handleLogout}
                 width="150px"
@@ -83,15 +85,12 @@ const MyPageContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 30px;
-  /* margin-bottom: 60px; */
   padding-bottom: 300px;
 `;
 const MyPageMenu = styled.div`
-  /* box-shadow: inset 0 0 10px red; */
   padding: 10px;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
   flex: 2;
   h3 {
     font-size: 24px;
@@ -112,7 +111,7 @@ const OrderMenu = styled.div`
     border-bottom: 1px solid var(--content-color-dark);
   }
 `;
-const MyPageContent = styled.div`
+const MyPageContent = styled.div<{ center: string }>`
   flex: 8;
   ${(props) =>
     props.center === "true" &&

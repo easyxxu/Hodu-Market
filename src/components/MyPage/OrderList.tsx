@@ -3,15 +3,17 @@ import { useEffect } from "react";
 import { fetchOrderList } from "../../apis/orderApi";
 import { styled } from "styled-components";
 import OrderDetail from "./OrderDetail";
+import axios from "axios";
+import { Order } from "../../types/order";
 
 export default function OrderList() {
   const [orderListData, setOrderListData] = useState([]);
-  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   // 날짜 형식 변경 함수
-  const formatDateTime = (dateTime) => {
+  const formatDateTime = (dateTime: Date) => {
     return new Date(dateTime).toLocaleString("ko-KR");
   };
-  const onClickOrderDetail = (order) => {
+  const onClickOrderDetail = (order: Order) => {
     setSelectedOrder(order);
   };
   useEffect(() => {
@@ -20,7 +22,9 @@ export default function OrderList() {
         const res = await fetchOrderList();
         setOrderListData(res.data.results);
       } catch (err) {
-        console.error("주문 리스트를 불러오는데 실패", err.response);
+        if (axios.isAxiosError(err)) {
+          console.error("주문 리스트를 불러오는데 실패", err.response);
+        }
       }
     };
     getOrderList();
@@ -39,7 +43,7 @@ export default function OrderList() {
             </tr>
           </thead>
           <tbody>
-            {orderListData.map((order, idx) => {
+            {orderListData.map((order: Order, idx) => {
               const formattedDate = formatDateTime(order.created_at);
               return (
                 <tr key={idx} onClick={() => onClickOrderDetail(order)}>
@@ -66,7 +70,6 @@ export default function OrderList() {
   );
 }
 const OrderTableContainer = styled.div`
-  /* background-color: var(--content-color-light); */
   height: 100%;
 `;
 const OrderTable = styled.table`

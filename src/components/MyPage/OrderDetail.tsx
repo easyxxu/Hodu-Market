@@ -4,10 +4,18 @@ import { useEffect } from "react";
 import { styled } from "styled-components";
 import { loadProductDetail } from "../../apis/productApi";
 import { Button } from "../common/Button/Button";
-
-export default function OrderDetail({ order, onClose }) {
+import axios from "axios";
+import { Order } from "../../types/order";
+import { Product } from "../../types/product";
+interface OrderDetailProps {
+  order: Order;
+  onClose: any;
+}
+export default function OrderDetail({ order, onClose }: OrderDetailProps) {
   const orderProductsId = order.order_items;
-  const [orderProductsDetail, setOrderProductsDetail] = useState([]);
+  const [orderProductsDetail, setOrderProductsDetail] = useState<
+    Product[] | []
+  >([]);
   const orderPaymentMethod = () => {
     switch (order.payment_method) {
       case "CARD":
@@ -25,17 +33,19 @@ export default function OrderDetail({ order, onClose }) {
     }
   };
   useEffect(() => {
-    const getOrderProductsDetail = async (productId) => {
+    const getOrderProductsDetail = async (productId: number) => {
       try {
         const res = await loadProductDetail(productId);
         console.log(res.data);
         return res.data;
       } catch (err) {
-        console.error("상세정보 오류:", err.response);
+        if (axios.isAxiosError(err)) {
+          console.error("상세정보 오류:", err.response);
+        }
       }
     };
     setOrderProductsDetail([]);
-    orderProductsId.map(async (productId) => {
+    orderProductsId.map(async (productId: number) => {
       const data = await getOrderProductsDetail(productId);
       setOrderProductsDetail((prev) => [...prev, data]);
     });
@@ -95,6 +105,7 @@ export default function OrderDetail({ order, onClose }) {
         <span>{order.total_price}</span>
       </OrderInfoList>
       <Button
+        type="button"
         content="뒤로가기"
         onClick={onClose}
         color="white"

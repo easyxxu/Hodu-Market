@@ -15,9 +15,19 @@ import useModal from "../../hooks/useModal";
 import { modalsList } from "../common/Modal/Modals";
 import useStockCheck from "../../hooks/useStockCheck";
 import { useNavigate } from "react-router-dom";
-
-export default function CartItem({ item }) {
-  const cartItemInfo = item.data; // cart에 담긴 아이템의 상세 정보
+import { Product } from "../../types/product";
+import axios from "axios";
+interface CartItemProps {
+  item: Product;
+}
+interface CartItem {
+  price: number;
+  product_id: number;
+  quantity: number;
+  shipping_fee: number;
+}
+export default function CartItem({ item }: CartItemProps) {
+  const cartItemInfo = item; // cart에 담긴 아이템의 상세 정보
   const [cartProductInfoList, setCartProductInfoList] = useRecoilState(
     cartProductInfoListAtom
   ); // cartItemInfo map돌리기전 전체 데이터
@@ -25,8 +35,11 @@ export default function CartItem({ item }) {
   const [totalPrice, setTotalPrice] = useRecoilState(cartTotalAtom);
   const [checkItems, setCheckItems] = useRecoilState(cartCheckedItemsAtom); // 선택된 아이템 배열
   const [isChecked, setIsChecked] = useState(true);
-  const [totalCheckedItems, setTotalCheckedItems] = useState([]); // 장바구니에 담긴 아이템 중에 체크된 아이템만 담겨있는 배열(총 가격 계산을 위함)
-  const [cartAllItem, setCartAllItem] = useState([]); // cart에 담긴 모든 상품의 수량, 가격, 배송비
+  const [totalCheckedItems, setTotalCheckedItems] = useState<CartItem[]>([]); // 장바구니에 담긴 아이템 중에 체크된 아이템만 담겨있는 배열(총 가격 계산을 위함)
+  const [cartAllItem, setCartAllItem] = useState<CartItem[] | null>(null);
+
+  // 나머지 코드는 동일하게 유지
+  // cart에 담긴 모든 상품의 수량, 가격, 배송비
   const { openModal, closeModal } = useModal();
   const { getStock, stockCheck } = useStockCheck();
   const navigate = useNavigate();
@@ -38,7 +51,7 @@ export default function CartItem({ item }) {
     (x) => x.product_id === cartItemInfo.product_id
   )?.quantity;
   const [checkedForm, setCheckedForm] = useState({
-    product_id: "",
+    product_id: 0,
     quantity: "",
     is_active: true,
   });
@@ -64,11 +77,12 @@ export default function CartItem({ item }) {
       }
       return null; // 혹은 원하는 값을 반환하세요.
     });
-    setCartAllItem(updatedCartAllItem.filter(Boolean)); // null 값 제거
+    const result = updatedCartAllItem.filter((item) => item !== null);
+    setCartAllItem(result as CartItem[]);
   }, [cartInfoList, cartProductInfoList]);
 
   // Cart 아이템 선택
-  const handleCartSingleSelect = (checked, id) => {
+  const handleCartSingleSelect = (checked: boolean, id: number) => {
     if (checked) {
       setCheckItems((prev) => [...prev, id]);
       setCheckedForm({
@@ -96,7 +110,9 @@ export default function CartItem({ item }) {
         const res = await updateQuantityApi(cartItemId, checkedForm);
         console.log("체크 통신 완료:", res.data);
       } catch (err) {
-        console.error("체크 통신 실패:", err.response.data);
+        if (axios.isAxiosError(err)) {
+          console.error("체크 통신 실패:", err.response?.data);
+        }
       }
     };
     if (checkedForm.product_id) {
@@ -106,8 +122,9 @@ export default function CartItem({ item }) {
 
   // 체크된 아이템만 결제하기 위해 배열에 담음
   const cartTotalCheckedItems = () => {
-    let total = [];
-    cartAllItem.map((item) => {
+    let total: CartItem[] = [];
+    if (!cartAllItem) return;
+    cartAllItem.map((item: CartItem) => {
       if (checkItems.includes(item.product_id)) {
         total.push(item);
       }
@@ -119,12 +136,12 @@ export default function CartItem({ item }) {
   // 체크된 아이템의 총 가격 계산
   const cartTotalPrice = () => {
     // console.log("총 가격 계산하기 함수 실행", totalCheckedItems);
-    let total = [];
+    let total: number[] = [];
     totalCheckedItems.forEach((item) => {
       let itemTotal = item.price * item.quantity;
       total.push(itemTotal);
     });
-
+    console.log("!!", total);
     const shippingFees = totalCheckedItems.map((item) => item.shipping_fee);
 
     setTotalPrice({
@@ -146,9 +163,9 @@ export default function CartItem({ item }) {
   }, [totalCheckedItems]);
 
   // cart 아이템 삭제
-  const handleDeleteItem = async (productId) => {
+  const handleDeleteItem = async (productId: number) => {
     try {
-      let cartItemId;
+      let cartItemId: number = 0;
       cartInfoList.map((item) => {
         if (item.product_id === productId) {
           cartItemId = item.cart_item_id;
@@ -233,6 +250,7 @@ export default function CartItem({ item }) {
       <S.ProductPriceContainer>
         <p>{(cartItemInfo.price * cartQuantity).toLocaleString("ko-KR")}원</p>
         <Button
+          type="button"
           width="130px"
           size="M"
           content="주문하기"

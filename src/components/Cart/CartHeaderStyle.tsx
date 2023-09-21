@@ -13,7 +13,6 @@ const CartTabTitle = styled.div`
   border-radius: 10px;
   background: #f2f2f2;
   display: flex;
-  /* justify-content: space-between; */
   align-items: center;
   padding: 19px 100px 19px 30px;
   font-size: 18px;

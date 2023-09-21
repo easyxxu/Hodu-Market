@@ -8,7 +8,7 @@ export default function CartList() {
   return (
     <CartListStyle>
       {cartProductInfoList.map((item) => {
-        return <CartItem item={item} key={item.data.product_id} />;
+        return <CartItem item={item.data} key={item.data.product_id} />;
       })}
     </CartListStyle>
   );

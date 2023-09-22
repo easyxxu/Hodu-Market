@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -35,7 +36,9 @@ export default function Payment() {
     payment_method: "",
   });
   const [orderPersonName, setOrderPersonName] = useState("");
-  const [orderPersonPhoneNum, setOrderPersonPhoneNum] = useState({
+  const [orderPersonPhoneNum, setOrderPersonPhoneNum] = useState<
+    { first: string; second: string; third: string } | string
+  >({
     first: "",
     second: "",
     third: "",
@@ -62,7 +65,7 @@ export default function Payment() {
   const [addressValid, setAddressValid] = useState(false);
   const [paymentMethodValid, setPaymentMethodValid] = useState(false);
 
-  const handleSubmitOrderForm = async (e) => {
+  const handleSubmitOrderForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       let res;
@@ -75,55 +78,67 @@ export default function Payment() {
         const { product_id, quantity, ...rest } = orderForm;
         res = await orderCart(rest);
       }
-      console.log("주문 성공: ", res.data);
       alert("주문이 완료되었습니다.");
       navigate("/mypage");
     } catch (err) {
-      console.error("주문 실패", err.response.data);
+      if (axios.isAxiosError(err)) {
+        console.error("주문 실패", err.response?.data);
+      }
     }
   };
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setOrderForm({ ...orderForm, [name]: value });
   };
 
   // 주문자 이름 저장
-  const handleOrderPersonName = (e) => {
+  const handleOrderPersonName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOrderPersonName(e.target.value);
     setOrderPersonNameValid(true);
   };
   // 주문자 휴대폰 번호 저장
-  const handleOrderPhoneNum = (e) => {
+  const handleOrderPhoneNum = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setOrderPersonPhoneNum({ ...orderPersonPhoneNum, [name]: value });
+
+    if (typeof orderPersonPhoneNum === "string") {
+      // 현재 orderPersonPhoneNum이 문자열인 경우
+      setOrderPersonPhoneNum(value);
+    } else {
+      // 현재 orderPersonPhoneNum이 객체인 경우
+      setOrderPersonPhoneNum({ ...orderPersonPhoneNum, [name]: value });
+    }
   };
+
   const updateOrderPhoneNum = () => {
-    if (
-      orderPersonPhoneNum.first &&
-      orderPersonPhoneNum.second &&
-      orderPersonPhoneNum.third
-    ) {
-      setOrderPersonPhoneNum(
-        `${orderPersonPhoneNum.first}${orderPersonPhoneNum.second}${orderPersonPhoneNum.third}`
-      );
-      setOrderPersonPhoneNumValid(true);
+    if (typeof orderPersonPhoneNum !== "string") {
+      // 현재 orderPersonPhonenum이 객체인 경우
+      if (
+        orderPersonPhoneNum.first &&
+        orderPersonPhoneNum.second &&
+        orderPersonPhoneNum.third
+      ) {
+        const combinedPhoneNumber = `${orderPersonPhoneNum.first}${orderPersonPhoneNum.second}${orderPersonPhoneNum.third}`;
+
+        setOrderPersonPhoneNum(combinedPhoneNumber);
+        setOrderPersonPhoneNumValid(true);
+      }
     }
   };
   // 주문자 이메일 저장
-  const handleOrderEmail = (e) => {
+  const handleOrderEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOrderPersonEmail(e.target.value);
     setOrderPersonEmailValid(true);
   };
 
   // 배송지 수령인 전화번호
-  const handleReceiverPhoneNum = (e) => {
+  const handleReceiverPhoneNum = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setReceiverPhoneNum({ ...receiverPhoneNum, [name]: value });
     updateReceiverPhoneNum();
   };
 
   // 배송지주소
-  const handleAddress = (e) => {
+  const handleAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setAddress({ ...address, [name]: value });
     updateAddress();
@@ -152,14 +167,16 @@ export default function Payment() {
   };
   // 주문자 정보와 배송받는사람 정보가 같은 경우 버튼 클릭
   const handleSaveInfoBtn = () => {
-    setOrderForm({
-      ...orderForm,
-      receiver: orderPersonName,
-      receiver_phone_number: `${orderPersonPhoneNum.first}${orderPersonPhoneNum.second}${orderPersonPhoneNum.third}`,
-    });
+    if (typeof orderPersonPhoneNum === "object") {
+      setOrderForm({
+        ...orderForm,
+        receiver: orderPersonName,
+        receiver_phone_number: `${orderPersonPhoneNum.first}${orderPersonPhoneNum.second}${orderPersonPhoneNum.third}`,
+      });
+    }
   };
 
-  const handleOrderAgree = (e) => {
+  const handleOrderAgree = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOrderAgree(e.target.checked);
   };
   // 모든 input값 유효하다면 버튼 활성화
@@ -216,19 +233,19 @@ export default function Payment() {
               <S.Input
                 type="text"
                 name="first"
-                maxLength="3"
+                maxLength={3}
                 onBlur={handleOrderPhoneNum}
               />
               <S.Input
                 type="text"
                 name="second"
-                maxLength="4"
+                maxLength={4}
                 onBlur={handleOrderPhoneNum}
               />
               <S.Input
                 type="text"
                 name="third"
-                maxLength="4"
+                maxLength={4}
                 onBlur={handleOrderPhoneNum}
               />
             </S.PhoneInputContainer>
@@ -238,11 +255,12 @@ export default function Payment() {
             <S.Input type="email" name="email" onChange={handleOrderEmail} />
           </S.Label>
           <S.InfoSaveBtn
+            type="button"
             bgcolor="disabled"
             color="white"
             width="MS"
-            type="button"
             onClick={handleSaveInfoBtn}
+            content="주문자 정보와 동일"
           >
             주문자 정보와 동일
           </S.InfoSaveBtn>
@@ -259,19 +277,19 @@ export default function Payment() {
               <S.Input
                 type="text"
                 name="first"
-                maxLength="3"
+                maxLength={3}
                 onChange={handleReceiverPhoneNum}
               />
               <S.Input
                 type="text"
                 name="second"
-                maxLength="4"
+                maxLength={4}
                 onChange={handleReceiverPhoneNum}
               />
               <S.Input
                 type="text"
                 name="third"
-                maxLength="4"
+                maxLength={4}
                 onChange={handleReceiverPhoneNum}
               />
             </S.PhoneInputContainer>
@@ -292,7 +310,12 @@ export default function Payment() {
               onChange={handleInputChange}
             />
           </S.ShippingMsgLabel>
-          <S.ShippingBtn width="154px" color="white" type="button">
+          <S.ShippingBtn
+            width="154px"
+            color="white"
+            type="button"
+            content="우편번호 조회"
+          >
             우편번호 조회
           </S.ShippingBtn>
         </fieldset>
@@ -378,15 +401,15 @@ export default function Payment() {
                   <input
                     type="checkbox"
                     name="orderCheck"
-                    value={orderAgree}
                     onChange={handleOrderAgree}
                   />
                   주문 내용을 확인하였으며, 정보 제공 등에 동의합니다.
                 </label>
                 <Button
+                  type="button"
                   width="L"
                   size="L"
-                  bgcolor={!handleSubmitBtn() ? "disabled" : null}
+                  bgcolor={!handleSubmitBtn() ? "disabled" : undefined}
                   color="white"
                   content="결제하기"
                   disabled={!handleSubmitBtn()}

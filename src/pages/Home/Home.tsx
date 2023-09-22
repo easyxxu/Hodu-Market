@@ -28,7 +28,6 @@ export default function Home() {
       }
     }
   };
-  console.log(productListData);
   const targetRef = useIntersectionObserver(
     () => {
       setPage((prev) => prev + 1);
@@ -36,8 +35,6 @@ export default function Home() {
     { threshold: 1 },
     isLoading
   );
-
-  console.log(page);
 
   useEffect(() => {
     if (page === 0) return;

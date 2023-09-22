@@ -4,6 +4,8 @@ import styled, { css } from "styled-components";
 //Button
 interface ButtonProps {
   type: "submit" | "reset" | "button" | undefined;
+  name?: string;
+  id?: string;
   content: string;
   size?: "L" | "M" | "MS" | "S" | undefined;
   width?: string;
@@ -14,7 +16,7 @@ interface ButtonProps {
   border?: "yes";
   disabled?: boolean;
   img?: string;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 export const ButtonStyle = styled.button<ButtonProps>`
   display: block;
@@ -81,6 +83,8 @@ export function Button({
   border,
   disabled,
   img,
+  name,
+  id,
   onClick,
 }: ButtonProps) {
   return (
@@ -97,6 +101,8 @@ export function Button({
       onClick={onClick}
       img={img}
       content={content}
+      name={name}
+      id={id}
     >
       {img && <img src={img} alt="Plus" />}
       {content}

@@ -45,6 +45,7 @@ export default function LoginForm() {
     } else {
       setLoginErrorMsg("");
     }
+    console.log("click");
     try {
       const res = await loginApi(loginInfo);
       localStorage.setItem("token", res.data.token);
@@ -97,7 +98,7 @@ export default function LoginForm() {
         />
         <ErrorMsg>{loginErrorMsg}</ErrorMsg>
         <Button
-          type="button"
+          type="submit"
           size="M"
           width="M"
           color="white"

@@ -437,7 +437,7 @@ export default function JoinForm() {
           </S.AgreeLabel>
         </S.AgreeContainer>
         <Button
-          type="button"
+          type="submit"
           size="M"
           width="M"
           bgcolor={!handleSubmitBtn() ? "disabled" : undefined}

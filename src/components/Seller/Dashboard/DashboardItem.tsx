@@ -1,8 +1,17 @@
+import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { productDeleteApi } from "../../../apis/productApi";
 import { Button } from "../../common/Button/Button";
+interface DashboardItemProps {
+  image: string;
+  productName: string;
+  productId: number;
+  stock: number;
+  price: number;
+  setProductList: React.Dispatch<React.SetStateAction<any[]>>;
+}
 export default function DashboardItem({
   image,
   productName,
@@ -10,7 +19,7 @@ export default function DashboardItem({
   stock,
   price,
   setProductList,
-}) {
+}: DashboardItemProps) {
   const navigate = useNavigate();
   const productPrice = price.toLocaleString("ko-KR");
   const handleProductModify = () => {
@@ -26,7 +35,9 @@ export default function DashboardItem({
       );
       console.log("상품 삭제 완료: ", res);
     } catch (err) {
-      console.error("상품 삭제 실패: ", err.response);
+      if (axios.isAxiosError(err)) {
+        console.error("상품 삭제 실패: ", err.response);
+      }
     }
   };
   return (
@@ -43,6 +54,7 @@ export default function DashboardItem({
       <td>{productPrice}원</td>
       <td>
         <Button
+          type="button"
           width="70px"
           color="white"
           content="수정"
@@ -51,6 +63,7 @@ export default function DashboardItem({
       </td>
       <td>
         <Button
+          type="button"
           width="70px"
           bgcolor="light"
           border="yes"

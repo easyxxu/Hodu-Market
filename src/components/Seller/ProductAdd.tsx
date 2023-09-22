@@ -12,6 +12,7 @@ import { Button } from "../common/Button/Button";
 import imgUploadBtn from "../../assets/icon-img.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import axios from "axios";
 export default function ProductAdd() {
   const [product, setProduct] = useState({
     product_name: "",
@@ -22,15 +23,13 @@ export default function ProductAdd() {
     stock: "",
     product_info: "",
   });
-  const inputImgRef = useRef(null);
-  // const [shippingMethod, setShippingMethod] = useState(product.shipping_method);
+  const inputImgRef = useRef<any>(null);
   const [imgPrev, setImgPrev] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const type = location.state.type;
   const productId = location.state.productId;
-  // console.log("shippingMethod: ", shippingMethod);
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       if (type === "add") {
@@ -42,14 +41,19 @@ export default function ProductAdd() {
       }
       navigate("/sellercenter");
     } catch (err) {
-      console.error("submit 에러: ", err.response.data);
+      if (axios.isAxiosError(err))
+        console.error("submit 에러: ", err.response?.data);
     }
   };
-  const handleInputChange = (e) => {
+  const handleInputChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
 
     // price, shipping_fee, stock 속성은 숫자로 변환하여 저장
-    let parsedValue = value;
+    let parsedValue: string | number = value;
     if (name === "price" || name === "shipping_fee" || name === "stock") {
       parsedValue = parseInt(value);
       if (isNaN(parsedValue)) {
@@ -61,7 +65,7 @@ export default function ProductAdd() {
   };
 
   const handleImgChange = () => {
-    const file = inputImgRef.current.files[0];
+    const file = inputImgRef.current?.files[0];
     // 파일 객체가 없는 경우 함수 종료
     if (!file) {
       return;
@@ -71,14 +75,15 @@ export default function ProductAdd() {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setImgPrev(reader.result);
+      if (typeof reader.result === "string") setImgPrev(reader.result);
     };
   };
   const onClickInput = () => {
-    inputImgRef.current.click();
+    inputImgRef.current?.click();
   };
-  const handleShippingMethod = (e) => {
-    if (e.target.textContent === "택배, 소포, 등기") {
+  const handleShippingMethod = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const button = e.target as HTMLButtonElement;
+    if (button.name === "DELIVERY") {
       setProduct({ ...product, shipping_method: "DELIVERY" });
       // setShippingMethod("DELIVERY");
     } else {
@@ -201,14 +206,17 @@ export default function ProductAdd() {
                   type="button"
                   id="deliveryMethod"
                   content="택배, 소포, 등기"
+                  name="DELIVERY"
                   width="L"
                   size="L"
-                  border={product.shipping_method === "DELIVERY" ? null : "yes"}
+                  border={
+                    product.shipping_method === "DELIVERY" ? undefined : "yes"
+                  }
                   color={
-                    product.shipping_method === "DELIVERY" ? "white" : null
+                    product.shipping_method === "DELIVERY" ? "white" : undefined
                   }
                   bgcolor={
-                    product.shipping_method === "DELIVERY" ? null : "light"
+                    product.shipping_method === "DELIVERY" ? undefined : "light"
                   }
                   onClick={handleShippingMethod}
                 />
@@ -216,12 +224,17 @@ export default function ProductAdd() {
                   type="button"
                   id="deliverMethod"
                   content="직접배송(화물배달)"
+                  name="PARCEL"
                   width="L"
                   size="L"
-                  border={product.shipping_method === "PARCEL" ? null : "yes"}
-                  color={product.shipping_method === "PARCEL" ? "white" : null}
+                  border={
+                    product.shipping_method === "PARCEL" ? undefined : "yes"
+                  }
+                  color={
+                    product.shipping_method === "PARCEL" ? "white" : undefined
+                  }
                   bgcolor={
-                    product.shipping_method === "PARCEL" ? null : "light"
+                    product.shipping_method === "PARCEL" ? undefined : "light"
                   }
                   onClick={handleShippingMethod}
                 />
@@ -253,7 +266,6 @@ export default function ProductAdd() {
           <ProductDetailContainer>
             <label htmlFor="productInfo">상품 상세 정보</label>
             <textarea
-              type="text"
               id="productInfo"
               name="product_info"
               onChange={handleInputChange}
@@ -261,8 +273,19 @@ export default function ProductAdd() {
             />
           </ProductDetailContainer>
           <FormBtnContainer>
-            <Button width="200px" bgcolor="light" border="yes" content="취소" />
-            <Button width="200px" color="white" content="저장하기" />
+            <Button
+              type="button"
+              width="200px"
+              bgcolor="light"
+              border="yes"
+              content="취소"
+            />
+            <Button
+              type="submit"
+              width="200px"
+              color="white"
+              content="저장하기"
+            />
           </FormBtnContainer>
         </form>
       </ProductAddMain>

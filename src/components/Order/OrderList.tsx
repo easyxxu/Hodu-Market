@@ -8,22 +8,23 @@ import {
   cartInfoListAtom,
   cartProductInfoListAtom,
 } from "../../atoms/cartAtom";
+import { Product } from "../../types/product";
 import OrderItem from "./OrderItem";
 export default function OrderList() {
   const location = useLocation();
   const data = location.state;
-  const { orderList, totalPrice, cartInfo } = data;
+  const { orderList, totalPrice } = data;
   const cartProductInfoList = useRecoilValue(cartProductInfoListAtom);
   const cartIsCheckedList = useRecoilValue(cartCheckedItemsAtom);
   const cartInformation = useRecoilValue(cartInfoListAtom);
-  const [checkedOrderList, setCheckedOrderList] = useState([]);
+  const [checkedOrderList, setCheckedOrderList] = useState<Product[]>([]);
   console.log("checkedOrderList: ", checkedOrderList);
   useEffect(() => {
     const realOrderList = () => {
       const result = cartProductInfoList.filter((item) =>
         cartIsCheckedList.includes(item.data.product_id)
       );
-      setCheckedOrderList(result);
+      setCheckedOrderList(result.map((orderItem) => orderItem.data));
     };
     realOrderList();
   }, []);
@@ -47,8 +48,8 @@ export default function OrderList() {
             checkedOrderList.map((item, idx) => {
               return (
                 <OrderItem
-                  key={item.data.product_id}
-                  item={item.data}
+                  key={item.product_id}
+                  item={item}
                   itemQuantity={cartInformation[idx].quantity}
                 />
               );

@@ -2,7 +2,17 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { styled } from "styled-components";
 
-export default function OrderItem({ item, itemQuantity }) {
+interface OrderItemProps {
+  item: {
+    image: string;
+    store_name: string;
+    product_name: string;
+    shipping_fee: number;
+    price: number;
+  };
+  itemQuantity?: number;
+}
+export default function OrderItem({ item, itemQuantity }: OrderItemProps) {
   const location = useLocation();
   const data = location.state;
   const quantity = data.quantity;

@@ -13,6 +13,7 @@ import { cartProductInfoListAtom } from "../../atoms/cartAtom";
 import useStockCheck from "../../hooks/useStockCheck";
 import { Product } from "../../types/product";
 import axios from "axios";
+import { logoutApi } from "../../apis/authApi";
 interface ProductDetailProps {
   data?: any;
   productInfo: Product;
@@ -68,6 +69,7 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
           closeModal(modalsList.goLogin);
         },
         onGoLogin: () => {
+          handleLogout();
           navigate("/login");
           closeModal(modalsList.goLogin);
         },
@@ -112,6 +114,7 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
           closeModal(modalsList.goLogin);
         },
         onGoLogin: () => {
+          handleLogout();
           navigate("/login");
           closeModal(modalsList.goLogin);
         },
@@ -132,6 +135,19 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
     }
   };
 
+  // logout
+  const handleLogout = async () => {
+    console.log("logout go");
+    try {
+      const res = await logoutApi();
+      localStorage.removeItem("token");
+      localStorage.removeItem("user_type");
+      localStorage.removeItem("recoil-persist");
+      console.log("logout:", res);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   // 홈페이지에서 상품 디테일로 가는 경우 productId가 달라짐에 따라 CartAddForm에 저장함
   useEffect(() => {
     setCartAddForm({

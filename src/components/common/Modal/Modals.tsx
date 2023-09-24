@@ -1,10 +1,14 @@
 import React from "react";
 import { Button } from "../Button/Button";
-import { useState } from "react";
 import useModal from "../../../hooks/useModal";
 import * as S from "./ModalsStyle";
 
-export const addCart = ({ onGoCart, onKeepShopping }) => {
+interface AddCartProps {
+  onGoCart: () => void;
+  onKeepShopping: () => void;
+}
+
+export const addCart = ({ onGoCart, onKeepShopping }: AddCartProps) => {
   return (
     <>
       <S.ModalContent>장바구니에 담겼습니다.</S.ModalContent>
@@ -28,7 +32,11 @@ export const addCart = ({ onGoCart, onKeepShopping }) => {
     </>
   );
 };
-export const alreadyCart = ({ onCancel, onGoCart }) => {
+interface AlreadyCartProps {
+  onCancel: () => void;
+  onGoCart: () => void;
+}
+export const alreadyCart = ({ onCancel, onGoCart }: AlreadyCartProps) => {
   return (
     <>
       <S.ModalContent>
@@ -55,7 +63,11 @@ export const alreadyCart = ({ onCancel, onGoCart }) => {
     </>
   );
 };
-export const productDelete = ({ onCancel, onDelete }) => {
+interface ProductDeleteProps {
+  onCancel: () => void;
+  onDelete: () => void;
+}
+export const productDelete = ({ onCancel, onDelete }: ProductDeleteProps) => {
   return (
     <>
       <S.ModalContent>상품을 삭제하시겠습니까?</S.ModalContent>
@@ -79,7 +91,11 @@ export const productDelete = ({ onCancel, onDelete }) => {
     </>
   );
 };
-export const goLogin = ({ onCancel, onGoLogin }) => {
+interface GoLoginProps {
+  onCancel: () => void;
+  onGoLogin: () => void;
+}
+export const goLogin = ({ onCancel, onGoLogin }: GoLoginProps) => {
   const userType = localStorage.getItem("user_type");
   return (
     <>
@@ -122,12 +138,15 @@ export const modalsList = {
   productDelete: productDelete,
   goLogin: goLogin,
 };
-
+interface Modal {
+  Component: React.ComponentType<any>;
+  props: any;
+}
 export const Modals = () => {
   const { modals, closeModal } = useModal();
   return (
     <>
-      {modals.map(({ Component, props }, idx) => {
+      {modals.map(({ Component, props }: Modal, idx: number) => {
         const ModalComponent = Component;
         return (
           <S.ModalContainer key={idx}>

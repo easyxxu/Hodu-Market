@@ -28,13 +28,13 @@ export default function Home() {
       }
     }
   };
-  const targetRef = useIntersectionObserver(
-    () => {
+  const targetRef = useIntersectionObserver({
+    onIntersect: () => {
       setPage((prev) => prev + 1);
     },
-    { threshold: 1 },
-    isLoading
-  );
+    options: { threshold: 1 },
+    isLoading,
+  });
 
   useEffect(() => {
     if (page === 0) return;

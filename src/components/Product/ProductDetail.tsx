@@ -47,7 +47,7 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
 
   // 주문하기 모달 오픈
   const handleOrderModalOpen = async () => {
-    const stock = await getStock(productId);
+    const stock = await getStock(product_id);
     const stockCheckResult = stockCheck(stock, cartAddForm.quantity);
     if (!stockCheckResult) {
       alert(`해당 상품의 최대 주문 수량은 ${stock}개입니다.`);

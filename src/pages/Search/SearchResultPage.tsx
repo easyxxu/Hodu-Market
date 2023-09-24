@@ -5,9 +5,10 @@ import { MainLayout } from "../../components/Layout/Layout";
 import ProductList from "../../components/Product/ProductList";
 import { productSearch } from "../../apis/productApi";
 import useIntersectionObserver from "../../hooks/useIntersectionObserver";
+import axios from "axios";
 
 export default function SearchResultPage() {
-  const { searchKeyword } = useParams();
+  const { searchKeyword } = useParams() as { searchKeyword: string };
   const userType = localStorage.getItem("user_type");
   const [searchResultData, setSearchResultData] = useState([]);
   const [page, setPage] = useState(0);
@@ -20,22 +21,24 @@ export default function SearchResultPage() {
         console.log(res.data);
         setSearchResultData(res.data.results);
       } catch (err) {
-        console.error("getSearchResult Error: ", err.response.data);
-        if (err.response.data.detail === "페이지가 유효하지 않습니다.")
-          setIsLoading(false);
+        if (axios.isAxiosError(err)) {
+          console.error("getSearchResult Error: ", err.response?.data);
+          if (err.response?.data.detail === "페이지가 유효하지 않습니다.")
+            setIsLoading(false);
+        }
       }
     };
     if (page === 0) return;
-    if (isLoading) getSearchResult(page);
+    if (isLoading) getSearchResult();
   }, [page, searchKeyword, isLoading]);
 
-  const targetRef = useIntersectionObserver(
-    () => setPage((prev) => prev + 1),
-    {
-      threshold: 1,
+  const targetRef = useIntersectionObserver({
+    onIntersect: () => {
+      setPage((prev) => prev + 1);
     },
-    isLoading
-  );
+    options: { threshold: 1 },
+    isLoading,
+  });
 
   return (
     <MainLayout type={userType}>

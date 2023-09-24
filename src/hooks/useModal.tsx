@@ -1,22 +1,26 @@
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 import { atom, useRecoilState } from "recoil";
 
-const modalsAtom = atom({
+interface ModalItems {
+  Component: React.ComponentType<any>;
+  props: any;
+}
+const modalsAtom = atom<ModalItems[]>({
   // 모달 컴포넌트들을 상태값으로 보관
   key: "modalOpenAtom",
   default: [],
 });
 export default function useModal() {
-  const [modals, setModals] = useRecoilState(modalsAtom);
+  const [modals, setModals] = useRecoilState<ModalItems[]>(modalsAtom);
   const openModal = useCallback(
-    (Component, props) => {
-      setModals([...modals, { Component, props: { ...props, open: true } }]);
+    (Component: React.ComponentType<any>, props: any) => {
+      setModals([...modals, { Component, props: { ...props } }]);
     },
     [setModals]
   );
 
   const closeModal = useCallback(
-    (type) => {
+    (type: React.ComponentType<any>) => {
       setModals((modals) => modals.filter((modal) => modal.Component !== type));
     },
     [setModals]

@@ -13,7 +13,9 @@ export default function ProductList({ productListData }: ProductListData) {
             <S.ProductImg src={product.image} alt="상품이미지" />
             {product.stock === 0 && <S.SoldOut />}
             <S.ProductCorporation>{product.store_name}</S.ProductCorporation>
-            <S.ProductName>{product.product_name}</S.ProductName>
+            <S.ProductName className="ellipsis">
+              {product.product_name}
+            </S.ProductName>
             <S.ProductPrice>
               {product.price}
               <S.ProductWon>원</S.ProductWon>

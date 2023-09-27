@@ -1,6 +1,8 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import SearchIcon from "../../../assets/search.svg";
 import { Link } from "react-router-dom";
+import { media } from "../../style/media";
+
 const HeaderDiv = styled.div`
   box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.1);
   position: relative;
@@ -15,6 +17,11 @@ const HeaderContainer = styled.header`
   padding: 26px 30px;
   z-index: 10;
   position: relative;
+  img {
+    ${media.Small`
+      width: 100%;
+    `}
+  }
 `;
 
 const SearchContainer = styled.form`
@@ -27,7 +34,7 @@ const SearchInput = styled.input`
   width: 100%;
   border: 2px solid rgba(33, 191, 72, 1);
   border-radius: 50px;
-  padding: 13px 0 13px 22px;
+  padding: 13px 40px 13px 22px;
   &::placeholder {
     color: #767676;
   }

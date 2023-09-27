@@ -69,4 +69,9 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     position: absolute;
   }
+  .ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
   `;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LogoIcon from "../../../assets/Logo-hodu.svg";
 import ShoppingCart from "../../../assets/icon-shopping-cart.svg";
 import ShoppingCartActive from "../../../assets/icon-shopping-cart-2.svg";
@@ -56,7 +56,19 @@ function HeaderType(type: string | null) {
   const navigate = useNavigate();
   const location = useLocation();
   const isCartPage = location.pathname === "/cart";
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 639);
+  const navItemClassName = isMobile ? "a11y-hidden" : undefined;
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 639);
+    };
 
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   // BUYER로 로그인한 상태
   if (type === "BUYER" && TOKEN) {
     return (
@@ -66,11 +78,11 @@ function HeaderType(type: string | null) {
             src={isCartPage ? ShoppingCartActive : ShoppingCart}
             alt="shopping-cart"
           />
-          <p>장바구니</p>
+          <p className={navItemClassName}>장바구니</p>
         </S.ShoppingCartLink>
         <S.HeaderLink to="/mypage">
           <img src={MyPage} alt="my-page" />
-          <p>마이페이지</p>
+          <p className={navItemClassName}>마이페이지</p>
         </S.HeaderLink>
       </S.Nav>
     );
@@ -80,7 +92,7 @@ function HeaderType(type: string | null) {
       <S.Nav>
         <S.HeaderLink to="/mypage">
           <img src={MyPage} alt="my-page" />
-          <p>마이페이지</p>
+          <p className={navItemClassName}>마이페이지</p>
         </S.HeaderLink>
         <Button
           type="button"
@@ -101,11 +113,11 @@ function HeaderType(type: string | null) {
             src={isCartPage ? ShoppingCartActive : ShoppingCart}
             alt="shopping-cart"
           />
-          <p>장바구니</p>
+          <p className={navItemClassName}>장바구니</p>
         </S.ShoppingCartLink>
         <S.HeaderLink to="/login">
           <img src={MyPage} alt="my-page" />
-          <p>로그인</p>
+          <p className={navItemClassName}>로그인</p>
         </S.HeaderLink>
       </S.Nav>
     );

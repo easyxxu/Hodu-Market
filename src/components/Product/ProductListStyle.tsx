@@ -9,9 +9,9 @@ const ProductUl = styled.ul`
   width: 100%;
   margin: 70px auto 130px;
   justify-content: center;
-  font-size: 1rem;
   ${media.Small`
     gap: 30px;
+    padding: 0 10px;
   `}
   li {
     position: relative;

@@ -2,7 +2,7 @@ type SizeType = "Medium" | "Small";
 
 const sizes: Record<SizeType, number> = {
   // Large: 1200,
-  Medium: 1200,
+  Medium: 1280,
   Small: 639,
 };
 

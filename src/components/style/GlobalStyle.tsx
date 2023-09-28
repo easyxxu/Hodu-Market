@@ -49,12 +49,14 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     border: 0;
     cursor: pointer;
+    color: inherit;
     padding: 0;
     background-color: inherit;
     &:disabled{cursor: default}
   }
   input{
     border: 0;
+    -webkit-appearance: none;
     &:focus{
       outline: none;
     }

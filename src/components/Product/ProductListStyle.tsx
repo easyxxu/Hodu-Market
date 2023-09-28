@@ -9,21 +9,21 @@ const ProductUl = styled.ul`
   width: 100%;
   margin: 70px auto 130px;
   justify-content: center;
+  font-size: 1rem;
+  ${media.Small`
+    gap: 30px;
+  `}
   li {
-    font-size: 1rem;
     position: relative;
     width: 350px;
     ${media.Medium`
       width: 250px;
     `}
     ${media.Small`
-      width: 100px;
+      width: 90px;
       font-size: 0.7rem;
     `}
   }
-  ${media.Medium`
-    /* font-size: 0.8rem; */
-  `}
 `;
 const ProductImg = styled.img`
   width: 100%;
@@ -31,11 +31,12 @@ const ProductImg = styled.img`
   border-radius: 10px;
   border: 1px solid #c4c4c4;
   margin-bottom: 6px;
+  object-fit: cover;
   ${media.Medium`
     height: 250px;
   `}
   ${media.Small`
-    height: 100px;
+    height: 90px;
   `}
 `;
 const SoldOut = styled.div`

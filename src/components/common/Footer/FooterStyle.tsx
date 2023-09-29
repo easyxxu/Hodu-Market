@@ -19,12 +19,12 @@ const ListContainer = styled.div`
   border-bottom: 1px solid #c4c4c4;
   ${media.Medium`
     padding: 0 50px;
-  `}
-  ${media.Small`
     flex-direction: column;
     align-items: stretch;
-    padding: 0 30px;
     font-size: 0.9rem;
+  `}
+  ${media.Small`
+    padding: 0 30px;
   `}
 `;
 
@@ -44,7 +44,7 @@ const FooterLink = styled.ul`
       }
     }
   }
-  ${media.Small`
+  ${media.Medium`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
@@ -79,8 +79,8 @@ const FooterInfo = styled.address`
     padding: 0 50px;
   `}
   ${media.Small`
-    padding: 0 30px;
     font-size: 0.9rem;
+    padding: 0 30px;
   `}
 `;
 

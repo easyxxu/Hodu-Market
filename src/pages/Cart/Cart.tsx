@@ -119,8 +119,10 @@ export default function Cart() {
   // console.log("!!", cartInfoList);
   return (
     <MainLayout type={userType}>
-      <CartHeaderStyle />
-      {cartContent()}
+      <CartContentContainer>
+        <CartHeaderStyle />
+        {cartContent()}
+      </CartContentContainer>
     </MainLayout>
   );
 }
@@ -138,4 +140,7 @@ const ButtonStyle = styled.div`
 
 const AllDeleteBtn = styled(ButtonStyle)`
   margin: 36px 0 0;
+`;
+const CartContentContainer = styled.div`
+  padding: 0 10px;
 `;

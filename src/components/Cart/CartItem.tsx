@@ -215,30 +215,32 @@ export default function CartItem({ item }: CartItemProps) {
 
   return (
     <S.CartItemContainer>
-      <S.ToggleCheckBox
-        type="checkbox"
-        checked={isChecked}
-        onChange={(e) =>
-          handleCartSingleSelect(e.target.checked, cartItemInfo.product_id)
-        }
-      />
-      <S.ProductInfo>
-        <S.ProductImg src={cartItemInfo.image} alt="상품이미지" />
+      <S.ProductInfoContainer>
+        <S.ToggleCheckBox
+          type="checkbox"
+          checked={isChecked}
+          onChange={(e) =>
+            handleCartSingleSelect(e.target.checked, cartItemInfo.product_id)
+          }
+        />
         <S.ProductInfoWrapper>
-          <p>{cartItemInfo.store_name}</p>
-          <p>{cartItemInfo.product_name}</p>
-          <p>{cartItemInfo.price.toLocaleString("ko-KR")}원</p>
-          <p>
-            {cartItemInfo.shipping_method === "DELIVERY"
-              ? "택배배송"
-              : "직접배송"}{" "}
-            /{" "}
-            {cartItemInfo.shipping_fee === 0
-              ? "무료배송"
-              : `${cartItemInfo.shipping_fee.toLocaleString("ko-KR")} 원`}
-          </p>
+          <S.ProductImg src={cartItemInfo.image} alt="상품이미지" />
+          <S.ProductInfo>
+            <p>{cartItemInfo.store_name}</p>
+            <p>{cartItemInfo.product_name}</p>
+            <p>{cartItemInfo.price.toLocaleString("ko-KR")}원</p>
+            <p>
+              {cartItemInfo.shipping_method === "DELIVERY"
+                ? "택배배송"
+                : "직접배송"}{" "}
+              /{" "}
+              {cartItemInfo.shipping_fee === 0
+                ? "무료배송"
+                : `${cartItemInfo.shipping_fee.toLocaleString("ko-KR")} 원`}
+            </p>
+          </S.ProductInfo>
         </S.ProductInfoWrapper>
-      </S.ProductInfo>
+      </S.ProductInfoContainer>
       <QuantityButton
         cartQuantity={cartQuantity}
         cartItemId={cartItemId}

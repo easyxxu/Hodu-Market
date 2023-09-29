@@ -7,6 +7,7 @@ import { updateQuantityApi, cartListApi } from "../../../apis/cartApi";
 import Minus from "../../../assets/icon-minus-line.svg";
 import Plus from "../../../assets/icon-plus-line.svg";
 import { cartInfoListAtom } from "../../../atoms/cartAtom";
+import { media } from "../../style/media";
 
 interface QuantityButtonProps {
   cartQuantity?: number;
@@ -97,7 +98,6 @@ const CountButtonStyle = styled.div`
   align-items: center;
   gap: 36px;
   padding: 13px;
-  width: 150px;
   border: 1px solid var(--content-color-light);
   border-radius: 5px;
   button {
@@ -109,9 +109,13 @@ const CountButtonStyle = styled.div`
     &:last-child {
       background: url(${Plus}) no-repeat center center;
     }
+    ${media.Small`
+      width: 10px;
+      height: 10px;
+    `}
   }
   p {
-    font-size: 18px;
+    font-size: 1.125em;
     position: relative;
     &::before {
       content: "";
@@ -121,6 +125,12 @@ const CountButtonStyle = styled.div`
       top: -14px;
       left: -20px;
       background-color: var(--content-color-light);
+      ${media.Small`
+        width: 37px;
+        height: 1px;
+        top: -20px;
+        left: -15px;
+      `}
     }
     &::after {
       content: "";
@@ -130,6 +140,16 @@ const CountButtonStyle = styled.div`
       top: -14px;
       right: -20px;
       background-color: var(--content-color-light);
+      ${media.Small`
+        width: 38px;
+        height: 1px;
+        top: 30px;
+        left: -15px;
+      `}
     }
   }
+  ${media.Small`
+    font-size: 0.8rem;
+    flex-direction: column-reverse;
+  `}
 `;

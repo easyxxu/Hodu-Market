@@ -36,8 +36,6 @@ const ProductInfoContainer = styled.div`
   word-break: keep-all;
   ${media.Small`
     width: inherit;
-    /* gap: 20px; */
-    /* width: 180px; */
   `}
 `;
 const ProductInfoWrapper = styled.div`
@@ -53,15 +51,15 @@ const ProductImg = styled.img`
   width: 160px;
   height: 160px;
   border-radius: 10px;
+  border: 1px solid var(--content-color-light);
   ${media.Small`
-    width: 80px;
-    height: 80px;
-  `}
+    width: 110px;
+    height: 110px;
+  `};
 `;
 const ProductInfo = styled.div`
   padding: 10px 0;
   ${media.Small`
-    /* float: left; */
   `}
   p:nth-child(1) {
     color: var(--content-color-dark);

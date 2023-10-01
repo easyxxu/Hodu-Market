@@ -56,7 +56,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   input{
     border: 0;
-    -webkit-appearance: none;
+    /* -webkit-appearance: none; */
     &:focus{
       outline: none;
     }

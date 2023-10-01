@@ -5,6 +5,7 @@ import { styled } from "styled-components";
 import OrderDetail from "./OrderDetail";
 import axios from "axios";
 import { Order } from "../../types/order";
+import { media } from "../style/media";
 
 export default function OrderList() {
   const [orderListData, setOrderListData] = useState([]);
@@ -79,7 +80,7 @@ const OrderTable = styled.table`
   width: 100%;
   background-color: #fff;
   th {
-    font-size: 24px;
+    font-size: 1.5em;
     padding: 15px;
     background-color: #f2f2f2;
     &:first-child {
@@ -90,6 +91,9 @@ const OrderTable = styled.table`
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
     }
+    ${media.Small`
+      font-size: 1.2em;
+    `}
   }
   tr {
     &:not(:last-child) {

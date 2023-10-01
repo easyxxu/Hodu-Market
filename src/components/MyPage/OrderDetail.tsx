@@ -7,6 +7,7 @@ import { Button } from "../common/Button/Button";
 import axios from "axios";
 import { Order } from "../../types/order";
 import { Product } from "../../types/product";
+import { media } from "../style/media";
 interface OrderDetailProps {
   order: Order;
   onClose: any;
@@ -127,11 +128,11 @@ const OrderInfoTitle = styled.div`
   display: flex;
   justify-content: space-between;
   h4 {
-    font-size: 32px;
+    font-size: 2em;
     font-weight: 500;
   }
   p {
-    font-size: 24px;
+    font-size: 1.5em;
     color: var(--content-color-dark);
   }
 `;
@@ -142,7 +143,7 @@ const ProductListTable = styled.table`
   width: 100%;
   text-align: center;
   th {
-    font-size: 18px;
+    font-size: 1.5em;
     padding: 10px;
     background-color: #f2f2f2;
     &:first-child {
@@ -153,6 +154,9 @@ const ProductListTable = styled.table`
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
     }
+    ${media.Small`
+      font-size: 1.1em;
+    `}
   }
   tr {
     &:not(:last-child) {
@@ -169,6 +173,10 @@ const ProductListTable = styled.table`
     object-fit: contain;
     border: 1px solid var(--content-color-light);
     border-radius: 10px;
+    ${media.Small`
+      width:80px;
+      height:80px;
+    `}
   }
 `;
 const OrderInfoList = styled.div`
@@ -180,7 +188,7 @@ const OrderInfoList = styled.div`
   padding: 20px;
   span {
     &:nth-child(odd) {
-      font-size: 18px;
+      font-size: 1.125em;
       font-weight: 500;
     }
   }

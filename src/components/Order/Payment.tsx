@@ -406,7 +406,7 @@ export default function Payment() {
                   주문 내용을 확인하였으며, 정보 제공 등에 동의합니다.
                 </label>
                 <Button
-                  type="button"
+                  type="submit"
                   width="L"
                   size="L"
                   bgcolor={!handleSubmitBtn() ? "disabled" : undefined}

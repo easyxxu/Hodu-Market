@@ -6,6 +6,7 @@ import { Button } from "../../components/common/Button/Button";
 import { MainLayout } from "../../components/Layout/Layout";
 import OrderList from "../../components/MyPage/OrderList";
 import Welcome from "../../components/MyPage/Welcome";
+import { media } from "../../components/style/media";
 export default function MyPage() {
   const userType = localStorage.getItem("user_type");
   const navigate = useNavigate();
@@ -76,33 +77,59 @@ export default function MyPage() {
 }
 
 const MyPageTitle = styled.h2`
-  font-size: 32px;
+  font-size: 2em;
   font-weight: 500;
   text-align: center;
   margin: 30px 0;
+  ${media.Small`
+      margin-bottom: 10px;
+  `}
 `;
 const MyPageContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 30px;
+  /* box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2); */
+  padding: 0 20px;
   padding-bottom: 300px;
+  ${media.Small`
+    flex-direction: column;
+    font-size: 0.7rem;
+    gap: 15px;
+  `}
 `;
 const MyPageMenu = styled.div`
-  padding: 10px;
   display: flex;
   flex-direction: column;
   flex: 2;
+  /* box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2); */
+  ${media.Small`
+    justify-content: center;
+  `}
   h3 {
-    font-size: 24px;
+    font-size: 1.5em;
+    button {
+      ${media.Small`
+        font-size: 0.8em;
+        width: 100px;
+    `}
+    }
   }
   ul {
     margin: 20px 0;
+    ${media.Small`
+      display:flex;
+      gap: 10px;
+  `}
   }
   li {
-    font-size: 20px;
+    font-size: 1.25em;
     color: var(--content-color-dark);
     margin-bottom: 20px;
     cursor: pointer;
+    ${media.Small`
+      margin-bottom: 0;
+    `}
   }
 `;
 const OrderMenu = styled.div`
@@ -113,6 +140,7 @@ const OrderMenu = styled.div`
 `;
 const MyPageContent = styled.div<{ center: string }>`
   flex: 8;
+  /* box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2); */
   ${(props) =>
     props.center === "true" &&
     css`

@@ -3,6 +3,7 @@ import LogoIcon from "../../../assets/Logo-hodu.svg";
 import ShoppingCart from "../../../assets/icon-shopping-cart.svg";
 import ShoppingCartActive from "../../../assets/icon-shopping-cart-2.svg";
 import MyPage from "../../../assets/icon-user.svg";
+import MyPageActive from "../../../assets/icon-user-2.svg";
 import ShoppingBag from "../../../assets/icon-shopping-bag.svg";
 import { Button } from "../Button/Button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -56,6 +57,7 @@ function HeaderType(type: string | null) {
   const navigate = useNavigate();
   const location = useLocation();
   const isCartPage = location.pathname === "/cart";
+  const isMyPage = location.pathname === "/mypage";
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 639);
   const navItemClassName = isMobile ? "a11y-hidden" : undefined;
   useEffect(() => {
@@ -80,8 +82,8 @@ function HeaderType(type: string | null) {
           />
           <p className={navItemClassName}>장바구니</p>
         </S.ShoppingCartLink>
-        <S.HeaderLink to="/mypage">
-          <img src={MyPage} alt="my-page" />
+        <S.HeaderLink to="/mypage" active={isMyPage ? true : false}>
+          <img src={isMyPage ? MyPageActive : MyPage} alt="my-page" />
           <p className={navItemClassName}>마이페이지</p>
         </S.HeaderLink>
       </S.Nav>
@@ -90,8 +92,8 @@ function HeaderType(type: string | null) {
     // SELLER로 로그인한 상태
     return (
       <S.Nav>
-        <S.HeaderLink to="/mypage">
-          <img src={MyPage} alt="my-page" />
+        <S.HeaderLink to="/mypage" active={isMyPage ? true : false}>
+          <img src={isMyPage ? MyPageActive : MyPage} alt="my-page" />
           <p className={navItemClassName}>마이페이지</p>
         </S.HeaderLink>
         <Button

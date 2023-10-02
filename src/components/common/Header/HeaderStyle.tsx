@@ -89,7 +89,7 @@ const ShoppingCartLink = styled(Link)<{ active: string }>`
   }
 `;
 
-const HeaderLink = styled(Link)`
+const HeaderLink = styled(Link)<{ active: boolean }>`
   text-align: center;
   color: #767676;
   font-size: 12px;
@@ -98,6 +98,9 @@ const HeaderLink = styled(Link)`
       width: 26px;
       height: 26px;
     `}
+  }
+  p {
+    color: ${(props) => (props.active ? "var(--point-color)" : "inherit")};
   }
 `;
 // 판매자센터 헤더

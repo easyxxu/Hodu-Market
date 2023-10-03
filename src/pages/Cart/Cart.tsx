@@ -88,6 +88,20 @@ export default function Cart() {
       return (
         <>
           <CartList />
+        </>
+      );
+    }
+  };
+  // console.log("!!", cartInfoList);
+  return (
+    <MainLayout type={userType}>
+      <CartTitle>장바구니</CartTitle>
+      <CartContentContainer>
+        <CartHeader />
+        {cartContent()}
+      </CartContentContainer>
+      {userType === "BUYER" && cartProductInfoList.length !== 0 && (
+        <>
           <AllDeleteBtn>
             <Button
               content="전체삭제"
@@ -113,21 +127,15 @@ export default function Cart() {
             />
           </ButtonStyle>
         </>
-      );
-    }
-  };
-  // console.log("!!", cartInfoList);
-  return (
-    <MainLayout type={userType}>
-      <CartContentContainer>
-        <CartHeaderStyle />
-        {cartContent()}
-      </CartContentContainer>
+      )}
     </MainLayout>
   );
 }
-const CartHeaderStyle = styled(CartHeader)`
-  margin-bottom: 36px;
+const CartTitle = styled.h2`
+  font-size: 2.25em;
+  font-weight: 700;
+  text-align: center;
+  margin: 54px 0 52px;
 `;
 const CartTotalStyle = styled(CartTotal)`
   margin: 36px 0 40px;
@@ -141,6 +149,8 @@ const ButtonStyle = styled.div`
 const AllDeleteBtn = styled(ButtonStyle)`
   margin: 36px 0 0;
 `;
-const CartContentContainer = styled.div`
-  padding: 0 10px;
+const CartContentContainer = styled.table`
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
 `;

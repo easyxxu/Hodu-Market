@@ -29,21 +29,24 @@ export default function CartHeader({ className }: CartHeaderProps) {
 
   return (
     <>
-      <S.CartTitle>장바구니</S.CartTitle>
-      <S.CartTabTitle className={className}>
-        <S.CartCheckBox
-          type="checkbox"
-          onChange={(e) => handleAllSelect(e.target.checked)}
-          checked={
-            cartCheckedItems.length === cartProductInfoList.length
-              ? true
-              : false
-          }
-        />
-        <p>상품정보</p>
-        <p>수량</p>
-        <p>상품금액</p>
-      </S.CartTabTitle>
+      <S.CartHeader className={className}>
+        <tr>
+          <th>
+            <S.CartCheckBox
+              type="checkbox"
+              onChange={(e) => handleAllSelect(e.target.checked)}
+              checked={
+                cartCheckedItems.length === cartProductInfoList.length
+                  ? true
+                  : false
+              }
+            />
+          </th>
+          <th>상품정보</th>
+          <th>수량</th>
+          <th>상품금액</th>
+        </tr>
+      </S.CartHeader>
     </>
   );
 }

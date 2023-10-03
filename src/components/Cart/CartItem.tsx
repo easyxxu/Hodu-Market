@@ -215,7 +215,7 @@ export default function CartItem({ item }: CartItemProps) {
 
   return (
     <S.CartItemContainer>
-      <S.ProductInfoContainer>
+      <td>
         <S.ToggleCheckBox
           type="checkbox"
           checked={isChecked}
@@ -223,32 +223,34 @@ export default function CartItem({ item }: CartItemProps) {
             handleCartSingleSelect(e.target.checked, cartItemInfo.product_id)
           }
         />
-        <S.ProductInfoWrapper>
-          <S.ProductImg src={cartItemInfo.image} alt="상품이미지" />
-          <S.ProductInfo>
-            <p>{cartItemInfo.store_name}</p>
-            <p>{cartItemInfo.product_name}</p>
-            <p>{cartItemInfo.price.toLocaleString("ko-KR")}원</p>
-            <p>
-              {cartItemInfo.shipping_method === "DELIVERY"
-                ? "택배배송"
-                : "직접배송"}{" "}
-              /{" "}
-              {cartItemInfo.shipping_fee === 0
-                ? "무료배송"
-                : `${cartItemInfo.shipping_fee.toLocaleString("ko-KR")} 원`}
-            </p>
-          </S.ProductInfo>
-        </S.ProductInfoWrapper>
-      </S.ProductInfoContainer>
-      <QuantityButton
-        cartQuantity={cartQuantity}
-        cartItemId={cartItemId}
-        productId={
-          cartInfoList.find((x) => x.product_id === cartItemInfo.product_id)
-            ?.product_id
-        }
-      />
+      </td>
+      <S.ProductInfoWrapper>
+        <S.ProductImg src={cartItemInfo.image} alt="상품이미지" />
+        <S.ProductInfo>
+          <p>{cartItemInfo.store_name}</p>
+          <p>{cartItemInfo.product_name}</p>
+          <p>{cartItemInfo.price.toLocaleString("ko-KR")}원</p>
+          <p>
+            {cartItemInfo.shipping_method === "DELIVERY"
+              ? "택배배송"
+              : "직접배송"}{" "}
+            /{" "}
+            {cartItemInfo.shipping_fee === 0
+              ? "무료배송"
+              : `${cartItemInfo.shipping_fee.toLocaleString("ko-KR")} 원`}
+          </p>
+        </S.ProductInfo>
+      </S.ProductInfoWrapper>
+      <td>
+        <QuantityButton
+          cartQuantity={cartQuantity}
+          cartItemId={cartItemId}
+          productId={
+            cartInfoList.find((x) => x.product_id === cartItemInfo.product_id)
+              ?.product_id
+          }
+        />
+      </td>
       <S.ProductPriceContainer>
         <p>{(cartItemInfo.price * cartQuantity).toLocaleString("ko-KR")}원</p>
         <Button

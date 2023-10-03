@@ -6,16 +6,15 @@ import { cartProductInfoListAtom } from "../../atoms/cartAtom";
 export default function CartList() {
   const cartProductInfoList = useRecoilValue(cartProductInfoListAtom);
   return (
-    <CartListStyle>
+    <tbody>
+      <CartMargin />
       {cartProductInfoList.map((item) => {
         return <CartItem item={item.data} key={item.data.product_id} />;
       })}
-    </CartListStyle>
+    </tbody>
   );
 }
 
-const CartListStyle = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+const CartMargin = styled.tr`
+  height: 30px;
 `;

@@ -3,12 +3,7 @@ import ToggleCheck from "../../assets/toggle-check.svg";
 import ToggleUnCheck from "../../assets/toggle-uncheck.svg";
 import Close from "../../assets/icon-delete.svg";
 import { media } from "../style/media";
-const CartItemContainer = styled.li`
-  /* max-width: 1280px; */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 100px 20px 30px;
+const CartItemContainer = styled.tr`
   border-radius: 10px;
   border: 2px solid #e0e0e0;
   position: relative;
@@ -17,28 +12,46 @@ const CartItemContainer = styled.li`
     padding-left: 10px;
     padding-right: 30px;
   `}
+  td {
+    vertical-align: middle;
+    padding: 20px;
+    &:first-child {
+      border-left: 2px solid #e0e0e0;
+      border-top: 2px solid #e0e0e0;
+      border-bottom: 2px solid #e0e0e0;
+      border-radius: 10px 0 0 10px;
+    }
+    &:nth-child(2) {
+      border-top: 2px solid #e0e0e0;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    &:nth-child(3) {
+      border-top: 2px solid #e0e0e0;
+      border-bottom: 2px solid #e0e0e0;
+      div {
+        margin: 0 auto;
+      }
+    }
+    &:nth-child(4) {
+      border-right: 2px solid #e0e0e0;
+      border-top: 2px solid #e0e0e0;
+      border-bottom: 2px solid #e0e0e0;
+      border-radius: 0 10px 10px 0;
+    }
+  }
 `;
 const ToggleCheckBox = styled.input`
   background: url(${ToggleUnCheck}) no-repeat;
   width: 20px;
   height: 20px;
-  margin: auto 0;
+  margin: 0 auto;
   appearance: none;
   cursor: pointer;
   &:checked {
     background: url(${ToggleCheck}) no-repeat;
   }
 `;
-const ProductInfoContainer = styled.div`
-  display: flex;
-  gap: 40px;
-  width: 500px;
-  word-break: keep-all;
-  ${media.Small`
-    width: inherit;
-  `}
-`;
-const ProductInfoWrapper = styled.div`
+const ProductInfoWrapper = styled.td`
   display: flex;
   gap: 36px;
   ${media.Small`
@@ -78,8 +91,7 @@ const ProductInfo = styled.div`
     color: var(--content-color-dark);
   }
 `;
-
-const ProductPriceContainer = styled.div`
+const ProductPriceContainer = styled.td`
   p {
     color: #eb5757;
     text-align: center;
@@ -88,6 +100,7 @@ const ProductPriceContainer = styled.div`
     margin-bottom: 26px;
   }
   button {
+    margin: 0 auto;
     width: 130px;
     padding: 10px 35px;
     font-size: 1em;
@@ -112,7 +125,6 @@ const BtnDelete = styled.button`
 export {
   CartItemContainer,
   ToggleCheckBox,
-  ProductInfoContainer,
   ProductImg,
   ProductInfoWrapper,
   ProductInfo,

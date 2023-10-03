@@ -3,38 +3,29 @@ import ToggleUnCheck from "../../assets/toggle-uncheck.svg";
 import ToggleCheck from "../../assets/toggle-check.svg";
 import { media } from "../style/media";
 
-const CartTitle = styled.h2`
-  font-size: 36px;
-  font-weight: 700;
-  text-align: center;
-  margin: 54px 0 52px;
-`;
-const CartTabTitle = styled.div`
-  max-width: 1280px;
+const CartHeader = styled.thead`
+  width: 100%;
   border-radius: 10px;
   background: #f2f2f2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 19px 100px 19px 30px;
   font-size: 1.125em;
+  th {
+    padding: 19px;
+    vertical-align: middle;
+    &:first-child {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+    &:last-child {
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+  }
   ${media.Small`
     font-size: 0.9em;
+    display: none;
     padding-left: 10px;
     padding-right: 30px;
   `}
-  p:nth-child(2) {
-    /* width: 614px; */
-    text-align: center;
-  }
-  p:nth-child(3) {
-    /* width: 150px; */
-    text-align: center;
-  }
-  p:last-child {
-    /* width: 130px; */
-    text-align: center;
-  }
 `;
 const CartCheckBox = styled.input`
   background: url(${ToggleUnCheck}) no-repeat;
@@ -46,4 +37,4 @@ const CartCheckBox = styled.input`
     background: url(${ToggleCheck}) no-repeat;
   }
 `;
-export { CartTitle, CartTabTitle, CartCheckBox };
+export { CartHeader, CartCheckBox };

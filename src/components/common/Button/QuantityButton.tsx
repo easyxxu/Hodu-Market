@@ -96,13 +96,18 @@ export default function QuantityButton({
 const CountButtonStyle = styled.div`
   display: flex;
   align-items: center;
-  gap: 36px;
-  padding: 13px;
+  width: 9.2em;
+  gap: 2.25em;
+  padding: 0.8125em;
   border: 1px solid var(--content-color-light);
   border-radius: 5px;
+  ${media.Small`
+    width: 8em;
+    gap: 2em;
+  `}
   button {
-    width: 20px;
-    height: 20px;
+    width: 1.25em;
+    height: 1.25em;
     &:first-child {
       background: url(${Minus}) no-repeat center center;
     }
@@ -110,8 +115,8 @@ const CountButtonStyle = styled.div`
       background: url(${Plus}) no-repeat center center;
     }
     ${media.Small`
-      width: 10px;
-      height: 10px;
+      width: 1em;
+      height: 1em;
     `}
   }
   p {
@@ -120,36 +125,20 @@ const CountButtonStyle = styled.div`
     &::before {
       content: "";
       position: absolute;
-      width: 1px;
-      height: 47px;
-      top: -14px;
-      left: -20px;
+      width: 0.0625em;
+      height: 2.55em;
+      top: -0.79em;
+      left: -1.25em;
       background-color: var(--content-color-light);
-      ${media.Small`
-        width: 37px;
-        height: 1px;
-        top: -20px;
-        left: -15px;
-      `}
     }
     &::after {
       content: "";
       position: absolute;
-      width: 1px;
-      height: 47px;
-      top: -14px;
-      right: -20px;
+      width: 0.0625em;
+      height: 2.55em;
+      top: -0.79em;
+      right: -1.25em;
       background-color: var(--content-color-light);
-      ${media.Small`
-        width: 38px;
-        height: 1px;
-        top: 30px;
-        left: -15px;
-      `}
     }
   }
-  ${media.Small`
-    font-size: 0.8rem;
-    flex-direction: column-reverse;
-  `}
 `;

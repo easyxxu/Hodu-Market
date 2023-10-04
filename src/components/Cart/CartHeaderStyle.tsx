@@ -4,7 +4,6 @@ import ToggleCheck from "../../assets/toggle-check.svg";
 import { media } from "../style/media";
 
 const CartHeader = styled.thead`
-  width: 100%;
   border-radius: 10px;
   background: #f2f2f2;
   font-size: 1.125em;
@@ -22,9 +21,9 @@ const CartHeader = styled.thead`
   }
   ${media.Small`
     font-size: 0.9em;
-    display: none;
-    padding-left: 10px;
-    padding-right: 30px;
+    th{
+      padding: 5px 10px;
+    }
   `}
 `;
 const CartCheckBox = styled.input`

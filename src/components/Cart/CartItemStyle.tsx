@@ -4,18 +4,18 @@ import ToggleUnCheck from "../../assets/toggle-uncheck.svg";
 import Close from "../../assets/icon-delete.svg";
 import { media } from "../style/media";
 const CartItemContainer = styled.tr`
-  border-radius: 10px;
-  border: 2px solid #e0e0e0;
   position: relative;
   ${media.Small`
-    font-size: 0.9rem;
-    padding-left: 10px;
-    padding-right: 30px;
+    font-size: 0.8rem;
   `}
   td {
     vertical-align: middle;
     padding: 20px;
+    ${media.Small`
+      padding: 10px 5px;
+    `}
     &:first-child {
+      text-align: center;
       border-left: 2px solid #e0e0e0;
       border-top: 2px solid #e0e0e0;
       border-bottom: 2px solid #e0e0e0;
@@ -57,7 +57,6 @@ const ProductInfoWrapper = styled.td`
   ${media.Small`
     flex-direction: column;
     gap: 10px;
-    width: 110px;
   `}
 `;
 const ProductImg = styled.img`
@@ -66,8 +65,8 @@ const ProductImg = styled.img`
   border-radius: 10px;
   border: 1px solid var(--content-color-light);
   ${media.Small`
-    width: 110px;
-    height: 110px;
+    width: 100px;
+    height: 100px;
   `};
 `;
 const ProductInfo = styled.div`

@@ -5,10 +5,8 @@ import {
   cartProductInfoListAtom,
   cartCheckedItemsAtom,
 } from "../../atoms/cartAtom";
-interface CartHeaderProps {
-  className?: string;
-}
-export default function CartHeader({ className }: CartHeaderProps) {
+
+export default function CartHeader() {
   const cartProductInfoList = useRecoilValue(cartProductInfoListAtom);
   const [cartCheckedItems, setCartCheckItems] =
     useRecoilState(cartCheckedItemsAtom);
@@ -29,7 +27,7 @@ export default function CartHeader({ className }: CartHeaderProps) {
 
   return (
     <>
-      <S.CartHeader className={className}>
+      <S.CartHeader>
         <tr>
           <th>
             <S.CartCheckBox

@@ -4,6 +4,7 @@ import { Logo, Header, SellerHeader } from "../common/Header/Header";
 import styled from "styled-components";
 import { Modals } from "../common/Modal/Modals";
 import Banner from "../Banner/Banner";
+import { media } from "../style/media";
 interface CommonLayoutProps {
   children: React.ReactNode;
 }
@@ -51,12 +52,14 @@ export function AuthLayout({ children }: AuthLayoutProps) {
 }
 
 const Container = styled.div`
-  /* width: 100%; */
   position: relative;
 `;
 const MainContainer = styled.main`
   max-width: 1280px;
   margin: 0 auto;
+  ${media.Small`
+    padding: 0 15px;
+  `}
 `;
 const ModalContainer = styled.div`
   position: fixed;

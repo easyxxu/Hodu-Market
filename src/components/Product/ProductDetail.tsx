@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -44,7 +44,19 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
   const inCart = cartProductInfoList.filter(
     (item: ProductDetailProps) => item.data.product_id === parseInt(productId!)
   ).length;
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 639);
+  const [tabIsActive, setTabIsActive] = useState(0);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 639);
+    };
 
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   // 주문하기 모달 오픈
   const handleOrderModalOpen = async () => {
     const stock = await getStock(product_id);
@@ -134,6 +146,10 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
       }
     }
   };
+  const tabList: string[] = ["상세정보", "리뷰", "Q&A", "반품/교환정보"];
+  const handleTab = (index: number) => {
+    setTabIsActive(index);
+  };
 
   // logout
   const handleLogout = async () => {
@@ -161,7 +177,7 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
     <S.Wrapper>
       <S.DetailContainer>
         <S.ProductImg src={image} alt="상품이미지" />
-        <div>
+        <S.ProductInfoContainer>
           <S.ProductCompany>{store_name}</S.ProductCompany>
           <S.ProductName>{product_name}</S.ProductName>
           <S.ProductPrice>
@@ -197,7 +213,7 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
                 content="품절"
                 disabled={true}
                 type="button"
-                width="629px"
+                width={isMobile ? "100%" : "629px"}
                 bgcolor="disabled"
                 color="white"
                 fontSize="L"
@@ -208,7 +224,7 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
                 <Button
                   type="button"
                   size="M"
-                  width="416px"
+                  width={isMobile ? "70%" : "416px"}
                   color="white"
                   fontSize="M"
                   fontWeight="bold"
@@ -218,7 +234,7 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
                 <Button
                   type="button"
                   size="M"
-                  width="200px"
+                  width={isMobile ? "30%" : "200px"}
                   color="white"
                   bgcolor="dark"
                   fontSize="M"
@@ -229,15 +245,24 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
               </>
             )}
           </S.BtnBuyContainer>
-        </div>
+        </S.ProductInfoContainer>
       </S.DetailContainer>
       <S.DetailTabContainer>
-        <S.BtnDetailInfoActive>상세정보</S.BtnDetailInfoActive>
-        <S.BtnDetailInfoUnActive>리뷰</S.BtnDetailInfoUnActive>
-        <S.BtnDetailInfoUnActive>Q&A</S.BtnDetailInfoUnActive>
-        <S.BtnDetailInfoUnActive>반품/교환정보</S.BtnDetailInfoUnActive>
+        {tabList.map((tabItem, idx) => {
+          return (
+            <S.BtnDetailInfo
+              key={idx}
+              onClick={() => handleTab(idx)}
+              isActive={tabIsActive === idx}
+            >
+              {tabItem}
+            </S.BtnDetailInfo>
+          );
+        })}
       </S.DetailTabContainer>
-      <S.DetailInfo>{product_info}</S.DetailInfo>
+      <S.DetailInfo>
+        {tabIsActive === 0 ? product_info : "준비중입니다 :)"}
+      </S.DetailInfo>
     </S.Wrapper>
   );
 }

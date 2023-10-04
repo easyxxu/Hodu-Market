@@ -1,37 +1,60 @@
 import styled from "styled-components";
+import { media } from "../style/media";
 
 const Wrapper = styled.div`
   max-width: 1280px;
-  width: 100%;
   margin: 80px auto;
+  ${media.Small`
+    font-size: 0.9rem;
+    margin-top: 40px;
+  `}
 `;
 const DetailContainer = styled.div`
   display: flex;
+  justify-content: center;
   margin-bottom: 140px;
   position: relative;
+  ${media.Small`
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+  `}
 `;
 const ProductImg = styled.img`
   width: 600px;
   height: 600px;
   margin-right: 50px;
+  ${media.Medium`
+    width: 40%;
+    height: 100%;
+  `}
+  ${media.Small`
+    width: 80%;
+    height: 100%;
+    margin: 0 0 40px;
+  `}
 `;
+const ProductInfoContainer = styled.div``;
 const ProductCompany = styled.p`
   margin-bottom: 16px;
-  font-size: 18px;
+  font-size: 1.125em;
   color: var(--content-color-dark);
 `;
 const ProductName = styled.p`
   margin-bottom: 20px;
-  font-size: 36px;
+  font-size: 2.25em;
   font-weight: 400;
 `;
 const ProductPrice = styled.p`
   margin-bottom: 138px;
   strong {
-    font-size: 36px;
+    font-size: 2.25em;
     font-weight: 700;
     margin-right: 2px;
   }
+  ${media.Small`
+    margin-bottom: 20px;
+  `}
 `;
 const Delivery = styled.p`
   color: var(--content-color-dark);
@@ -64,7 +87,7 @@ const TotalPrice = styled.p`
   position: relative;
   strong {
     font-weight: 700;
-    font-size: 36px;
+    font-size: 2.25em;
     margin-right: 2px;
   }
   &::before {
@@ -80,22 +103,24 @@ const TotalPrice = styled.p`
 const BtnBuyContainer = styled.div`
   display: flex;
   gap: 14px;
+  ${media.Medium`
+    button{
+      width: 100%;
+    }
+  `}
 `;
-const DetailTabContainer = styled.div``;
-const BtnDetailInfoActive = styled.button`
-  width: 320px;
-  color: var(--point-color);
-  font-size: 18px;
-  font-weight: 700;
-  border-bottom: 6px solid var(--point-color);
-  padding: 19px 0;
+const DetailTabContainer = styled.div`
+  display: flex;
 `;
-const BtnDetailInfoUnActive = styled.button`
+const BtnDetailInfo = styled.button<{ isActive: boolean }>`
   width: 320px;
-  color: var(--content-color-dark);
-  font-size: 18px;
-  border-bottom: 6px solid #e0e0e0;
+  font-size: 1.125em;
   padding: 19px 0;
+  color: ${(props) =>
+    props.isActive ? "var(--point-color)" : "var(--content-color-dark)"};
+  font-weight: ${(props) => (props.isActive ? "700" : "500")};
+  border-bottom: 6px solid
+    ${(props) => (props.isActive ? "var(--point-color)" : "#e0e0e0")};
 `;
 const DetailInfo = styled.div`
   margin-top: 20px;
@@ -106,6 +131,7 @@ export {
   Wrapper,
   DetailContainer,
   ProductImg,
+  ProductInfoContainer,
   ProductCompany,
   ProductName,
   ProductPrice,
@@ -117,7 +143,6 @@ export {
   TotalPrice,
   BtnBuyContainer,
   DetailTabContainer,
-  BtnDetailInfoActive,
-  BtnDetailInfoUnActive,
+  BtnDetailInfo,
   DetailInfo,
 };

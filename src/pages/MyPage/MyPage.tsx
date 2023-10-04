@@ -89,20 +89,19 @@ const MyPageContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 30px;
-  /* box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2); */
-  padding: 0 20px;
-  padding-bottom: 300px;
+  padding: 0 20px 300px;
   ${media.Small`
     flex-direction: column;
     font-size: 0.7rem;
     gap: 15px;
+    padding-right: 0;
+    padding-left: 0;
   `}
 `;
 const MyPageMenu = styled.div`
   display: flex;
   flex-direction: column;
   flex: 2;
-  /* box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2); */
   ${media.Small`
     justify-content: center;
   `}
@@ -140,7 +139,6 @@ const OrderMenu = styled.div`
 `;
 const MyPageContent = styled.div<{ center: string }>`
   flex: 8;
-  /* box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2); */
   ${(props) =>
     props.center === "true" &&
     css`

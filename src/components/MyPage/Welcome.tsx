@@ -13,7 +13,6 @@ export default function Welcome() {
   );
 }
 const Container = styled.div`
-  padding: 10px;
   p {
     &:first-child {
       font-size: 2em;

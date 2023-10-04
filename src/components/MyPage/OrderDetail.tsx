@@ -139,7 +139,7 @@ const OrderInfoTitle = styled.div`
 const ProductListTable = styled.table`
   border-bottom: 3px solid #f2f2f2;
   border-radius: 10px;
-  border-collapse: seperate;
+  /* border-collapse: seperate; */
   width: 100%;
   text-align: center;
   th {

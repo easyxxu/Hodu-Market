@@ -13,7 +13,7 @@ export function Logo() {
   return (
     <h1>
       <Link to="/">
-        <img src={LogoIcon} alt="호두 로고" />
+        <S.LogoImg src={LogoIcon} alt="호두 로고" />
       </Link>
     </h1>
   );
@@ -98,10 +98,10 @@ function HeaderType(type: string | null) {
         </S.HeaderLink>
         <Button
           type="button"
-          width="MS"
+          width={isMobile ? "100%" : "MS"}
           color="white"
           img={ShoppingBag}
-          content="판매자센터"
+          content={isMobile ? "" : "판매자센터"}
           onClick={() => navigate("/sellercenter")}
         />
       </S.Nav>

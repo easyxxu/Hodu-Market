@@ -20,13 +20,12 @@ const HeaderContainer = styled.header`
   ${media.Small`
     padding: 26px 15px;
   `}
-  img {
-    ${media.Small`
-      width: 74px;
-    `}
-  }
 `;
-
+const LogoImg = styled.img`
+  ${media.Small`
+    width: 74px;
+  `}
+`;
 const SearchContainer = styled.form`
   position: relative;
   width: 400px;
@@ -105,7 +104,7 @@ const HeaderLink = styled(Link)<{ active: boolean }>`
 `;
 // 판매자센터 헤더
 const SellerHeaderDiv = styled.header`
-  padding: 26px 0;
+  padding: 26px 10px;
   display: flex;
   align-items: center;
   width: 100%;
@@ -124,6 +123,7 @@ const SellerHeaderDiv = styled.header`
 export {
   HeaderDiv,
   HeaderContainer,
+  LogoImg,
   SearchContainer,
   SearchInput,
   SearchBtn,

@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { media } from "../../style/media";
 
 //Button
 interface ButtonProps {
@@ -68,6 +69,9 @@ export const ButtonStyle = styled.button<ButtonProps>`
       align-items: center;
       font-size: 18px;
       padding: 11px 0;
+      ${media.Small`
+        padding: 5px 0;
+      `}
     `}
 `;
 
@@ -143,22 +147,25 @@ export const TabMenuButtonStyle = styled.button<TabMenuButtonProps>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 250px;
+  width: 100%;
   padding: 15px 20px;
   background-color: ${(props) =>
     props.active === "on" ? "var(--point-color)" : "#fff"};
   color: ${(props) => (props.active === "on" ? "#fff" : "#000")};
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 1em;
   p {
     width: 20px;
     height: 20px;
     color: #fff;
-    font-size: 12px;
+    font-size: 0.75em;
     border-radius: 50%;
     background-color: var(--price-point-color);
     line-height: 20px;
   }
+  ${media.Small`
+    padding: 5px 10px;
+  `}
   ${(props) =>
     props.active !== "on" &&
     css`

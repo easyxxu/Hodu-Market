@@ -57,6 +57,7 @@ export const GlobalStyle = createGlobalStyle`
   input{
     border: 0;
     /* -webkit-appearance: none; */
+    border-radius: 0;
     &:focus{
       outline: none;
     }

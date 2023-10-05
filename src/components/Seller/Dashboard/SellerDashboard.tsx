@@ -8,6 +8,7 @@ import { loadSellerProduct } from "../../../apis/productApi";
 import { useState } from "react";
 import DashboardItem from "./DashboardItem";
 import { Product } from "../../../types/product";
+import { media } from "../../style/media";
 
 export default function SellerDashboard() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function SellerDashboard() {
   }, []);
   console.log(productList);
   return (
-    <div>
+    <DashBoardContainer>
       <DashBoardTop>
         <h3>
           대시보드 {""}
@@ -48,7 +49,7 @@ export default function SellerDashboard() {
         />
       </DashBoardTop>
       <DashBoardMain>
-        <TabMenuBar>
+        <TabMenu>
           <ul>
             <li>
               <TabMenuButton
@@ -69,8 +70,8 @@ export default function SellerDashboard() {
               <TabMenuButton active="off" content="스토어 설정" />
             </li>
           </ul>
-        </TabMenuBar>
-        <ProductListBackground>
+        </TabMenu>
+        <ProductListContainer>
           <ProductList>
             <table>
               <thead>
@@ -98,18 +99,24 @@ export default function SellerDashboard() {
               </tbody>
             </table>
           </ProductList>
-        </ProductListBackground>
+        </ProductListContainer>
       </DashBoardMain>
-    </div>
+    </DashBoardContainer>
   );
 }
+const DashBoardContainer = styled.div`
+  word-break: keep-all;
+  ${media.Small`
+      font-size: 0.9rem;
+  `}
+`;
 const DashBoardTop = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 44px;
   margin-bottom: 42px;
   h3 {
-    font-size: 36px;
+    font-size: 2.25em;
     font-weight: 700;
   }
   strong {
@@ -120,18 +127,31 @@ const DashBoardTop = styled.div`
 const DashBoardMain = styled.div`
   display: flex;
   gap: 30px;
+  ${media.Small`
+    flex-direction: column;
+  `}
 `;
-const TabMenuBar = styled.div`
+const TabMenu = styled.div`
+  width: 20%;
   button {
     margin-bottom: 10px;
   }
+  ${media.Small`
+    width: 100%;
+    ul{
+      display: flex;
+    }
+  `}
 `;
-const ProductListBackground = styled.div`
-  width: 1000px;
-  height: 800px;
+const ProductListContainer = styled.div`
+  width: 80%;
+  height: 80vh;
   border: 1px solid var(--content-colr-light);
   background-color: #f2f2f2;
   margin-bottom: 80px;
+  ${media.Small`
+    width: 100%;
+  `}
 `;
 const ProductList = styled.div`
   img {
@@ -141,8 +161,7 @@ const ProductList = styled.div`
   }
   table {
     max-width: 1440px;
-    width: 1000px;
-    /* width: 100%; */
+    width: 100%;
     background-color: #fff;
     border: 1px solid var(--content-color-light);
   }

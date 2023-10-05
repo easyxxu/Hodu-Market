@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { productDeleteApi } from "../../../apis/productApi";
 import { Button } from "../../common/Button/Button";
+import { media } from "../../style/media";
 interface DashboardItemProps {
   image: string;
   productName: string;
@@ -87,4 +88,8 @@ const ProductInfo = styled.div`
       color: var(--content-color-dark);
     }
   }
+  ${media.Small`
+    flex-direction: column;
+    padding: 8px 15px;
+  `}
 `;

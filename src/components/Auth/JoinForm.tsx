@@ -439,7 +439,7 @@ export default function JoinForm() {
         <Button
           type="submit"
           size="M"
-          width="M"
+          width="100%"
           bgcolor={!handleSubmitBtn() ? "disabled" : undefined}
           color="white"
           fontSize="M"

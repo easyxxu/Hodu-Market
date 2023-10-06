@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { loginApi } from "../../apis/authApi";
 import { Button } from "../common/Button/Button";
+import { media } from "../style/media";
 export default function LoginForm() {
   const [loginInfo, setLoginInfo] = useState({
     username: "",
@@ -118,15 +119,23 @@ export default function LoginForm() {
 const LoginContainer = styled.div`
   width: 550px;
   margin: 50px auto;
-  border-radius: 10px;
+  ${media.Small`
+    width: 350px;
+    font-size: 0.9rem;
+  `}
 `;
 const LoginTypeBtn = styled.div`
   display: flex;
   button {
-    width: 275px;
-    font-size: 18px;
+    width: 50%;
+    font-size: 1.125em;
     padding: 20px 76px 38px;
   }
+  ${media.Small`
+    button{
+      padding: 10px 20px 30px;
+    }
+  `}
 `;
 const BuyerLoginBtn = styled.button<{ active: string }>`
   ${(props) =>
@@ -175,7 +184,7 @@ const LoginFormContainer = styled.form`
   z-index: 1;
   margin-bottom: 30px;
   input {
-    width: 480px;
+    width: 100%;
     border-bottom: 1px solid #ccc;
     padding: 20px 0;
     &:focus {
@@ -188,19 +197,27 @@ const LoginFormContainer = styled.form`
   button {
     margin-top: 36px;
   }
+  ${media.Small`
+  padding: 17px 17.5px 18px;
+  margin-bottom: 15px;
+    button{
+      width: 100%;
+      margin-top: 10px;
+    }
+  `}
 `;
 const LoginLinkContainer = styled.div`
   text-align: center;
   position: relative;
   a {
     color: #333;
-  }
-  a:first-of-type {
-    margin-right: 33px;
-    &::after {
-      content: "|";
-      position: absolute;
-      transform: translate(14px, 0);
+    &:first-of-type {
+      margin-right: 33px;
+      &::after {
+        content: "|";
+        position: absolute;
+        transform: translate(14px, 0);
+      }
     }
   }
 `;

@@ -74,7 +74,7 @@ const AuthContainer = styled.div`
   margin: 0 auto;
   h1 {
     text-align: center;
-    width: 550px;
+    width: 100%;
     margin: 0 auto;
   }
   img {

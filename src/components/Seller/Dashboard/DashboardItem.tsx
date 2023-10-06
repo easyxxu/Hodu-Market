@@ -90,6 +90,7 @@ const ProductInfo = styled.div`
   }
   ${media.Small`
     flex-direction: column;
-    padding: 8px 15px;
+    padding: 10px 15px;
+    gap: 10px;
   `}
 `;

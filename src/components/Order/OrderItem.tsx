@@ -33,9 +33,11 @@ export default function OrderItem({ item, itemQuantity }: OrderItemProps) {
           </ProductItem>
         </td>
         <td>-</td>
-        <td>{shippingFee}</td>
+        <td>{parseInt(shippingFee).toLocaleString("ko-KR")}</td>
         <td>
-          {itemQuantity ? itemQuantity * item.price : quantity * item.price}
+          {itemQuantity
+            ? (itemQuantity * item.price).toLocaleString("ko-KR")
+            : (quantity * item.price).toLocaleString("ko-KR")}
         </td>
       </tr>
     </>

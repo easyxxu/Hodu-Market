@@ -17,7 +17,7 @@ export default function ProductList({ productListData }: ProductListData) {
               {product.product_name}
             </S.ProductName>
             <S.ProductPrice>
-              {product.price}
+              {product.price.toLocaleString("ko-KR")}
               <S.ProductWon>원</S.ProductWon>
             </S.ProductPrice>
           </S.ProductLink>

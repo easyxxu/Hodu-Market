@@ -80,9 +80,9 @@ export default function OrderDetail({ order, onClose }: OrderDetailProps) {
                   <img src={product.image} alt="상품이미지" />
                 </td>
                 <td>{product.product_name}</td>
-                <td>{product.price}</td>
+                <td>{product.price.toLocaleString("ko-KR")}</td>
                 <td>{order.order_quantity[idx]}</td>
-                <td>{product.shipping_fee}</td>
+                <td>{product.shipping_fee.toLocaleString("ko-KR")}</td>
               </tr>
             );
           })}
@@ -102,7 +102,7 @@ export default function OrderDetail({ order, onClose }: OrderDetailProps) {
         <span>결제 방식</span>
         <span>{orderPaymentMethod()}</span>
         <span>총 금액</span>
-        <span>{order.total_price}</span>
+        <span>{order.total_price.toLocaleString("ko-KR")}</span>
       </OrderInfoList>
       <Button
         type="button"

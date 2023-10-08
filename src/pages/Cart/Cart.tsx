@@ -80,16 +80,6 @@ export default function Cart() {
       cartProductInfoList.length === 0
     ) {
       return <CartNoItemBuyer />;
-    } else if (
-      token &&
-      userType === "BUYER" &&
-      cartProductInfoList.length !== 0
-    ) {
-      return (
-        <>
-          <CartList />
-        </>
-      );
     }
   };
   // console.log("!!", cartInfoList);
@@ -97,7 +87,12 @@ export default function Cart() {
     <MainLayout type={userType}>
       <CartTitle>장바구니</CartTitle>
       <CartContentContainer>
-        <CartHeader />
+        <CartTable>
+          <CartHeader />
+          {token && userType === "BUYER" && cartInfoList.length !== 0 && (
+            <CartList />
+          )}
+        </CartTable>
         {cartContent()}
       </CartContentContainer>
       {userType === "BUYER" && cartProductInfoList.length !== 0 && (
@@ -149,7 +144,8 @@ const ButtonStyle = styled.div`
 const AllDeleteBtn = styled(ButtonStyle)`
   margin: 36px 0 0;
 `;
-const CartContentContainer = styled.table`
+const CartContentContainer = styled.div``;
+const CartTable = styled.table`
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 10px;

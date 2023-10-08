@@ -18,7 +18,6 @@ export default function OrderList() {
   const cartIsCheckedList = useRecoilValue(cartCheckedItemsAtom);
   const cartInformation = useRecoilValue(cartInfoListAtom);
   const [checkedOrderList, setCheckedOrderList] = useState<Product[]>([]);
-  console.log("checkedOrderList: ", checkedOrderList);
   useEffect(() => {
     const realOrderList = () => {
       const result = cartProductInfoList.filter((item) =>

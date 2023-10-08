@@ -83,7 +83,6 @@ export default function QuantityButton({
       quantityUpdate();
     }
   }, [quantityUpdateForm, cartItemId, setCartInfoList]);
-  console.log(quantityUpdateForm);
   return (
     <CountButtonStyle>
       <button type="button" onClick={handleQuantityMinus} />

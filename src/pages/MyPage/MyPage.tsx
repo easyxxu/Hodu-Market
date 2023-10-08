@@ -17,7 +17,7 @@ export default function MyPage() {
       localStorage.removeItem("token");
       localStorage.removeItem("user_type");
       localStorage.removeItem("recoil-persist");
-      console.log(res);
+      // console.log(res);
       navigate("/");
     } catch (err) {
       console.error(err);

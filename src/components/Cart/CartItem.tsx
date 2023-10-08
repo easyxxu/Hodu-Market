@@ -108,7 +108,7 @@ export default function CartItem({ item }: CartItemProps) {
     const updateIsActive = async () => {
       try {
         const res = await updateQuantityApi(cartItemId, checkedForm);
-        console.log("체크 통신 완료:", res.data);
+        // console.log("체크 통신 완료:", res.data);
       } catch (err) {
         if (axios.isAxiosError(err)) {
           console.error("체크 통신 실패:", err.response?.data);
@@ -141,7 +141,6 @@ export default function CartItem({ item }: CartItemProps) {
       let itemTotal = item.price * item.quantity;
       total.push(itemTotal);
     });
-    console.log("!!", total);
     const shippingFees = totalCheckedItems.map((item) => item.shipping_fee);
 
     setTotalPrice({
@@ -198,7 +197,7 @@ export default function CartItem({ item }: CartItemProps) {
     // 재고 조회
     const stock = await getStock(cartItemInfo.product_id);
     const stockCheckResult = stockCheck(stock, cartQuantity);
-    console.log(stockCheckResult, cartItemInfo.product_id);
+    // console.log(stockCheckResult, cartItemInfo.product_id);
     if (stockCheckResult) {
       navigate("/order", {
         state: {

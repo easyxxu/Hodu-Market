@@ -37,7 +37,7 @@ export default function OrderDetail({ order, onClose }: OrderDetailProps) {
     const getOrderProductsDetail = async (productId: number) => {
       try {
         const res = await loadProductDetail(productId);
-        console.log(res.data);
+        // console.log(res.data);
         return res.data;
       } catch (err) {
         if (axios.isAxiosError(err)) {
@@ -51,7 +51,6 @@ export default function OrderDetail({ order, onClose }: OrderDetailProps) {
       setOrderProductsDetail((prev) => [...prev, data]);
     });
   }, []);
-  console.log(orderProductsDetail);
   return (
     <Container>
       <OrderInfoTitle>

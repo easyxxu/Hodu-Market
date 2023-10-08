@@ -30,7 +30,6 @@ export default function OrderList() {
     };
     getOrderList();
   }, []);
-  console.log(orderListData);
   return (
     <OrderTableContainer>
       {!selectedOrder ? (

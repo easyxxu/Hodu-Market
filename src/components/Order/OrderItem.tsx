@@ -16,7 +16,6 @@ export default function OrderItem({ item, itemQuantity }: OrderItemProps) {
   const location = useLocation();
   const data = location.state;
   const quantity = data.quantity;
-  // console.log("hey!", item, quantity, itemQuantity);
   const shippingFee =
     item.shipping_fee === 0 ? "무료배송" : `${item.shipping_fee}`;
   return (

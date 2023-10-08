@@ -18,7 +18,7 @@ export default function SearchResultPage() {
     const getSearchResult = async () => {
       try {
         const res = await productSearch(page, searchKeyword);
-        console.log(res.data);
+        // console.log(res.data);
         setSearchResultData(res.data.results);
       } catch (err) {
         if (axios.isAxiosError(err)) {

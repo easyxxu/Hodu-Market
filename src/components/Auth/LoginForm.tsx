@@ -46,19 +46,17 @@ export default function LoginForm() {
     } else {
       setLoginErrorMsg("");
     }
-    console.log("click");
     try {
       const res = await loginApi(loginInfo);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user_type", res.data.user_type);
-      console.log("로그인 성공!", res);
+      // console.log("로그인 성공!", res);
       navigate("/");
     } catch (err) {
       console.error("로그인 에러", err);
       setLoginErrorMsg("아이디 또는 비밀번호가 틀렸습니다.");
     }
   };
-  console.log("loginInfo: ", loginInfo);
   return (
     <LoginContainer>
       <h1 className="a11y-hidden">로그인</h1>

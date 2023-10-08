@@ -18,14 +18,13 @@ export default function SellerDashboard() {
       try {
         const res = await loadSellerProduct();
         setProductList(res.data.results);
-        console.log(res);
+        // console.log(res);
       } catch (err) {
         console.error("load error", err);
       }
     };
     loadSellerProductList();
   }, []);
-  console.log(productList);
   return (
     <DashBoardContainer>
       <DashBoardTop>

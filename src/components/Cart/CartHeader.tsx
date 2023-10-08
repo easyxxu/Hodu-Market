@@ -19,7 +19,6 @@ export default function CartHeader() {
           idArr.push(cartItem.data.product_id)
       );
       setCartCheckItems(idArr);
-      console.log("전체 선택");
     } else {
       setCartCheckItems([]);
     }

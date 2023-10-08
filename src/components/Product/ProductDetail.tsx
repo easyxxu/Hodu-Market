@@ -137,7 +137,7 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
   const handleAddCart = async () => {
     try {
       const res = await addCartApi(cartAddForm);
-      console.log("장바구니 담기 성공: ", res);
+      // console.log("장바구니 담기 성공: ", res);
       return res;
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -153,13 +153,13 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
 
   // logout
   const handleLogout = async () => {
-    console.log("logout go");
+    // console.log("logout go");
     try {
       const res = await logoutApi();
       localStorage.removeItem("token");
       localStorage.removeItem("user_type");
       localStorage.removeItem("recoil-persist");
-      console.log("logout:", res);
+      // console.log("logout:", res);
     } catch (err) {
       console.error(err);
     }

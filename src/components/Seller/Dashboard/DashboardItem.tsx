@@ -34,7 +34,7 @@ export default function DashboardItem({
       setProductList((prevProductList) =>
         prevProductList.filter((product) => product.product_id !== productId)
       );
-      console.log("상품 삭제 완료: ", res);
+      // console.log("상품 삭제 완료: ", res);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.error("상품 삭제 실패: ", err.response);

@@ -47,7 +47,6 @@ export default function JoinForm() {
 
   // Form Submit API 통신
   const handleSubmitJoin = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("click");
     e.preventDefault();
     try {
       if (joinType === "buyer") {
@@ -56,7 +55,7 @@ export default function JoinForm() {
         await signupSellerApi(sellerInfo);
       }
       navigate("/login");
-      console.log("회원가입 성공!");
+      // console.log("회원가입 성공!");
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.error("회원가입 오류", err);
@@ -191,7 +190,6 @@ export default function JoinForm() {
   const pwValidCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const regex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
     if (!regex.test(e.target.value) && e.target.value.length > 0) {
-      console.log(e.target.value, regex.test(e.target.value));
       setPwValidErrorMsg("8자 이상, 영문 소문자, 숫자를 사용하세요.");
       setPwValid(false);
       setPwDoubleValid(false);

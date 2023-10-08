@@ -35,10 +35,10 @@ export default function ProductAdd() {
     try {
       if (type === "add") {
         await productAddApi(product);
-        console.log("상품등록 성공");
+        // console.log("상품등록 성공");
       } else if (type === "modify") {
         await productModifyApi(productId, product);
-        console.log("상품수정 성공");
+        // console.log("상품수정 성공");
       }
       navigate("/sellercenter");
     } catch (err) {
@@ -70,7 +70,6 @@ export default function ProductAdd() {
     if (!file) {
       return;
     }
-    console.log(file);
     setProduct({ ...product, image: file });
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -125,7 +124,6 @@ export default function ProductAdd() {
     }
   }, []);
 
-  console.log(product);
   return (
     <Container>
       <Title>{type === "add" ? "상품 등록" : "상품 수정"}</Title>

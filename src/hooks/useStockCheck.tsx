@@ -3,7 +3,7 @@ import { loadProductDetail } from "../apis/productApi";
 
 export default function useStockCheck() {
   const stockCheck = (stock: number, quantity: number) => {
-    console.log("재고:", stock, "주문수량:", quantity);
+    // console.log("재고:", stock, "주문수량:", quantity);
     if (stock < quantity) {
       return false;
     } else {

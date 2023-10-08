@@ -211,7 +211,6 @@ export default function Payment() {
       setReceiverValid(true);
     }
   }, [orderForm.payment_method, orderForm.receiver]);
-  console.log(orderForm);
   return (
     <>
       <S.Title>배송정보</S.Title>
@@ -376,7 +375,7 @@ export default function Payment() {
               <S.FinalPaymentDetail>
                 <p>- 상품금액</p>
                 <p>
-                  <strong>{totalPrice}</strong>원
+                  <strong>{totalPrice.toLocaleString("ko-KR")}</strong>원
                 </p>
               </S.FinalPaymentDetail>
               <S.FinalPaymentDetail>
@@ -388,7 +387,7 @@ export default function Payment() {
               <S.FinalPaymentDetail>
                 <p>- 배송비</p>
                 <p>
-                  <strong>{totalShippingFee}</strong>원
+                  <strong>{totalShippingFee.toLocaleString("ko-KR")}</strong>원
                 </p>
               </S.FinalPaymentDetail>
               <hr />

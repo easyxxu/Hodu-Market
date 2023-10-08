@@ -82,7 +82,7 @@ function HeaderType(type: string | null) {
           />
           <p className={navItemClassName}>장바구니</p>
         </S.ShoppingCartLink>
-        <S.HeaderLink to="/mypage" active={isMyPage ? true : false}>
+        <S.HeaderLink to="/mypage" active={isMyPage ? "true" : "false"}>
           <img src={isMyPage ? MyPageActive : MyPage} alt="my-page" />
           <p className={navItemClassName}>마이페이지</p>
         </S.HeaderLink>
@@ -92,7 +92,7 @@ function HeaderType(type: string | null) {
     // SELLER로 로그인한 상태
     return (
       <S.Nav>
-        <S.HeaderLink to="/mypage" active={isMyPage ? true : false}>
+        <S.HeaderLink to="/mypage" active={isMyPage ? "true" : "false"}>
           <img src={isMyPage ? MyPageActive : MyPage} alt="my-page" />
           <p className={navItemClassName}>마이페이지</p>
         </S.HeaderLink>

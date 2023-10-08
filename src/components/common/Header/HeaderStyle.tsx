@@ -88,7 +88,7 @@ const ShoppingCartLink = styled(Link)<{ active: string }>`
   }
 `;
 
-const HeaderLink = styled(Link)<{ active: boolean }>`
+const HeaderLink = styled(Link)<{ active: string }>`
   text-align: center;
   color: #767676;
   font-size: 12px;
@@ -99,7 +99,8 @@ const HeaderLink = styled(Link)<{ active: boolean }>`
     `}
   }
   p {
-    color: ${(props) => (props.active ? "var(--point-color)" : "inherit")};
+    color: ${(props) =>
+      props.active === "true" ? "var(--point-color)" : "inherit"};
   }
 `;
 // 판매자센터 헤더

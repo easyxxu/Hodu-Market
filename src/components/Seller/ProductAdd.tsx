@@ -24,6 +24,7 @@ export default function ProductAdd() {
     stock: "",
     product_info: "",
   });
+  const [productModify, setProductModify] = useState({});
   const inputImgRef = useRef<any>(null);
   const [imgPrev, setImgPrev] = useState("");
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ export default function ProductAdd() {
         await productAddApi(product);
         // console.log("상품등록 성공");
       } else if (type === "modify") {
-        await productModifyApi(productId, product);
+        await productModifyApi(productId, productModify);
         // console.log("상품수정 성공");
       }
       navigate("/sellercenter");
@@ -62,6 +63,7 @@ export default function ProductAdd() {
     }
 
     setProduct({ ...product, [name]: parsedValue });
+    setProductModify({ ...productModify, [name]: parsedValue });
   };
 
   const handleImgChange = () => {
@@ -92,6 +94,7 @@ export default function ProductAdd() {
   };
 
   useEffect(() => {
+    // 상품수정 시 해당 상품 정보 불러오기
     if (type === "modify") {
       const getProductDetail = async () => {
         try {

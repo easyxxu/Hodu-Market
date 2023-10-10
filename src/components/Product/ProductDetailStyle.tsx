@@ -4,8 +4,8 @@ import { media } from "../style/media";
 const Wrapper = styled.div`
   max-width: 1280px;
   margin: 80px auto;
+  word-break: keep-all;
   ${media.Small`
-    font-size: 0.9rem;
     margin-top: 40px;
   `}
 `;

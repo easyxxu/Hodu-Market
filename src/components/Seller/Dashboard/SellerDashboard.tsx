@@ -105,9 +105,6 @@ export default function SellerDashboard() {
 }
 const DashBoardContainer = styled.div`
   word-break: keep-all;
-  ${media.Small`
-      font-size: 0.9rem;
-  `}
 `;
 const DashBoardTop = styled.div`
   display: flex;

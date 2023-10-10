@@ -20,7 +20,6 @@ const CartHeader = styled.thead`
     }
   }
   ${media.Small`
-    font-size: 0.9em;
     th{
       padding: 5px 10px;
     }

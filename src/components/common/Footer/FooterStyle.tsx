@@ -79,7 +79,6 @@ const FooterInfo = styled.address`
     padding: 0 50px;
   `}
   ${media.Small`
-    font-size: 0.9rem;
     padding: 0 30px;
   `}
 `;

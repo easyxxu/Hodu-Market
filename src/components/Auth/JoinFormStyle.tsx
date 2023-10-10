@@ -9,7 +9,6 @@ const JoinContainer = styled.div`
   margin: 50px auto;
   ${media.Small`
     width: 350px;
-    font-size: 0.9rem; 
   `}
 `;
 const JoinTypeBtn = styled.div`

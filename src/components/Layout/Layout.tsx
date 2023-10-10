@@ -53,13 +53,14 @@ export function AuthLayout({ children }: AuthLayoutProps) {
 
 const Container = styled.div`
   position: relative;
+  ${media.Small`
+    font-size: 0.9rem;
+  `}
 `;
 const MainContainer = styled.main`
   max-width: 1280px;
   margin: 0 auto;
-  ${media.Small`
-    padding: 0 15px;
-  `}
+  padding: 0 10px;
 `;
 const ModalContainer = styled.div`
   position: fixed;
@@ -80,4 +81,7 @@ const AuthContainer = styled.div`
   img {
     width: 200px;
   }
+  ${media.Small`
+    font-size: 0.9rem;
+  `}
 `;

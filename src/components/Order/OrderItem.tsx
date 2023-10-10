@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { styled } from "styled-components";
+import { media } from "../style/media";
 
 interface OrderItemProps {
   item: {
@@ -65,4 +66,10 @@ const ProductItem = styled.div`
       color: var(--content-color-dark);
     }
   }
+  ${media.Small`
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  `}
 `;

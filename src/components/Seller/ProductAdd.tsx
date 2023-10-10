@@ -297,7 +297,6 @@ const Container = styled.div`
   `}
   ${media.Small`
     padding: 0;
-    font-size: 0.9rem;
   `}
 `;
 const Title = styled.h3`

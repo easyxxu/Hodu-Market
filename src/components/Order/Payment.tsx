@@ -235,12 +235,14 @@ export default function Payment() {
                 maxLength={3}
                 onBlur={handleOrderPhoneNum}
               />
+              -
               <S.Input
                 type="text"
                 name="second"
                 maxLength={4}
                 onBlur={handleOrderPhoneNum}
               />
+              -
               <S.Input
                 type="text"
                 name="third"
@@ -279,12 +281,14 @@ export default function Payment() {
                 maxLength={3}
                 onChange={handleReceiverPhoneNum}
               />
+              -
               <S.Input
                 type="text"
                 name="second"
                 maxLength={4}
                 onChange={handleReceiverPhoneNum}
               />
+              -
               <S.Input
                 type="text"
                 name="third"
@@ -296,7 +300,17 @@ export default function Payment() {
           <S.ShippingLabel>
             배송주소
             <S.ShippingInfo>
-              <S.Input type="text" name="우편번호" onChange={handleAddress} />
+              <S.ZipCodeContainer>
+                <S.Input type="text" name="우편번호" onChange={handleAddress} />
+                <S.ShippingBtn
+                  width="154px"
+                  color="white"
+                  type="button"
+                  content="우편번호 조회"
+                >
+                  우편번호 조회
+                </S.ShippingBtn>
+              </S.ZipCodeContainer>
               <S.Input type="text" name="기본주소" onChange={handleAddress} />
               <S.Input type="text" name="상세주소" onChange={handleAddress} />
             </S.ShippingInfo>
@@ -309,14 +323,6 @@ export default function Payment() {
               onChange={handleInputChange}
             />
           </S.ShippingMsgLabel>
-          <S.ShippingBtn
-            width="154px"
-            color="white"
-            type="button"
-            content="우편번호 조회"
-          >
-            우편번호 조회
-          </S.ShippingBtn>
         </fieldset>
         <S.TotalPaymentContainer>
           <S.PaymentFieldset>
@@ -369,7 +375,7 @@ export default function Payment() {
               </label>
             </S.PaymentContainer>
           </S.PaymentFieldset>
-          <div>
+          <S.FinalWrapper>
             <S.FinalPaymentTitle>최종결제 정보</S.FinalPaymentTitle>
             <S.FinalPaymentContainer>
               <S.FinalPaymentDetail>
@@ -415,7 +421,7 @@ export default function Payment() {
                 />
               </S.FinalAgreementContainer>
             </S.FinalPaymentContainer>
-          </div>
+          </S.FinalWrapper>
         </S.TotalPaymentContainer>
       </S.PaymentForm>
     </>

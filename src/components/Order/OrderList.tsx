@@ -63,18 +63,19 @@ export default function OrderList() {
   );
 }
 const Title = styled.h2`
-  font-size: 36px;
+  font-size: 2.25em;
   font-weight: 700;
   text-align: center;
   margin-bottom: 52px;
   margin-top: 54px;
 `;
 const OrderTable = styled.table`
-  width: 1280px;
+  width: 100%;
+  word-break: keep-all;
   thead {
     tr {
       background-color: #f2f2f2;
-      font-size: 18px;
+      font-size: 1.125em;
     }
     th {
       padding: 19px 0;
@@ -98,7 +99,7 @@ const OrderTable = styled.table`
     td {
       /* border: 1px solid black; */
       &:not(:first-child) {
-        font-size: 18px;
+        font-size: 1.125em;
         text-align: center;
         vertical-align: middle;
       }
@@ -117,7 +118,7 @@ const Total = styled.p`
   margin-top: 30px;
   strong {
     color: var(--price-point-color);
-    font-size: 24px;
+    font-size: 1.5em;
     font-weight: 700;
   }
 `;

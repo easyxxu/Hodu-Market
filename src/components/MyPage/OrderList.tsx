@@ -71,6 +71,7 @@ export default function OrderList() {
 }
 const OrderTableContainer = styled.div`
   height: 100%;
+  word-break: keep-all;
 `;
 const OrderTable = styled.table`
   border-bottom: 3px solid #f2f2f2;

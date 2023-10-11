@@ -5,7 +5,9 @@ import { useRecoilValue } from "recoil";
 import { orderCart, orderDirect } from "../../apis/orderApi";
 import { cartProductInfoListAtom } from "../../atoms/cartAtom";
 import { Button } from "../common/Button/Button";
+import PostCode from "./PostCode";
 import * as S from "./PaymentStyle";
+
 export default function Payment() {
   const location = useLocation();
   const data = location.state;
@@ -66,7 +68,7 @@ export default function Payment() {
     useState(false);
   const [addressValid, setAddressValid] = useState(false);
   const [paymentMethodValid, setPaymentMethodValid] = useState(false);
-
+  const [postCodeModal, setPostCodeModal] = useState(false);
   const handleSubmitOrderForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -185,9 +187,9 @@ export default function Payment() {
     });
   };
 
-  console.log("orderForm: ", orderForm);
-  // console.log("orderPhone: ", receiverPhoneNum);
-  console.log("orderPhone: ", orderPersonPhoneNum);
+  const handleZipCode = () => {
+    setPostCodeModal(true);
+  };
 
   const handleOrderAgree = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOrderAgree(e.target.checked);
@@ -226,7 +228,7 @@ export default function Payment() {
       setReceiverValid(true);
     }
   }, [orderForm.payment_method, orderForm.receiver]);
-
+  console.log("orderForm:", orderForm);
   return (
     <>
       <S.Title>배송정보</S.Title>
@@ -325,17 +327,35 @@ export default function Payment() {
             배송주소
             <S.ShippingInfo>
               <S.ZipCodeContainer>
-                <S.Input type="text" name="우편번호" onChange={handleAddress} />
-                <S.ShippingBtn
+                <S.Input
+                  type="text"
+                  name="우편번호"
+                  value={address.우편번호}
+                  readOnly={true}
+                />
+                <Button
                   width="154px"
                   color="white"
                   type="button"
                   content="우편번호 조회"
-                >
-                  우편번호 조회
-                </S.ShippingBtn>
+                  onClick={handleZipCode}
+                />
+                {postCodeModal && (
+                  <S.DaumPostCodeContainer>
+                    <PostCode
+                      address={address}
+                      setAddress={setAddress}
+                      setPostCodeModal={setPostCodeModal}
+                    />
+                  </S.DaumPostCodeContainer>
+                )}
               </S.ZipCodeContainer>
-              <S.Input type="text" name="기본주소" onChange={handleAddress} />
+              <S.Input
+                type="text"
+                name="기본주소"
+                value={address.기본주소}
+                readOnly={true}
+              />
               <S.Input type="text" name="상세주소" onChange={handleAddress} />
             </S.ShippingInfo>
           </S.ShippingLabel>

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { ButtonStyle } from "../common/Button/Button";
 import { media } from "../style/media";
+
 const Title = styled.h3`
   font-size: 1.5em;
   font-weight: 500;
@@ -196,6 +197,16 @@ const FinalAgreementContainer = styled.div`
     margin-top: 30px;
   }
 `;
+const DaumPostCodeContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+`;
+
 export {
   Title,
   PaymentForm,
@@ -218,4 +229,5 @@ export {
   FinalPaymentDetail,
   FinalPayment,
   FinalAgreementContainer,
+  DaumPostCodeContainer,
 };

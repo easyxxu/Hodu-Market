@@ -36,9 +36,11 @@ export default function Payment() {
     payment_method: "",
   });
   const [orderPersonName, setOrderPersonName] = useState("");
-  const [orderPersonPhoneNum, setOrderPersonPhoneNum] = useState<
-    { first: string; second: string; third: string } | string
-  >({
+  const [orderPersonPhoneNum, setOrderPersonPhoneNum] = useState<{
+    first: string;
+    second: string;
+    third: string;
+  }>({
     first: "",
     second: "",
     third: "",
@@ -86,9 +88,21 @@ export default function Payment() {
       }
     }
   };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setOrderForm({ ...orderForm, [name]: value });
+  };
+
+  const validCheckPhoneNumber = (inputElement: HTMLInputElement) => {
+    const isAllDigits = /^\d+$/.test(inputElement.value);
+    if (!isAllDigits) {
+      inputElement.setCustomValidity("숫자로만 입력하세요.");
+      inputElement.reportValidity();
+      inputElement.focus();
+    } else {
+      inputElement.setCustomValidity("");
+    }
   };
 
   // 주문자 이름 저장
@@ -96,34 +110,21 @@ export default function Payment() {
     setOrderPersonName(e.target.value);
     setOrderPersonNameValid(true);
   };
+
   // 주문자 휴대폰 번호 저장
-  const handleOrderPhoneNum = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleOrderPhoneNum = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
-    if (typeof orderPersonPhoneNum === "string") {
-      // 현재 orderPersonPhoneNum이 문자열인 경우
-      setOrderPersonPhoneNum(value);
-    } else {
-      // 현재 orderPersonPhoneNum이 객체인 경우
-      setOrderPersonPhoneNum({ ...orderPersonPhoneNum, [name]: value });
+    validCheckPhoneNumber(e.target);
+    setOrderPersonPhoneNum({ ...orderPersonPhoneNum, [name]: value });
+    if (
+      orderPersonPhoneNum.first &&
+      orderPersonPhoneNum.second &&
+      orderPersonPhoneNum.third
+    ) {
+      setOrderPersonPhoneNumValid(true);
     }
   };
 
-  const updateOrderPhoneNum = () => {
-    if (typeof orderPersonPhoneNum !== "string") {
-      // 현재 orderPersonPhonenum이 객체인 경우
-      if (
-        orderPersonPhoneNum.first &&
-        orderPersonPhoneNum.second &&
-        orderPersonPhoneNum.third
-      ) {
-        const combinedPhoneNumber = `${orderPersonPhoneNum.first}${orderPersonPhoneNum.second}${orderPersonPhoneNum.third}`;
-
-        setOrderPersonPhoneNum(combinedPhoneNumber);
-        setOrderPersonPhoneNumValid(true);
-      }
-    }
-  };
   // 주문자 이메일 저장
   const handleOrderEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOrderPersonEmail(e.target.value);
@@ -133,6 +134,7 @@ export default function Payment() {
   // 배송지 수령인 전화번호
   const handleReceiverPhoneNum = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    validCheckPhoneNumber(e.target);
     setReceiverPhoneNum({ ...receiverPhoneNum, [name]: value });
     updateReceiverPhoneNum();
   };
@@ -165,20 +167,32 @@ export default function Payment() {
       setAddressValid(true);
     }
   };
-  // 주문자 정보와 배송받는사람 정보가 같은 경우 버튼 클릭
+  // 주문자 정보와 배송받는사람 정보가 같은 경우 버튼 handler
   const handleSaveInfoBtn = () => {
+    console.log(typeof orderPersonPhoneNum);
     if (typeof orderPersonPhoneNum === "object") {
       setOrderForm({
         ...orderForm,
         receiver: orderPersonName,
-        receiver_phone_number: `${orderPersonPhoneNum.first}${orderPersonPhoneNum.second}${orderPersonPhoneNum.third}`,
       });
     }
+
+    // 주문자 정보를 배송지 정보에 반영
+    setReceiverPhoneNum({
+      first: orderPersonPhoneNum.first,
+      second: orderPersonPhoneNum.second,
+      third: orderPersonPhoneNum.third,
+    });
   };
+
+  console.log("orderForm: ", orderForm);
+  // console.log("orderPhone: ", receiverPhoneNum);
+  console.log("orderPhone: ", orderPersonPhoneNum);
 
   const handleOrderAgree = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOrderAgree(e.target.checked);
   };
+
   // 모든 input값 유효하다면 버튼 활성화
   const handleSubmitBtn = () => {
     return (
@@ -192,6 +206,7 @@ export default function Payment() {
       orderAgree
     );
   };
+
   useEffect(() => {
     updateReceiverPhoneNum();
   }, [receiverPhoneNum]);
@@ -200,9 +215,9 @@ export default function Payment() {
     updateAddress();
   }, [address]);
 
-  useEffect(() => {
-    updateOrderPhoneNum();
-  }, [orderPersonPhoneNum]);
+  // useEffect(() => {
+  //   updateOrderPhoneNum();
+  // }, [orderPersonPhoneNum]);
 
   useEffect(() => {
     if (orderForm.payment_method.length > 0) {
@@ -211,6 +226,7 @@ export default function Payment() {
       setReceiverValid(true);
     }
   }, [orderForm.payment_method, orderForm.receiver]);
+
   return (
     <>
       <S.Title>배송정보</S.Title>
@@ -230,24 +246,24 @@ export default function Payment() {
             휴대폰
             <S.PhoneInputContainer>
               <S.Input
-                type="text"
+                type="tel"
                 name="first"
                 maxLength={3}
-                onBlur={handleOrderPhoneNum}
+                onChange={handleOrderPhoneNum}
               />
               -
               <S.Input
-                type="text"
+                type="tel"
                 name="second"
                 maxLength={4}
-                onBlur={handleOrderPhoneNum}
+                onChange={handleOrderPhoneNum}
               />
               -
               <S.Input
-                type="text"
+                type="tel"
                 name="third"
                 maxLength={4}
-                onBlur={handleOrderPhoneNum}
+                onChange={handleOrderPhoneNum}
               />
             </S.PhoneInputContainer>
           </S.Label>
@@ -270,29 +286,37 @@ export default function Payment() {
           <legend>배송지 정보</legend>
           <S.Label>
             수령인
-            <S.Input type="text" name="receiver" onChange={handleInputChange} />
+            <S.Input
+              type="text"
+              name="receiver"
+              value={orderForm.receiver}
+              onChange={handleInputChange}
+            />
           </S.Label>
           <S.Label>
             휴대폰
             <S.PhoneInputContainer>
               <S.Input
-                type="text"
+                type="tel"
                 name="first"
                 maxLength={3}
+                value={receiverPhoneNum.first}
                 onChange={handleReceiverPhoneNum}
               />
               -
               <S.Input
-                type="text"
+                type="tel"
                 name="second"
                 maxLength={4}
+                value={receiverPhoneNum.second}
                 onChange={handleReceiverPhoneNum}
               />
               -
               <S.Input
-                type="text"
+                type="tel"
                 name="third"
                 maxLength={4}
+                value={receiverPhoneNum.third}
                 onChange={handleReceiverPhoneNum}
               />
             </S.PhoneInputContainer>

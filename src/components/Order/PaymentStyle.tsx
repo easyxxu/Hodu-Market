@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { ButtonStyle } from "../common/Button/Button";
 import { media } from "../style/media";
+
 const Title = styled.h3`
   font-size: 1.5em;
   font-weight: 500;
@@ -29,6 +30,9 @@ const PaymentForm = styled.form`
 `;
 const InfoSaveBtn = styled(ButtonStyle)`
   margin-top: 15px;
+  &:hover {
+    background-color: var(--point-color);
+  }
 `;
 const Label = styled.label`
   width: 100%;
@@ -52,6 +56,9 @@ const Input = styled.input`
   margin: 8px 0;
   border: 1px solid var(--content-color-light);
   font-size: 1em;
+  &:focus {
+    border: 1px solid var(--point-color);
+  }
 `;
 const PhoneInputContainer = styled.div`
   width: 80%;
@@ -190,6 +197,16 @@ const FinalAgreementContainer = styled.div`
     margin-top: 30px;
   }
 `;
+const DaumPostCodeContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+`;
+
 export {
   Title,
   PaymentForm,
@@ -212,4 +229,5 @@ export {
   FinalPaymentDetail,
   FinalPayment,
   FinalAgreementContainer,
+  DaumPostCodeContainer,
 };

@@ -13,11 +13,17 @@ export default function ErrorPage() {
           <br />웹 주소가 올바른지 확인해 주세요.
         </p>
         <ButtonContainer>
-          <Button width="200px" color="white" content="메인으로" />
           <Button
+            type="button"
+            width="200px"
+            color="white"
+            content="메인으로"
+          />
+          <Button
+            type="button"
             width="200px"
             bgcolor="light"
-            border="yes"
+            border="active"
             content="이전 페이지"
           />
         </ButtonContainer>

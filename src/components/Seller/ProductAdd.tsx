@@ -7,9 +7,9 @@ import {
   productAddApi,
   productModifyApi,
 } from "../../apis/productApi";
-import Frame from "../../assets/frame.svg";
+import Frame from "../../assets/svg/frame.svg";
 import { Button } from "../common/Button/Button";
-import imgUploadBtn from "../../assets/icon-img.svg";
+import imgUploadBtn from "../../assets/svg/icon-img.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
@@ -84,15 +84,18 @@ export default function ProductAdd() {
   };
   const handleShippingMethod = (e: React.MouseEvent<HTMLButtonElement>) => {
     const button = e.target as HTMLButtonElement;
+    console.log("눌리긴함 button: ", e);
     if (button.name === "DELIVERY") {
+      console.log("나 택배");
       setProduct({ ...product, shipping_method: "DELIVERY" });
       // setShippingMethod("DELIVERY");
-    } else {
+    } else if (button.name === "PARCEL") {
+      console.log("나 parcel");
       setProduct({ ...product, shipping_method: "PARCEL" });
       // setShippingMethod("PARCEL");
     }
   };
-
+  console.log("Product: ", product.shipping_method);
   useEffect(() => {
     // 상품수정 시 해당 상품 정보 불러오기
     if (type === "modify") {
@@ -203,7 +206,7 @@ export default function ProductAdd() {
               </InputFrameContainer>
               <label htmlFor="deliveryMethod">배송방법</label>
               <DeliveryBtnContainer>
-                <Button
+                {/* <Button
                   type="button"
                   id="deliveryMethod"
                   content="택배, 소포, 등기"
@@ -211,10 +214,12 @@ export default function ProductAdd() {
                   width="L"
                   size="L"
                   border={
-                    product.shipping_method === "DELIVERY" ? undefined : "yes"
+                    product.shipping_method === "DELIVERY"
+                      ? undefined
+                      : "active"
                   }
                   color={
-                    product.shipping_method === "DELIVERY" ? "white" : undefined
+                    product.shipping_method === "DELIVERY" ? "point" : "white"
                   }
                   bgcolor={
                     product.shipping_method === "DELIVERY" ? undefined : "light"
@@ -229,7 +234,7 @@ export default function ProductAdd() {
                   width="L"
                   size="L"
                   border={
-                    product.shipping_method === "PARCEL" ? undefined : "yes"
+                    product.shipping_method === "PARCEL" ? undefined : "active"
                   }
                   color={
                     product.shipping_method === "PARCEL" ? "white" : undefined
@@ -237,6 +242,30 @@ export default function ProductAdd() {
                   bgcolor={
                     product.shipping_method === "PARCEL" ? undefined : "light"
                   }
+                  onClick={handleShippingMethod}
+                /> */}
+                <Button
+                  type="button"
+                  id="deliveryMethod"
+                  name="DELIVERY"
+                  size="medium"
+                  color={
+                    product.shipping_method === "DELIVERY" ? "point" : "white"
+                  }
+                  customStyle={{ fontSize: "16px" }}
+                  children="택배, 소포, 등기"
+                  onClick={handleShippingMethod}
+                />
+                <Button
+                  type="button"
+                  id="deliveryMethod"
+                  name="PARCEL"
+                  size="medium"
+                  color={
+                    product.shipping_method === "PARCEL" ? "point" : "white"
+                  }
+                  customStyle={{ fontSize: "16px" }}
+                  children="직접배송(화물배달)"
                   onClick={handleShippingMethod}
                 />
               </DeliveryBtnContainer>
@@ -274,11 +303,11 @@ export default function ProductAdd() {
             />
           </ProductDetailContainer>
           <FormBtnContainer>
-            <Button
+            {/* <Button
               type="button"
               width="200px"
               bgcolor="light"
-              border="yes"
+              border="active"
               content="취소"
             />
             <Button
@@ -286,6 +315,20 @@ export default function ProductAdd() {
               width="200px"
               color="white"
               content="저장하기"
+            /> */}
+            <Button
+              type="button"
+              size="small"
+              color="white"
+              customStyle={{ width: "200px" }}
+              children="취소"
+            />
+            <Button
+              type="submit"
+              size="small"
+              color="point"
+              customStyle={{ width: "200px" }}
+              children="저장하기"
             />
           </FormBtnContainer>
         </Form>

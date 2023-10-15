@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import LogoIcon from "../../../assets/Logo-hodu.svg";
-import ShoppingCart from "../../../assets/icon-shopping-cart.svg";
-import ShoppingCartActive from "../../../assets/icon-shopping-cart-2.svg";
-import MyPage from "../../../assets/icon-user.svg";
-import MyPageActive from "../../../assets/icon-user-2.svg";
-import ShoppingBag from "../../../assets/icon-shopping-bag.svg";
+import LogoIcon from "../../../assets/svg/Logo-hodu.svg";
+import ShoppingCart from "../../../assets/svg/icon-shopping-cart.svg";
+import ShoppingCartActive from "../../../assets/svg/icon-shopping-cart-2.svg";
+import MyPage from "../../../assets/svg/icon-user.svg";
+import MyPageActive from "../../../assets/svg/icon-user-2.svg";
+// import ShoppingBag from "../../../assets/svg/icon-shopping-bag.svg";
 import { Button } from "../Button/Button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as S from "./HeaderStyle";
+import Icon from "../../Icon/Icon";
 
 export function Logo() {
   return (
@@ -96,14 +97,24 @@ function HeaderType(type: string | null) {
           <img src={isMyPage ? MyPageActive : MyPage} alt="my-page" />
           <p className={navItemClassName}>마이페이지</p>
         </S.HeaderLink>
-        <Button
+        {/* <Button
           type="button"
           width={isMobile ? "100%" : "MS"}
           color="white"
           img={ShoppingBag}
           content={isMobile ? "" : "판매자센터"}
           onClick={() => navigate("/sellercenter")}
-        />
+        /> */}
+        <Button
+          type="button"
+          size="medium_small"
+          color="point"
+          customStyle={isMobile ? { width: "100%" } : undefined}
+          onClick={() => navigate("/sellercenter")}
+        >
+          <Icon icon="shoppingbag" />
+          {isMobile ? "" : "판매자센터"}
+        </Button>
       </S.Nav>
     );
   } else {

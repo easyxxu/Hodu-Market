@@ -1,8 +1,8 @@
 import { styled, css } from "styled-components";
-import UpArrow from "../../assets/icon-up-arrow.svg";
-import DownArrow from "../../assets/icon-down-arrow.svg";
-import CheckBoxIcon from "../../assets/icon-check.svg";
-import { ReactComponent as CheckIcon } from "../../assets/icon-check-off.svg";
+import UpArrow from "../../assets/svg/icon-up-arrow.svg";
+import DownArrow from "../../assets/svg/icon-down-arrow.svg";
+import CheckBoxIcon from "../../assets/svg/icon-check.svg";
+import { ReactComponent as CheckIcon } from "../../assets/svg/icon-check-off.svg";
 import { media } from "../style/media";
 const JoinContainer = styled.div`
   width: 550px;

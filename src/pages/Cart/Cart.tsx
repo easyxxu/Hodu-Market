@@ -99,12 +99,10 @@ export default function Cart() {
         <>
           <AllDeleteBtn>
             <Button
-              content="전체삭제"
               type="button"
-              width="MS"
-              fontSize="M"
-              color="white"
-              bgcolor="disabled"
+              size="medium_small"
+              color="light"
+              children="전체삭제"
               onClick={handleDeleteAll}
             />
           </AllDeleteBtn>
@@ -112,12 +110,9 @@ export default function Cart() {
           <ButtonStyle>
             <Button
               type="button"
-              content="주문하기"
-              width="L"
-              size="L"
-              color="white"
-              fontSize="L"
-              fontWeight="bold"
+              size="medium"
+              color="point"
+              children="주문하기"
               onClick={handleIsCheckedOrder}
             />
           </ButtonStyle>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Minus from "../../assets/minus-icon_2.svg";
-import Plus from "../../assets/plus-icon_2.svg";
-import Result from "../../assets/icon-result.svg";
+import Minus from "../../assets/svg/minus-icon_2.svg";
+import Plus from "../../assets/svg/plus-icon_2.svg";
+import Result from "../../assets/svg/icon-result.svg";
 import { media } from "../style/media";
 const TotalContainer = styled.div`
   display: flex;

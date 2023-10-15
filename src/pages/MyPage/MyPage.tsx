@@ -45,12 +45,13 @@ export default function MyPage() {
             <h3>
               <Button
                 type="button"
-                content="로그아웃"
+                customStyle={{ width: "150px" }}
+                color="point"
+                size="small"
                 onClick={handleLogout}
-                width="150px"
-                color="white"
-                fontSize="M"
-              />
+              >
+                로그아웃
+              </Button>
             </h3>
           </MyPageMenu>
         )}
@@ -59,16 +60,15 @@ export default function MyPage() {
           {view === "welcome" && <Welcome />}
           {view === "order-lookup" && <OrderList />}
           {userType === "SELLER" && (
-            <>
-              <Button
-                type="button"
-                content="로그아웃"
-                onClick={handleLogout}
-                width="150px"
-                color="white"
-                fontSize="M"
-              />
-            </>
+            <Button
+              type="button"
+              customStyle={{ width: "150px" }}
+              color="point"
+              size="small"
+              onClick={handleLogout}
+            >
+              로그아웃
+            </Button>
           )}
         </MyPageContent>
       </MyPageContainer>

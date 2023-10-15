@@ -104,14 +104,23 @@ export default function OrderDetail({ order, onClose }: OrderDetailProps) {
         <span>총 금액</span>
         <span>{order.total_price.toLocaleString("ko-KR")}</span>
       </OrderInfoList>
-      <Button
+      {/* <Button
         type="button"
         content="뒤로가기"
         onClick={onClose}
         color="white"
         fontSize="M"
         bgcolor="disabled"
-      />
+      /> */}
+      <ButtonContainer>
+        <Button
+          type="button"
+          size="medium_small"
+          color="light"
+          children="뒤로가기"
+          onClick={onClose}
+        />
+      </ButtonContainer>
     </Container>
   );
 }
@@ -191,4 +200,8 @@ const OrderInfoList = styled.div`
       font-weight: 500;
     }
   }
+`;
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
 `;

@@ -273,7 +273,7 @@ export default function Payment() {
             이메일
             <S.Input type="email" name="email" onChange={handleOrderEmail} />
           </S.Label>
-          <S.InfoSaveBtn
+          {/* <S.InfoSaveBtn
             type="button"
             bgcolor="disabled"
             color="white"
@@ -282,6 +282,15 @@ export default function Payment() {
             content="주문자 정보와 동일"
           >
             주문자 정보와 동일
+          </S.InfoSaveBtn> */}
+          <S.InfoSaveBtn>
+            <Button
+              type="button"
+              size="medium_small"
+              color="white"
+              children="주문자 정보와 동일"
+              onClick={handleSaveInfoBtn}
+            />
           </S.InfoSaveBtn>
         </fieldset>
         <fieldset>
@@ -333,11 +342,19 @@ export default function Payment() {
                   value={address.우편번호}
                   readOnly={true}
                 />
-                <Button
+                {/* <Button
                   width="154px"
                   color="white"
                   type="button"
                   content="우편번호 조회"
+                  onClick={handleZipCode}
+                /> */}
+                <Button
+                  type="button"
+                  size="small"
+                  color="point"
+                  customStyle={{ width: "154px" }}
+                  children="우편번호 조회"
                   onClick={handleZipCode}
                 />
                 {postCodeModal && (
@@ -454,7 +471,7 @@ export default function Payment() {
                   />
                   주문 내용을 확인하였으며, 정보 제공 등에 동의합니다.
                 </label>
-                <Button
+                {/* <Button
                   type="submit"
                   width="L"
                   size="L"
@@ -462,6 +479,14 @@ export default function Payment() {
                   color="white"
                   content="결제하기"
                   disabled={!handleSubmitBtn()}
+                /> */}
+                <Button
+                  type="submit"
+                  size="large"
+                  color="point"
+                  customStyle={{ width: "418px" }}
+                  children="결제하기"
+                  disabled={!handleSubmitBtn() ? true : false}
                 />
               </S.FinalAgreementContainer>
             </S.FinalPaymentContainer>

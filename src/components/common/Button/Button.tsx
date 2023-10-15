@@ -1,195 +1,247 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled, { css, CSSObject } from "styled-components";
 import { media } from "../../style/media";
 
 //Button
-interface ButtonProps {
-  type: "submit" | "reset" | "button" | undefined;
-  name?: string;
-  id?: string;
-  content: string;
-  size?: "L" | "M" | "MS" | "S" | undefined;
-  width?: string;
-  bgcolor?: "disabled" | "dark" | "light";
-  color?: "white";
-  fontSize?: "L" | "M" | "S";
-  fontWeight?: "bold";
-  border?: "yes";
-  disabled?: boolean;
-  img?: string;
+// interface ButtonProps {
+//   type: "submit" | "button" | undefined;
+//   name?: string;
+//   id?: string;
+//   content: string;
+//   size?: "L" | "M" | "MS" | "S" | undefined;
+//   width?: string;
+//   bgcolor?: "disabled" | "dark" | "light";
+//   color?: "white";
+//   fontSize?: "L" | "M" | "S";
+//   fontWeight?: "bold";
+//   border?: "active";
+//   disabled?: boolean;
+//   img?: string;
+//   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+// }
+
+// export const ButtonStyle = styled.button<ButtonProps>`
+//   display: block;
+//   border-radius: 5px;
+//   width: ${(props) =>
+//     props.width === "L"
+//       ? "480px"
+//       : props.width === "M"
+//       ? "220px"
+//       : props.width === "MS"
+//       ? "168px"
+//       : props.width === "S"
+//       ? "80px"
+//       : props.width};
+//   padding: ${(props) =>
+//     props.size === "L" || props.size === "M"
+//       ? "19px 0px"
+//       : props.size === "MS"
+//       ? "16px 0px"
+//       : "10px 0px"};
+//   background-color: ${(props) =>
+//     props.bgcolor === "disabled"
+//       ? "var(--content-color-light)"
+//       : props.bgcolor === "dark"
+//       ? "var(--content-color-dark)"
+//       : props.bgcolor === "light"
+//       ? "#fff"
+//       : "var(--point-color)"};
+//   color: ${(props) => (props.color === "white" ? "#ffffff" : "#767676")};
+//   font-size: ${(props) =>
+//     props.fontSize === "L" ? "18px" : props.fontSize === "M" ? "24px" : "16px"};
+//   font-weight: ${(props) => (props.fontWeight === "bold" ? "700" : "500")};
+//   border: ${(props) =>
+//     props.border === "active"
+//       ? "1px solid var(--content-color-light)"
+//       : "none"};
+//   ${(props) =>
+//     props.bgcolor === "light" &&
+//     css`
+//       &:hover {
+//         border: 1px solid #000;
+//         color: #000;
+//       }
+//     `}
+//   ${(props) =>
+//     props.img &&
+//     css`
+//       display: flex;
+//       justify-content: center;
+//       gap: 8px;
+//       align-items: center;
+//       font-size: 18px;
+//       padding: 11px 0;
+//       ${media.Small`
+//         padding: 5px 0;
+//       `}
+//     `}
+// `;
+
+// export function Button({
+//   type,
+//   content,
+//   size,
+//   width,
+//   bgcolor,
+//   color,
+//   fontSize,
+//   fontWeight,
+//   border,
+//   disabled,
+//   img,
+//   name,
+//   id,
+//   onClick,
+// }: ButtonProps) {
+//   return (
+//     <ButtonStyle
+//       type={type}
+//       size={size}
+//       width={width}
+//       bgcolor={bgcolor}
+//       color={color}
+//       fontSize={fontSize}
+//       fontWeight={fontWeight}
+//       border={border}
+//       disabled={disabled}
+//       onClick={onClick}
+//       img={img}
+//       content={content}
+//       name={name}
+//       id={id}
+//     >
+//       {img && <img src={img} alt="Plus" />}
+//       {content}
+//     </ButtonStyle>
+//   );
+// }
+export interface ButtonProps {
+  /** 버튼 안의 내용 */
+  children: React.ReactNode;
+  /** 클릭했을 때 호출할 함수 */
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  /** 버튼 타입을 설정 */
+  type: "submit" | "button" | undefined;
+  /** 버튼 색상을 설정 */
+  color: "light" | "dark" | "white" | "point";
+  /** 버튼 크기를 설정 */
+  size?: "large" | "medium" | "medium_small" | "small";
+  /** 버튼 name 속성 */
+  name?: string;
+  /** 버튼 id 속성 */
+  id?: string;
+  /** 버튼 비활성화 */
+  disabled?: boolean;
+  /** 커스텀 속성 */
+  customStyle?: CSSObject;
 }
-export const ButtonStyle = styled.button<ButtonProps>`
-  display: block;
+
+const ButtonStyle = styled.button<ButtonProps>`
   border-radius: 5px;
-  width: ${(props) =>
-    props.width === "L"
-      ? "220px"
-      : props.width === "M"
-      ? "480px"
-      : props.width === "MS"
-      ? "168px"
-      : props.width === "S"
-      ? "80px"
-      : props.width};
-  padding: ${(props) =>
-    props.size === "L" || props.size === "M"
-      ? "19px 0px"
-      : props.size === "MS"
-      ? "16px 0px"
-      : "10px 0px"};
-  background-color: ${(props) =>
-    props.bgcolor === "disabled"
-      ? "var(--content-color-light)"
-      : props.bgcolor === "dark"
-      ? "var(--content-color-dark)"
-      : props.bgcolor === "light"
-      ? "#fff"
-      : "var(--point-color)"};
-  color: ${(props) => (props.color === "white" ? "#ffffff" : "#767676")};
-  font-size: ${(props) =>
-    props.fontSize === "L" ? "24px" : props.fontSize === "M" ? "18px" : "16px"};
-  font-weight: ${(props) => (props.fontWeight === "bold" ? "700" : "500")};
-  border: ${(props) =>
-    props.border === "yes" ? "1px solid var(--content-color-light)" : "none"};
-  ${(props) =>
-    props.bgcolor === "light" &&
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${({ size }) => size && SIZES[size]}
+  ${({ color }) => COLORS[color]}
+  ${({ customStyle }) =>
     css`
-      &:hover {
-        border: 1px solid #000;
-        color: #000;
-      }
+      ${customStyle}
     `}
-  ${(props) =>
-    props.img &&
-    css`
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      align-items: center;
-      font-size: 18px;
-      padding: 11px 0;
-      ${media.Small`
-        padding: 5px 0;
-      `}
-    `}
+  svg {
+    width: 2em;
+    margin-right: 1em;
+  }
+  &:disabled {
+    background-color: var(--content-color-light);
+  }
 `;
 
+const COLORS = {
+  light: css`
+    background-color: var(--content-color-light);
+    &:hover:enabled {
+      background-color: var(--content-color-dark);
+    }
+  `,
+  dark: css`
+    background-color: var(--content-color-dark);
+    &:hover:enabled {
+      background-color: var(--content-color-dark-hover);
+    }
+    /* &:disabled {
+      background-color: var(--content-color-light);
+    } */
+  `,
+  white: css`
+    background-color: var(--color-white);
+    color: var(--content-color-dark);
+    border: 1px solid var(--content-color-light);
+    &:hover:enabled {
+      border: 1px solid var(--content-color-dark);
+      color: var(--color-black);
+    }
+    /* &:disabled {
+      background-color: var(--content-color-light);
+    } */
+  `,
+  point: css`
+    background-color: var(--point-color);
+    /* &:disabled {
+      background-color: var(--content-color-light);
+    } */
+  `,
+};
+
+const SIZES = {
+  large: css`
+    width: 480px;
+    padding: 19px 0px;
+    font-size: var(--font-md);
+    font-weight: 700;
+  `,
+  medium: css`
+    width: 220px;
+    padding: 19px 0;
+    font-size: var(--font-lg);
+    font-weight: 700;
+  `,
+  medium_small: css`
+    width: 168px;
+    padding: 16px 0;
+    font-size: var(--font-sm);
+  `,
+  small: css`
+    width: 100px;
+    padding: 10px 0;
+    font-size: var(--font-sm);
+  `,
+};
+
 export function Button({
-  type,
-  content,
-  size,
-  width,
-  bgcolor,
-  color,
-  fontSize,
-  fontWeight,
-  border,
-  disabled,
-  img,
-  name,
-  id,
+  children,
   onClick,
+  type,
+  color,
+  size,
+  name,
+  // id,
+  disabled,
+  customStyle,
 }: ButtonProps) {
   return (
     <ButtonStyle
       type={type}
       size={size}
-      width={width}
-      bgcolor={bgcolor}
       color={color}
-      fontSize={fontSize}
-      fontWeight={fontWeight}
-      border={border}
+      name={name}
+      // id={id}
       disabled={disabled}
       onClick={onClick}
-      img={img}
-      content={content}
-      name={name}
-      id={id}
+      customStyle={customStyle}
     >
-      {img && <img src={img} alt="Plus" />}
-      {content}
+      {children}
     </ButtonStyle>
-  );
-}
-
-//TabButton
-interface TabButtonProps {
-  active: "active" | "unactive";
-  content?: string;
-  onClick?: () => void;
-}
-export const TabButtonStyle = styled.button<TabButtonProps>`
-  width: 320px;
-  box-sizing: content-box;
-  padding: 19px 0 18px;
-  background-color: #fff;
-  border-bottom: 6px solid
-    ${(props) => (props.active === "active" ? "var(--point-color)" : "#e0e0e0")};
-  font-size: 18px;
-  color: ${(props) =>
-    props.active === "active"
-      ? "var(--point-color)"
-      : "var(--content-color-dark)"};
-`;
-
-export function TabButton({ active, content, onClick }: TabButtonProps) {
-  return (
-    <TabButtonStyle active={active} onClick={onClick} type="button">
-      {content}
-    </TabButtonStyle>
-  );
-}
-
-// TabMenuButton
-export const TabMenuButtonStyle = styled.button<TabMenuButtonProps>`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 15px 20px;
-  background-color: ${(props) =>
-    props.active === "on" ? "var(--point-color)" : "#fff"};
-  color: ${(props) => (props.active === "on" ? "#fff" : "#000")};
-  border-radius: 5px;
-  font-size: 1em;
-  p {
-    width: 20px;
-    height: 20px;
-    color: #fff;
-    font-size: 0.75em;
-    border-radius: 50%;
-    background-color: var(--price-point-color);
-    line-height: 20px;
-  }
-  ${media.Small`
-    padding: 5px 10px;
-  `}
-  ${(props) =>
-    props.active !== "on" &&
-    css`
-      &:hover {
-        background-color: #effff3;
-      }
-    `}
-`;
-interface TabMenuButtonProps {
-  active: "on" | "off";
-  content?: string;
-  cnt?: number;
-  onClick?: () => void;
-}
-export function TabMenuButton({
-  active,
-  content,
-  cnt,
-  onClick,
-}: TabMenuButtonProps) {
-  return (
-    <TabMenuButtonStyle active={active} onClick={onClick} type="button">
-      {content}
-      {cnt && <p>{cnt}</p>}
-    </TabMenuButtonStyle>
   );
 }

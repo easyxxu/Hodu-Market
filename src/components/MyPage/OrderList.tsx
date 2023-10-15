@@ -76,7 +76,7 @@ const OrderTableContainer = styled.div`
 const OrderTable = styled.table`
   border-bottom: 3px solid #f2f2f2;
   border-radius: 10px;
-  border-collapse: seperate;
+  /* border-collapse: seperate; */
   width: 100%;
   background-color: #fff;
   th {

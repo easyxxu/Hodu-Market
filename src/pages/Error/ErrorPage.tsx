@@ -15,16 +15,17 @@ export default function ErrorPage() {
         <ButtonContainer>
           <Button
             type="button"
-            width="200px"
-            color="white"
-            content="메인으로"
+            size="large"
+            color="point"
+            customStyle={{ width: "200px" }}
+            children="메인으로"
           />
           <Button
             type="button"
-            width="200px"
-            bgcolor="light"
-            border="active"
-            content="이전 페이지"
+            size="large"
+            color="white"
+            customStyle={{ width: "200px" }}
+            children="이전 페이지"
           />
         </ButtonContainer>
       </ErrorMsg>

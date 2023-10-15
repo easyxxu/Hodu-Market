@@ -209,19 +209,27 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
           </S.TotalContainer>
           <S.BtnBuyContainer>
             {stock === 0 ? (
+              // <Button
+              //   content="품절"
+              //   disabled={true}
+              //   type="button"
+              //   width={isMobile ? "100%" : "629px"}
+              //   bgcolor="disabled"
+              //   color="white"
+              //   fontSize="L"
+              //   fontWeight="bold"
+              // />
               <Button
-                content="품절"
-                disabled={true}
                 type="button"
-                width={isMobile ? "100%" : "629px"}
-                bgcolor="disabled"
-                color="white"
-                fontSize="L"
-                fontWeight="bold"
+                size="large"
+                color="point"
+                children="품절"
+                customStyle={isMobile ? { width: "100%" } : { width: "629px" }}
+                disabled
               />
             ) : (
               <>
-                <Button
+                {/* <Button
                   type="button"
                   size="M"
                   width={isMobile ? "70%" : "416px"}
@@ -241,7 +249,23 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
                   fontWeight="bold"
                   content="장바구니"
                   onClick={handleCartModalOpen}
-                ></Button>
+                ></Button> */}
+                <Button
+                  type="button"
+                  size="large"
+                  color="point"
+                  children="바로구매"
+                  customStyle={isMobile ? { width: "70%" } : { width: "416px" }}
+                  onClick={handleOrderModalOpen}
+                />
+                <Button
+                  type="button"
+                  size="large"
+                  color="white"
+                  children="장바구니"
+                  customStyle={isMobile ? { width: "30%" } : { width: "200px" }}
+                  onClick={handleCartModalOpen}
+                />
               </>
             )}
           </S.BtnBuyContainer>

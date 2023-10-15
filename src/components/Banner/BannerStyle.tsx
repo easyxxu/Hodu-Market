@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
-import ArrowLeft from "../../assets/icon-swiper-1.svg";
-import ArrowRight from "../../assets/icon-swiper-2.svg";
+import ArrowLeft from "../../assets/svg/icon-swiper-1.svg";
+import ArrowRight from "../../assets/svg/icon-swiper-2.svg";
 
 const fadeAnimation = keyframes`
 0%{

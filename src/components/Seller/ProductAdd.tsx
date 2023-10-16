@@ -1,19 +1,17 @@
 import React from "react";
 import { useRef } from "react";
 import { useState } from "react";
-import styled from "styled-components";
 import {
   loadProductDetail,
   productAddApi,
   productModifyApi,
 } from "../../apis/productApi";
-import Frame from "../../assets/svg/frame.svg";
+import * as S from "./ProductAddStyle";
 import { Button } from "../common/Button/Button";
 import imgUploadBtn from "../../assets/svg/icon-img.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
-import { media } from "../style/media";
 export default function ProductAdd() {
   const [product, setProduct] = useState({
     product_name: "",
@@ -131,12 +129,12 @@ export default function ProductAdd() {
   }, []);
 
   return (
-    <Container>
-      <Title>{type === "add" ? "상품 등록" : "상품 수정"}</Title>
-      <ProductAddMain>
-        <ProductCautionContainer>
-          <ProductCautionTitle>* 상품 등록 주의사항</ProductCautionTitle>
-          <ProductCautionContent>
+    <S.Container>
+      <S.Title>{type === "add" ? "상품 등록" : "상품 수정"}</S.Title>
+      <S.ProductAddMain>
+        <S.ProductCautionContainer>
+          <S.ProductCautionTitle>* 상품 등록 주의사항</S.ProductCautionTitle>
+          <S.ProductCautionContent>
             <ul>
               <li>너무 귀여운 사진은 심장이 아파올 수 있습니다.</li>
               <li>
@@ -156,13 +154,13 @@ export default function ProductAdd() {
                 이것이다.
               </li>
             </ul>
-          </ProductCautionContent>
-        </ProductCautionContainer>
-        <Form onSubmit={handleSubmit}>
-          <ProductAddContainer>
-            <ProductImg>
+          </S.ProductCautionContent>
+        </S.ProductCautionContainer>
+        <S.Form onSubmit={handleSubmit}>
+          <S.ProductAddContainer>
+            <S.ProductImg>
               <label htmlFor="image">상품 이미지</label>
-              <ProductImgInputContainer>
+              <S.ProductImgInputContainer>
                 <input
                   type="file"
                   id="image"
@@ -171,21 +169,21 @@ export default function ProductAdd() {
                   ref={inputImgRef}
                   onChange={handleImgChange}
                 />
-                <ProductImgInputBtn type="button" onClick={onClickInput}>
+                <S.ProductImgInputBtn type="button" onClick={onClickInput}>
                   <img src={imgUploadBtn} alt="이미지 추가하기" />
-                </ProductImgInputBtn>
+                </S.ProductImgInputBtn>
                 {imgPrev && (
-                  <ProductImgPreview
+                  <S.ProductImgPreview
                     src={imgPrev}
                     alt="상품 미리보기"
                     onClick={onClickInput}
                   />
                 )}
-              </ProductImgInputContainer>
-            </ProductImg>
-            <ProductInfo>
+              </S.ProductImgInputContainer>
+            </S.ProductImg>
+            <S.ProductInfo>
               <label htmlFor="productName">상품명</label>
-              <ProductNameInput
+              <S.ProductNameInput
                 type="text"
                 id="productName"
                 name="product_name"
@@ -194,7 +192,7 @@ export default function ProductAdd() {
                 value={product.product_name}
               />
               <label htmlFor="productPrice">판매가</label>
-              <InputFrameContainer>
+              <S.InputFrameContainer>
                 <input
                   type="text"
                   id="productPrice"
@@ -203,9 +201,9 @@ export default function ProductAdd() {
                   autoComplete="off"
                   value={product.price}
                 />
-              </InputFrameContainer>
+              </S.InputFrameContainer>
               <label htmlFor="deliveryMethod">배송방법</label>
-              <DeliveryBtnContainer>
+              <S.DeliveryBtnContainer>
                 {/* <Button
                   type="button"
                   id="deliveryMethod"
@@ -268,9 +266,9 @@ export default function ProductAdd() {
                   children="직접배송(화물배달)"
                   onClick={handleShippingMethod}
                 />
-              </DeliveryBtnContainer>
+              </S.DeliveryBtnContainer>
               <label htmlFor="deliveryStandardPrice">기본배송비</label>
-              <InputFrameContainer>
+              <S.InputFrameContainer>
                 <input
                   type="text"
                   id="deliveryStandardPrice"
@@ -279,9 +277,9 @@ export default function ProductAdd() {
                   autoComplete="off"
                   value={product.shipping_fee}
                 />
-              </InputFrameContainer>
+              </S.InputFrameContainer>
               <label htmlFor="stock">재고</label>
-              <InputFrameCntContainer>
+              <S.InputFrameCntContainer>
                 <input
                   type="text"
                   id="stock"
@@ -290,10 +288,10 @@ export default function ProductAdd() {
                   autoComplete="off"
                   value={product.stock}
                 />
-              </InputFrameCntContainer>
-            </ProductInfo>
-          </ProductAddContainer>
-          <ProductDetailContainer>
+              </S.InputFrameCntContainer>
+            </S.ProductInfo>
+          </S.ProductAddContainer>
+          <S.ProductDetailContainer>
             <label htmlFor="productInfo">상품 상세 정보</label>
             <textarea
               id="productInfo"
@@ -301,8 +299,8 @@ export default function ProductAdd() {
               onChange={handleInputChange}
               value={product.product_info}
             />
-          </ProductDetailContainer>
-          <FormBtnContainer>
+          </S.ProductDetailContainer>
+          <S.FormBtnContainer>
             {/* <Button
               type="button"
               width="200px"
@@ -330,192 +328,9 @@ export default function ProductAdd() {
               customStyle={{ width: "200px" }}
               children="저장하기"
             />
-          </FormBtnContainer>
-        </Form>
-      </ProductAddMain>
-    </Container>
+          </S.FormBtnContainer>
+        </S.Form>
+      </S.ProductAddMain>
+    </S.Container>
   );
 }
-
-const Container = styled.div`
-  ${media.Medium`
-    padding: 0 10px;
-  `}
-  ${media.Small`
-    padding: 0;
-  `}
-`;
-const Title = styled.h3`
-  font-size: 2.25em;
-  font-weight: 700;
-  margin: 44px 0 42px;
-`;
-const ProductAddMain = styled.div`
-  display: flex;
-  gap: 80px;
-  ${media.Medium`
-    gap: 40px;
-  `}
-  ${media.Small`
-    flex-direction: column;
-  `}
-`;
-const ProductCautionContainer = styled.div`
-  /* max-width: 320px; */
-  width: 30%;
-  ${media.Small`
-    width: 100%;
-  `}
-`;
-const ProductCautionTitle = styled.p`
-  margin-bottom: 10px;
-  font-size: 1em;
-  font-weight: 500;
-  color: var(--price-point-color);
-`;
-const ProductCautionContent = styled.div`
-  padding: 20px;
-  background-color: #ffefe8;
-  li {
-    list-style-type: "- ";
-    font-size: 0.875em;
-    &:not(:last-child) {
-      margin-bottom: 10px;
-    }
-  }
-`;
-const Form = styled.form`
-  width: 70%;
-  ${media.Small`
-    width: 100%;
-  `}
-`;
-const ProductAddContainer = styled.div`
-  display: flex;
-  width: 100%;
-  gap: 40px;
-  label {
-    display: block;
-    color: var(--content-color-dark);
-    font-size: 1em;
-    font-weight: 400;
-  }
-  ${media.Small`
-    flex-direction: column;
-  `}
-`;
-const ProductImg = styled.div`
-  width: 100%;
-  /* aspect-ratio: 1/1; */
-  label {
-    margin-bottom: 10px;
-  }
-  input {
-    display: none;
-  }
-`;
-const ProductImgInputContainer = styled.div`
-  width: 100%;
-  aspect-ratio: 1/1;
-  position: relative;
-  border: 1px solid var(--content-color-light);
-  ${media.Small`
-    width: 100%;
-  `}
-`;
-const ProductImgInputBtn = styled.button`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-const ProductImgPreview = styled.img`
-  position: absolute;
-  /* top: 1px;
-  left: 1px; */
-  width: 100%;
-  aspect-ratio: 1/1;
-  object-fit: contain;
-  cursor: pointer;
-  /* border: 1px solid var(--content-color-light); */
-`;
-const ProductInfo = styled.div`
-  width: 50%;
-  ${media.Small`
-    width: 100%;
-    input {
-      width: 100%;
-      }
-  `}
-`;
-const ProductNameInput = styled.input`
-  padding: 16px 17px;
-  border-radius: 5px;
-  border: 1px solid var(--content-color-light);
-  margin: 10px 0 16px;
-  font-size: 1em;
-`;
-const InputFrameContainer = styled.div`
-  background: url(${Frame}) no-repeat center;
-  margin: 10px 0 16px;
-  width: 220px;
-  height: 54px;
-  position: relative;
-  input {
-    font-size: 1em;
-    width: 60%;
-    transform: translate(17px, 5px);
-    padding: 12px 0;
-    background-color: transparent;
-  }
-  &::after {
-    content: "원";
-    position: absolute;
-    top: 35%;
-    right: 9%;
-    color: #fff;
-    font-size: 1em;
-  }
-`;
-const InputFrameCntContainer = styled(InputFrameContainer)`
-  &::after {
-    content: "개";
-  }
-`;
-const DeliveryBtnContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  margin: 10px 0 16px;
-  ${media.Medium`
-    flex-direction: column;
-  `}
-  ${media.Small`
-    flex-direction: row;
-    `}
-`;
-const ProductDetailContainer = styled.div`
-  margin-top: 40px;
-  label {
-    color: var(--content-color-dark);
-    font-size: 1em;
-  }
-  textarea {
-    margin-top: 10px;
-    width: 100%;
-    height: 400px;
-    border-radius: 5px;
-    border: 1px solid var(--content-color-light);
-    padding: 16px 17px;
-    /* background: #f2f2f2; */
-    /* text-align: center; */
-    font-size: 1.25em;
-    /* line-height: 400px; */
-    /* color: var(--content-color-light); */
-  }
-`;
-const FormBtnContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 14px;
-  margin: 50px 0;
-`;

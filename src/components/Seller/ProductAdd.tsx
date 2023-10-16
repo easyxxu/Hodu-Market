@@ -29,6 +29,9 @@ export default function ProductAdd() {
   const location = useLocation();
   const type = location.state.type;
   const productId = location.state.productId;
+  const handleGoBack = () => {
+    navigate(-1);
+  };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -320,6 +323,7 @@ export default function ProductAdd() {
               color="white"
               customStyle={{ width: "200px" }}
               children="취소"
+              onClick={handleGoBack}
             />
             <Button
               type="submit"

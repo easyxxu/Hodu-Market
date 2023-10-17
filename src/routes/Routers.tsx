@@ -5,11 +5,14 @@ import Home from "../pages/Home/Home";
 import Login from "../pages/Login/LoginPage";
 import SellerDashBoardPage from "../pages/Seller/SellerDashBoardPage";
 import ProductAddPage from "../pages/Seller/ProductAddPage";
-import ShoppingCart from "../pages/Cart/Cart";
+import Cart from "../pages/Cart/Cart";
 import OrderPage from "../pages/Order/OrderPage";
 import ProductDetailPage from "../pages/Product/ProductDetailPage";
 import MyPage from "../pages/MyPage/MyPage";
 import SearchResultPage from "../pages/Search/SearchResultPage";
+import OrderList from "../components/MyPage/OrderList";
+import Welcome from "../components/MyPage/Welcome";
+import OrderDetail from "../components/MyPage/OrderDetail";
 export default function Routers() {
   return (
     <Routes>
@@ -17,13 +20,14 @@ export default function Routers() {
       <Route path="/search/:searchKeyword" element={<SearchResultPage />} />
       <Route path="/join" element={<Join />} />
       <Route path="/login" element={<Login />} />
-      <Route
-        path="/product/detail/:productId"
-        element={<ProductDetailPage />}
-      />
-      <Route path="/cart" element={<ShoppingCart />} />
+      <Route path="/detail/:productId" element={<ProductDetailPage />} />
+      <Route path="/cart" element={<Cart />} />
       <Route path="/order" element={<OrderPage />} />
-      <Route path="/mypage" element={<MyPage />} />
+      <Route path="/mypage" element={<MyPage />}>
+        <Route index element={<Welcome />} />
+        <Route path="order" element={<OrderList />} />
+        <Route path=":orderId" element={<OrderDetail />} />
+      </Route>
       <Route path="/sellercenter">
         <Route index element={<SellerDashBoardPage />} />
         <Route path="addproduct" element={<ProductAddPage />} />

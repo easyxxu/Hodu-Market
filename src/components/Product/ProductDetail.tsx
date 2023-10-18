@@ -224,7 +224,7 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
                 size="large"
                 color="point"
                 children="품절"
-                customStyle={isMobile ? { width: "100%" } : { width: "629px" }}
+                $customStyle={isMobile ? { width: "100%" } : { width: "629px" }}
                 disabled
               />
             ) : (
@@ -255,7 +255,9 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
                   size="large"
                   color="point"
                   children="바로구매"
-                  customStyle={isMobile ? { width: "70%" } : { width: "416px" }}
+                  $customStyle={
+                    isMobile ? { width: "70%" } : { width: "416px" }
+                  }
                   onClick={handleOrderModalOpen}
                 />
                 <Button
@@ -263,7 +265,9 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
                   size="large"
                   color="white"
                   children="장바구니"
-                  customStyle={isMobile ? { width: "30%" } : { width: "200px" }}
+                  $customStyle={
+                    isMobile ? { width: "30%" } : { width: "200px" }
+                  }
                   onClick={handleCartModalOpen}
                 />
               </>

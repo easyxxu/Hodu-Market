@@ -17,14 +17,14 @@ export default function ErrorPage() {
             type="button"
             size="large"
             color="point"
-            customStyle={{ width: "200px" }}
+            $customStyle={{ width: "200px" }}
             children="메인으로"
           />
           <Button
             type="button"
             size="large"
             color="white"
-            customStyle={{ width: "200px" }}
+            $customStyle={{ width: "200px" }}
             children="이전 페이지"
           />
         </ButtonContainer>

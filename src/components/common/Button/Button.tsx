@@ -134,7 +134,7 @@ export interface ButtonProps {
   /** 버튼 비활성화 */
   disabled?: boolean;
   /** 커스텀 속성 */
-  customStyle?: CSSObject;
+  $customStyle?: CSSObject;
 }
 
 const ButtonStyle = styled.button<ButtonProps>`
@@ -145,9 +145,9 @@ const ButtonStyle = styled.button<ButtonProps>`
   justify-content: center;
   ${({ size }) => size && SIZES[size]}
   ${({ color }) => COLORS[color]}
-  ${({ customStyle }) =>
+  ${({ $customStyle }) =>
     css`
-      ${customStyle}
+      ${$customStyle}
     `}
   svg {
     width: 2em;
@@ -226,9 +226,8 @@ export function Button({
   color,
   size,
   name,
-  // id,
   disabled,
-  customStyle,
+  $customStyle,
 }: ButtonProps) {
   return (
     <ButtonStyle
@@ -236,10 +235,9 @@ export function Button({
       size={size}
       color={color}
       name={name}
-      // id={id}
       disabled={disabled}
       onClick={onClick}
-      customStyle={customStyle}
+      $customStyle={$customStyle}
     >
       {children}
     </ButtonStyle>

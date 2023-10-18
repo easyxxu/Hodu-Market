@@ -263,7 +263,7 @@ export default function CartItem({ item }: CartItemProps) {
           type="button"
           size="small"
           color="point"
-          customStyle={{ width: "130px" }}
+          $customStyle={{ width: "130px" }}
           children="주문하기"
           onClick={handleOneOrder}
         />

@@ -52,7 +52,7 @@ export default function SellerDashboard() {
           type="button"
           size="medium_small"
           color="point"
-          customStyle={{ padding: "10px 0", fontWeight: "500" }}
+          $customStyle={{ padding: "10px 0", fontWeight: "500" }}
           onClick={() => {
             navigate("/sellercenter/addproduct", { state: { type: "add" } });
           }}

@@ -109,7 +109,7 @@ function HeaderType(type: string | null) {
           type="button"
           size="medium_small"
           color="point"
-          customStyle={isMobile ? { width: "100%" } : undefined}
+          $customStyle={isMobile ? { width: "100%" } : undefined}
           onClick={() => navigate("/sellercenter")}
         >
           <Icon icon="shoppingbag" />

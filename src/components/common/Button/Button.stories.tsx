@@ -121,7 +121,7 @@ export const customButton = () => {
         type="button"
         size="large"
         color="point"
-        customStyle={{ width: "416px" }}
+        $customStyle={{ width: "416px" }}
       >
         바로구매
       </Button>
@@ -129,7 +129,7 @@ export const customButton = () => {
         type="button"
         size="large"
         color="dark"
-        customStyle={{ width: "200px" }}
+        $customStyle={{ width: "200px" }}
       >
         장바구니
       </Button>
@@ -137,7 +137,7 @@ export const customButton = () => {
         type="button"
         size="medium_small"
         color="point"
-        customStyle={{ width: "122px" }}
+        $customStyle={{ width: "122px" }}
       >
         중복확인
       </Button>
@@ -145,7 +145,7 @@ export const customButton = () => {
         type="button"
         size="small"
         color="point"
-        customStyle={{ width: "130px" }}
+        $customStyle={{ width: "130px" }}
       >
         주문하기
       </Button>
@@ -158,7 +158,7 @@ export const myPageButton = () => {
     <Wrapper>
       <Button
         type="button"
-        customStyle={{ width: "150px" }}
+        $customStyle={{ width: "150px" }}
         color="point"
         size="small"
       >
@@ -174,14 +174,14 @@ export const errorPageButton = () => {
         type="button"
         size="large"
         color="point"
-        customStyle={{ width: "200px" }}
+        $customStyle={{ width: "200px" }}
         children="메인으로"
       />
       <Button
         type="button"
         size="large"
         color="white"
-        customStyle={{ width: "200px" }}
+        $customStyle={{ width: "200px" }}
         children="이전 페이지"
       />
     </Wrapper>
@@ -210,7 +210,7 @@ export const ProductAddButton = () => {
         id="deliveryMethod"
         size="medium"
         color={active ? "white" : "point"}
-        customStyle={{ fontSize: "16px" }}
+        $customStyle={{ fontSize: "16px" }}
         children="택배, 소포, 등기"
         onClick={() => setActive(!active)}
       />
@@ -218,21 +218,21 @@ export const ProductAddButton = () => {
         type="button"
         size="medium"
         color="white"
-        customStyle={{ fontSize: "16px" }}
+        $customStyle={{ fontSize: "16px" }}
         children="직접배송(화물배달)"
       />
       <Button
         type="button"
         size="small"
         color="white"
-        customStyle={{ width: "200px" }}
+        $customStyle={{ width: "200px" }}
         children="취소"
       />
       <Button
         type="submit"
         size="small"
         color="point"
-        customStyle={{ width: "200px" }}
+        $customStyle={{ width: "200px" }}
         children="저장하기"
       />
     </Wrapper>
@@ -244,7 +244,7 @@ export const SellerDashboardButton = () => {
       type="button"
       size="medium_small"
       color="point"
-      customStyle={{ padding: "10px 0", fontWeight: "500" }}
+      $customStyle={{ padding: "10px 0", fontWeight: "500" }}
     >
       <Icon icon="plus" />
       상품업로드
@@ -259,14 +259,14 @@ export const DashboardItemButton = () => {
         size="small"
         color="point"
         children="수정"
-        customStyle={{ width: "80px" }}
+        $customStyle={{ width: "80px" }}
       />
       <Button
         type="button"
         size="small"
         color="white"
         children="삭제"
-        customStyle={{ width: "80px" }}
+        $customStyle={{ width: "80px" }}
       />
     </Wrapper>
   );
@@ -299,14 +299,14 @@ export const PaymentButton = () => {
         type="button"
         size="small"
         color="point"
-        customStyle={{ width: "154px" }}
+        $customStyle={{ width: "154px" }}
         children="우편번호 조회"
       />
       <Button
         type="submit"
         size="large"
         color="point"
-        customStyle={{ width: "418px" }}
+        $customStyle={{ width: "418px" }}
         children="결제하기"
       />
     </Wrapper>
@@ -324,14 +324,14 @@ export const ModalButton = () => {
         type="button"
         size="small"
         color="point"
-        customStyle={{ width: "130px" }}
+        $customStyle={{ width: "130px" }}
         children="계속 쇼핑하기"
       />
       <Button
         type="button"
         size="small"
         color="white"
-        customStyle={{ width: "130px" }}
+        $customStyle={{ width: "130px" }}
         children="장바구니 가기"
       />
       <Button type="button" size="small" color="white" children="아니오" />
@@ -353,7 +353,7 @@ export const CartItemButton = () => {
       type="button"
       size="small"
       color="point"
-      customStyle={{ width: "130px" }}
+      $customStyle={{ width: "130px" }}
       children="주문하기"
     />
   );
@@ -364,7 +364,7 @@ export const CartContentButton = () => {
       type="button"
       size="medium"
       color="point"
-      customStyle={{ padding: "10px 0", fontSize: "16px" }}
+      $customStyle={{ padding: "10px 0", fontSize: "16px" }}
       children="로그인 / 회원가입 하러가기"
     />
   );

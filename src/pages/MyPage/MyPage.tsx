@@ -42,7 +42,7 @@ export default function MyPage() {
             <h3>
               <Button
                 type="button"
-                customStyle={{ width: "150px" }}
+                $customStyle={{ width: "150px" }}
                 color="point"
                 size="small"
                 onClick={handleLogout}
@@ -57,7 +57,7 @@ export default function MyPage() {
           {userType === "SELLER" && (
             <Button
               type="button"
-              customStyle={{ width: "150px" }}
+              $customStyle={{ width: "150px" }}
               color="point"
               size="small"
               onClick={handleLogout}

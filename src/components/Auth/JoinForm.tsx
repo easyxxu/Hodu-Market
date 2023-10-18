@@ -469,7 +469,7 @@ export default function JoinForm() {
           type="submit"
           size="large"
           color="point"
-          customStyle={{ width: "100%" }}
+          $customStyle={{ width: "100%" }}
           children="가입하기"
           disabled={!handleSubmitBtn() ? true : false}
         />

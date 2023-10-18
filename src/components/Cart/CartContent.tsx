@@ -28,7 +28,7 @@ export function CartNoLogin() {
         type="button"
         size="medium"
         color="point"
-        customStyle={{ padding: "10px 0", fontSize: "16px" }}
+        $customStyle={{ padding: "10px 0", fontSize: "16px" }}
         children="로그인 / 회원가입 하러가기"
         onClick={goLoginJoin}
       />
@@ -61,7 +61,7 @@ export function CartLoginSeller() {
         type="button"
         size="medium"
         color="point"
-        customStyle={{ padding: "10px 0", fontSize: "16px" }}
+        $customStyle={{ padding: "10px 0", fontSize: "16px" }}
         children="로그인 / 회원가입 하러가기"
         onClick={goLoginJoin}
       />

@@ -34,7 +34,6 @@ export default function OrderDetail() {
     const getOrderProductsDetail = async (productId: number) => {
       try {
         const res = await loadProductDetail(productId);
-        console.log(res.data);
         return res.data;
       } catch (err) {
         if (axios.isAxiosError(err)) {

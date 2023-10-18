@@ -66,7 +66,7 @@ export default function DashboardItem({
           size="small"
           color="point"
           children="수정"
-          customStyle={{ width: "80px" }}
+          $customStyle={{ width: "80px" }}
           onClick={handleProductModify}
         />
       </td>
@@ -84,7 +84,7 @@ export default function DashboardItem({
           size="small"
           color="white"
           children="삭제"
-          customStyle={{ width: "80px" }}
+          $customStyle={{ width: "80px" }}
           onClick={handleProductDelete}
         />
       </td>

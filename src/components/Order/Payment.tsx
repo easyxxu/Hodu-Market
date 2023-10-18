@@ -353,7 +353,7 @@ export default function Payment() {
                   type="button"
                   size="small"
                   color="point"
-                  customStyle={{ width: "154px" }}
+                  $customStyle={{ width: "154px" }}
                   children="우편번호 조회"
                   onClick={handleZipCode}
                 />
@@ -484,7 +484,7 @@ export default function Payment() {
                   type="submit"
                   size="large"
                   color="point"
-                  customStyle={{ width: "418px" }}
+                  $customStyle={{ width: "418px" }}
                   children="결제하기"
                   disabled={!handleSubmitBtn() ? true : false}
                 />

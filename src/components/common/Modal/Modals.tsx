@@ -32,7 +32,7 @@ export const addCart = ({ onGoCart, onKeepShopping }: AddCartProps) => {
           type="button"
           size="small"
           color="point"
-          customStyle={{ width: "130px" }}
+          $customStyle={{ width: "130px" }}
           children="계속 쇼핑하기"
           onClick={onKeepShopping}
         />
@@ -40,7 +40,7 @@ export const addCart = ({ onGoCart, onKeepShopping }: AddCartProps) => {
           type="button"
           size="small"
           color="white"
-          customStyle={{ width: "130px" }}
+          $customStyle={{ width: "130px" }}
           children="장바구니 가기"
           onClick={onGoCart}
         />

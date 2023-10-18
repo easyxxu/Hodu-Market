@@ -253,7 +253,7 @@ export default function ProductAdd() {
                   color={
                     product.shipping_method === "DELIVERY" ? "point" : "white"
                   }
-                  customStyle={{ fontSize: "16px" }}
+                  $customStyle={{ fontSize: "16px" }}
                   children="택배, 소포, 등기"
                   onClick={handleShippingMethod}
                 />
@@ -265,7 +265,7 @@ export default function ProductAdd() {
                   color={
                     product.shipping_method === "PARCEL" ? "point" : "white"
                   }
-                  customStyle={{ fontSize: "16px" }}
+                  $customStyle={{ fontSize: "16px" }}
                   children="직접배송(화물배달)"
                   onClick={handleShippingMethod}
                 />
@@ -321,7 +321,7 @@ export default function ProductAdd() {
               type="button"
               size="small"
               color="white"
-              customStyle={{ width: "200px" }}
+              $customStyle={{ width: "200px" }}
               children="취소"
               onClick={handleGoBack}
             />
@@ -329,7 +329,7 @@ export default function ProductAdd() {
               type="submit"
               size="small"
               color="point"
-              customStyle={{ width: "200px" }}
+              $customStyle={{ width: "200px" }}
               children="저장하기"
             />
           </S.FormBtnContainer>

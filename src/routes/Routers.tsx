@@ -13,13 +13,17 @@ import SearchResultPage from "../pages/Search/SearchResultPage";
 import OrderList from "../components/MyPage/OrderList";
 import Welcome from "../components/MyPage/Welcome";
 import OrderDetail from "../components/MyPage/OrderDetail";
+import PrivateRoutes from "./PrivateRoutes";
+import PrivateRoutesSeller from "./PrivateRoutesSeller";
 export default function Routers() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/search/:searchKeyword" element={<SearchResultPage />} />
-      <Route path="/join" element={<Join />} />
-      <Route path="/login" element={<Login />} />
+      <Route element={<PrivateRoutes />}>
+        <Route index path="/join" element={<Join />} />
+        <Route path="/login" element={<Login />} />
+      </Route>
       <Route path="/detail/:productId" element={<ProductDetailPage />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/order" element={<OrderPage />} />
@@ -28,9 +32,11 @@ export default function Routers() {
         <Route path="order" element={<OrderList />} />
         <Route path=":orderId" element={<OrderDetail />} />
       </Route>
-      <Route path="/sellercenter">
-        <Route index element={<SellerDashBoardPage />} />
-        <Route path="addproduct" element={<ProductAddPage />} />
+      <Route element={<PrivateRoutesSeller />}>
+        <Route path="/sellercenter">
+          <Route index element={<SellerDashBoardPage />} />
+          <Route path="addproduct" element={<ProductAddPage />} />
+        </Route>
       </Route>
     </Routes>
   );

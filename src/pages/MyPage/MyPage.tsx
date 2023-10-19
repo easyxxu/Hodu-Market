@@ -39,17 +39,15 @@ export default function MyPage() {
                 <li>적립금 내역</li>
               </ul>
             </OrderMenu>
-            <h3>
-              <Button
-                type="button"
-                $customStyle={{ width: "150px" }}
-                color="point"
-                size="small"
-                onClick={handleLogout}
-              >
-                로그아웃
-              </Button>
-            </h3>
+            <Button
+              type="button"
+              $customStyle={{ width: "150px" }}
+              color="point"
+              size="small"
+              onClick={handleLogout}
+            >
+              로그아웃
+            </Button>
           </MyPageMenu>
         )}
         <MyPageContent center={userType === "SELLER" ? "true" : "false"}>

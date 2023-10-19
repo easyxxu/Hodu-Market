@@ -1,10 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
 
-export default function PrivateRoutesSeller() {
+export default function PrivateRoutesBuyer() {
   const userType = localStorage.getItem("user_type");
   const notify = () => {
-    toast.info("판매자만 접근 가능합니다.", {
+    toast.info("구매자만 접근할 수 있습니다.", {
       position: "top-center",
       autoClose: 2500,
       hideProgressBar: false,
@@ -16,10 +16,9 @@ export default function PrivateRoutesSeller() {
     });
   };
 
-  if (userType !== "SELLER" || userType === null) {
+  if (userType !== "BUYER" || userType === null) {
     notify();
     return <Navigate to="/" />;
   }
-
   return <Outlet />;
 }

@@ -16,22 +16,30 @@ import OrderDetail from "../components/MyPage/OrderDetail";
 import PublicRoutes from "./PublicRoutes";
 import PrivateRoutesSeller from "./PrivateRoutesSeller";
 import ErrorPage from "../pages/Error/ErrorPage";
+import PrivateRoutesBuyer from "./PrivateRoutesBuyer";
+import PrivateRouetsSubscriber from "./PrivateRoutesSubscriber";
 export default function Routers() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/search/:searchKeyword" element={<SearchResultPage />} />
+      <Route path="/detail/:productId" element={<ProductDetailPage />} />
+      <Route path="/cart" element={<Cart />} />
       <Route element={<PublicRoutes />}>
         <Route index path="/join" element={<Join />} />
         <Route path="/login" element={<Login />} />
       </Route>
-      <Route path="/detail/:productId" element={<ProductDetailPage />} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/order" element={<OrderPage />} />
-      <Route path="/mypage" element={<MyPage />}>
-        <Route index element={<Welcome />} />
-        <Route path="order" element={<OrderList />} />
-        <Route path=":orderId" element={<OrderDetail />} />
+      <Route element={<PrivateRoutesBuyer />}>
+        <Route path="/order" element={<OrderPage />} />
+      </Route>
+      <Route element={<PrivateRouetsSubscriber />}>
+        <Route path="/mypage" element={<MyPage />}>
+          <Route index element={<Welcome />} />
+          <Route element={<PrivateRoutesBuyer />}>
+            <Route path="order" element={<OrderList />} />
+            <Route path=":orderId" element={<OrderDetail />} />
+          </Route>
+        </Route>
       </Route>
       <Route element={<PrivateRoutesSeller />}>
         <Route path="/sellercenter">

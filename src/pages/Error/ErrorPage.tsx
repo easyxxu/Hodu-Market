@@ -1,8 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import ErrorIcon from "../../assets/icon-404.svg";
+import ErrorIcon from "../../assets/svg/icon-404.svg";
 import { Button } from "../../components/common/Button/Button";
 export default function ErrorPage() {
+  const navigate = useNavigate();
+  const handleGoMain = () => {
+    navigate("/");
+  };
+  const handleGoBack = () => {
+    navigate(-1);
+  };
   return (
     <ErrorContainer>
       <img src={ErrorIcon} alt="에러이미지" />
@@ -19,6 +27,7 @@ export default function ErrorPage() {
             color="point"
             $customStyle={{ width: "200px" }}
             children="메인으로"
+            onClick={handleGoMain}
           />
           <Button
             type="button"
@@ -26,6 +35,7 @@ export default function ErrorPage() {
             color="white"
             $customStyle={{ width: "200px" }}
             children="이전 페이지"
+            onClick={handleGoBack}
           />
         </ButtonContainer>
       </ErrorMsg>

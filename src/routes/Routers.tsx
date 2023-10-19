@@ -39,6 +39,7 @@ export default function Routers() {
           <Route path="addproduct" element={<ProductAddPage />} />
         </Route>
       </Route>
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 }

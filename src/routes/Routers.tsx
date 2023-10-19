@@ -13,14 +13,15 @@ import SearchResultPage from "../pages/Search/SearchResultPage";
 import OrderList from "../components/MyPage/OrderList";
 import Welcome from "../components/MyPage/Welcome";
 import OrderDetail from "../components/MyPage/OrderDetail";
-import PrivateRoutes from "./PrivateRoutes";
+import PublicRoutes from "./PublicRoutes";
 import PrivateRoutesSeller from "./PrivateRoutesSeller";
+import ErrorPage from "../pages/Error/ErrorPage";
 export default function Routers() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/search/:searchKeyword" element={<SearchResultPage />} />
-      <Route element={<PrivateRoutes />}>
+      <Route element={<PublicRoutes />}>
         <Route index path="/join" element={<Join />} />
         <Route path="/login" element={<Login />} />
       </Route>

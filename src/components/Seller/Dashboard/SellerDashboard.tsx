@@ -1,6 +1,7 @@
 import React from "react";
 import PlusIcon from "../../../assets/icon-plus.svg";
-import { Button, TabMenuButton } from "../../common/Button/Button";
+import { Button } from "../../common/Button/Button";
+import { TabMenuButton } from "../../common/Button/TabMenuButton";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -9,6 +10,7 @@ import { useState } from "react";
 import DashboardItem from "./DashboardItem";
 import { Product } from "../../../types/product";
 import { media } from "../../style/media";
+import Icon from "../../Icon/Icon";
 
 export default function SellerDashboard() {
   const navigate = useNavigate();
@@ -35,7 +37,7 @@ export default function SellerDashboard() {
               "회사이름"}
           </strong>
         </h3>
-        <Button
+        {/* <Button
           type="button"
           size="MS"
           width="MS"
@@ -45,7 +47,19 @@ export default function SellerDashboard() {
           onClick={() => {
             navigate("/sellercenter/addproduct", { state: { type: "add" } });
           }}
-        />
+        /> */}
+        <Button
+          type="button"
+          size="medium_small"
+          color="point"
+          $customStyle={{ padding: "10px 0", fontWeight: "500" }}
+          onClick={() => {
+            navigate("/sellercenter/addproduct", { state: { type: "add" } });
+          }}
+        >
+          <Icon icon="plus" />
+          상품업로드
+        </Button>
       </DashBoardTop>
       <DashBoardMain>
         <TabMenu>

@@ -96,15 +96,16 @@ export default function LoginForm() {
           placeholder="비밀번호"
         />
         <ErrorMsg>{loginErrorMsg}</ErrorMsg>
-        <Button
+        {/* <Button
           type="submit"
-          size="M"
-          width="M"
+          size="L"
+          width="L"
           color="white"
-          fontSize="M"
+          fontSize="L"
           fontWeight="bold"
           content="로그인"
-        />
+        /> */}
+        <Button type="submit" size="large" color="point" children="로그인" />
       </LoginFormContainer>
       <LoginLinkContainer>
         <Link to="/join">회원가입</Link>

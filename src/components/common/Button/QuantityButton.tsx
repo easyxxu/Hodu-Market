@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { updateQuantityApi, cartListApi } from "../../../apis/cartApi";
-import Minus from "../../../assets/icon-minus-line.svg";
-import Plus from "../../../assets/icon-plus-line.svg";
+import Minus from "../../../assets/svg/icon-minus-line.svg";
+import Plus from "../../../assets/svg/icon-plus-line.svg";
 import { cartInfoListAtom } from "../../../atoms/cartAtom";
 import { media } from "../../style/media";
 

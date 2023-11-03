@@ -1,7 +1,7 @@
 import React from "react";
-import InstaIcon from "../../../assets/icon-insta.svg";
-import FacebookIcon from "../../../assets/icon-fb.svg";
-import YoutubeIcon from "../../../assets/icon-yt.svg";
+import InstaIcon from "../../../assets/svg/icon-insta.svg";
+import FacebookIcon from "../../../assets/svg/icon-fb.svg";
+import YoutubeIcon from "../../../assets/svg/icon-yt.svg";
 import {
   FooterContainer,
   FooterStyleContainer,

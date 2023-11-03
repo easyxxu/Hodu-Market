@@ -17,11 +17,19 @@ export function CartNoLogin() {
   return (
     <Container>
       <p>로그인을 해야 장바구니에 담을 수 있어요!</p>
-      <Button
+      {/* <Button
         content="로그인 / 회원가입 하러가기"
         type="button"
         width="L"
         color="white"
+        onClick={goLoginJoin}
+      /> */}
+      <Button
+        type="button"
+        size="medium"
+        color="point"
+        $customStyle={{ padding: "10px 0", fontSize: "16px" }}
+        children="로그인 / 회원가입 하러가기"
         onClick={goLoginJoin}
       />
     </Container>
@@ -42,11 +50,19 @@ export function CartLoginSeller() {
   return (
     <Container>
       <p>구매회원으로 로그인해주세요.</p>
-      <Button
+      {/* <Button
         content="로그인 / 회원가입 하러가기"
         type="button"
         width="L"
         color="white"
+        onClick={goLoginJoin}
+      /> */}
+      <Button
+        type="button"
+        size="medium"
+        color="point"
+        $customStyle={{ padding: "10px 0", fontSize: "16px" }}
+        children="로그인 / 회원가입 하러가기"
         onClick={goLoginJoin}
       />
     </Container>

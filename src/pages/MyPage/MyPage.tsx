@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { styled, css } from "styled-components";
 import { logoutApi } from "../../apis/authApi";
 import { Button } from "../../components/common/Button/Button";
 import { MainLayout } from "../../components/Layout/Layout";
-import OrderList from "../../components/MyPage/OrderList";
-import Welcome from "../../components/MyPage/Welcome";
 import { media } from "../../components/style/media";
 export default function MyPage() {
   const userType = localStorage.getItem("user_type");
   const navigate = useNavigate();
-  const [view, setView] = useState("welcome");
   const handleLogout = async () => {
     try {
       const res = await logoutApi();
@@ -24,7 +21,7 @@ export default function MyPage() {
     }
   };
   const handleOrderLookUp = () => {
-    setView("order-lookup");
+    navigate("/mypage/order");
   };
 
   return (
@@ -42,33 +39,29 @@ export default function MyPage() {
                 <li>적립금 내역</li>
               </ul>
             </OrderMenu>
-            <h3>
-              <Button
-                type="button"
-                content="로그아웃"
-                onClick={handleLogout}
-                width="150px"
-                color="white"
-                fontSize="M"
-              />
-            </h3>
+            <Button
+              type="button"
+              $customStyle={{ width: "150px" }}
+              color="point"
+              size="small"
+              onClick={handleLogout}
+            >
+              로그아웃
+            </Button>
           </MyPageMenu>
         )}
-
         <MyPageContent center={userType === "SELLER" ? "true" : "false"}>
-          {view === "welcome" && <Welcome />}
-          {view === "order-lookup" && <OrderList />}
+          <Outlet />
           {userType === "SELLER" && (
-            <>
-              <Button
-                type="button"
-                content="로그아웃"
-                onClick={handleLogout}
-                width="150px"
-                color="white"
-                fontSize="M"
-              />
-            </>
+            <Button
+              type="button"
+              $customStyle={{ width: "150px" }}
+              color="point"
+              size="small"
+              onClick={handleLogout}
+            >
+              로그아웃
+            </Button>
           )}
         </MyPageContent>
       </MyPageContainer>

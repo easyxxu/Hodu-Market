@@ -35,7 +35,7 @@ export default function Banner() {
   useEffect(() => {
     const swiperLoop = setTimeout(() => {
       nextSlide();
-    }, 3000);
+    }, 5000); // 배너 속도 조절
     setLoop(swiperLoop);
     return () => clearTimeout(loop);
   }, [swiperCurrentPosition]);

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import SoldOutIcon from "../../assets/sold-out.svg";
+import SoldOutIcon from "../../assets/svg/sold-out.svg";
 import { media } from "../style/media";
 const ProductUl = styled.ul`
   display: flex;

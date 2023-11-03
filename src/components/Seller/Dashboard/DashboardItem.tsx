@@ -54,21 +54,37 @@ export default function DashboardItem({
       </td>
       <td>{productPrice}원</td>
       <td>
-        <Button
+        {/* <Button
           type="button"
           width="70px"
           color="white"
           content="수정"
           onClick={handleProductModify}
+        /> */}
+        <Button
+          type="button"
+          size="small"
+          color="point"
+          children="수정"
+          $customStyle={{ width: "80px" }}
+          onClick={handleProductModify}
         />
       </td>
       <td>
-        <Button
+        {/* <Button
           type="button"
           width="70px"
           bgcolor="light"
-          border="yes"
+          border="active"
           content="삭제"
+          onClick={handleProductDelete}
+        /> */}
+        <Button
+          type="button"
+          size="small"
+          color="white"
+          children="삭제"
+          $customStyle={{ width: "80px" }}
           onClick={handleProductDelete}
         />
       </td>

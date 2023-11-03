@@ -1,18 +1,14 @@
-import { useState } from "react";
-import React from "react";
-import { useEffect } from "react";
-import { styled } from "styled-components";
+import { useState, useEffect } from "react";
 import { loadProductDetail } from "../../apis/productApi";
-import { Button } from "../common/Button/Button";
 import axios from "axios";
-import { Order } from "../../types/order";
 import { Product } from "../../types/product";
-import { media } from "../style/media";
-interface OrderDetailProps {
-  order: Order;
-  onClose: any;
-}
-export default function OrderDetail({ order, onClose }: OrderDetailProps) {
+import { useLocation } from "react-router-dom";
+import * as S from "./OrderDetailStyle";
+
+export default function OrderDetail() {
+  const location = useLocation();
+  const { state } = location;
+  const order = state.order;
   const orderProductsId = order.order_items;
   const [orderProductsDetail, setOrderProductsDetail] = useState<
     Product[] | []
@@ -33,11 +29,11 @@ export default function OrderDetail({ order, onClose }: OrderDetailProps) {
         return "기타";
     }
   };
+
   useEffect(() => {
     const getOrderProductsDetail = async (productId: number) => {
       try {
         const res = await loadProductDetail(productId);
-        // console.log(res.data);
         return res.data;
       } catch (err) {
         if (axios.isAxiosError(err)) {
@@ -51,16 +47,17 @@ export default function OrderDetail({ order, onClose }: OrderDetailProps) {
       setOrderProductsDetail((prev) => [...prev, data]);
     });
   }, []);
+
   return (
-    <Container>
-      <OrderInfoTitle>
+    <S.Container>
+      <S.OrderInfoTitle>
         <h4>주문번호: {order.order_number}</h4>
         <p>
           배송상태 :{" "}
           {order.delivery_status === "COMPLETE_PAYMENT" ? "결제완료" : null}
         </p>
-      </OrderInfoTitle>
-      <ProductListTable>
+      </S.OrderInfoTitle>
+      <S.ProductListTable>
         <thead>
           <tr>
             <th>No.</th>
@@ -87,8 +84,8 @@ export default function OrderDetail({ order, onClose }: OrderDetailProps) {
             );
           })}
         </tbody>
-      </ProductListTable>
-      <OrderInfoList>
+      </S.ProductListTable>
+      <S.OrderInfoList>
         <span>구매자</span>
         <span>{order.buyer}</span>
         <span>받는 사람</span>
@@ -103,92 +100,7 @@ export default function OrderDetail({ order, onClose }: OrderDetailProps) {
         <span>{orderPaymentMethod()}</span>
         <span>총 금액</span>
         <span>{order.total_price.toLocaleString("ko-KR")}</span>
-      </OrderInfoList>
-      <Button
-        type="button"
-        content="뒤로가기"
-        onClick={onClose}
-        color="white"
-        fontSize="M"
-        bgcolor="disabled"
-      />
-    </Container>
+      </S.OrderInfoList>
+    </S.Container>
   );
 }
-const Container = styled.div`
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  height: 100%;
-`;
-
-const OrderInfoTitle = styled.div`
-  display: flex;
-  justify-content: space-between;
-  h4 {
-    font-size: 2em;
-    font-weight: 500;
-  }
-  p {
-    font-size: 1.5em;
-    color: var(--content-color-dark);
-  }
-`;
-const ProductListTable = styled.table`
-  border-bottom: 3px solid #f2f2f2;
-  border-radius: 10px;
-  /* border-collapse: seperate; */
-  width: 100%;
-  text-align: center;
-  th {
-    font-size: 1.5em;
-    padding: 10px;
-    background-color: #f2f2f2;
-    &:first-child {
-      border-top-left-radius: 10px;
-      border-bottom-left-radius: 10px;
-    }
-    &:last-child {
-      border-top-right-radius: 10px;
-      border-bottom-right-radius: 10px;
-    }
-    ${media.Small`
-      font-size: 1.1em;
-    `}
-  }
-  tr {
-    &:not(:last-child) {
-      border-bottom: 1px solid var(--content-color-light);
-    }
-  }
-  td {
-    vertical-align: middle;
-    padding: 10px;
-  }
-  img {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-    border: 1px solid var(--content-color-light);
-    border-radius: 10px;
-    ${media.Small`
-      width:80px;
-      height:80px;
-    `}
-  }
-`;
-const OrderInfoList = styled.div`
-  display: grid;
-  gap: 20px;
-  grid-template-columns: 1fr 3fr;
-  border: 2px solid #f2f2f2;
-  border-radius: 10px;
-  padding: 20px;
-  span {
-    &:nth-child(odd) {
-      font-size: 1.125em;
-      font-weight: 500;
-    }
-  }
-`;

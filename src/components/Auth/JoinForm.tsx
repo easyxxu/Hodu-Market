@@ -292,9 +292,18 @@ export default function JoinForm() {
                   : "true"
               }
             />
-            <Button
+            {/* <Button
               type="button"
               content="중복확인"
+              onClick={() =>
+                idDuplicateCheck(buyerInfo.username || sellerInfo.username)
+              }
+            /> */}
+            <Button
+              type="button"
+              size="small"
+              color="point"
+              children="중복확인"
               onClick={() =>
                 idDuplicateCheck(buyerInfo.username || sellerInfo.username)
               }
@@ -393,9 +402,20 @@ export default function JoinForm() {
                       : "true"
                   }
                 />
-                <Button
+                {/* <Button
                   type="button"
                   content="인증"
+                  onClick={() =>
+                    companyRegisterationNumCheck(
+                      sellerInfo.company_registration_number
+                    )
+                  }
+                /> */}
+                <Button
+                  type="button"
+                  size="small"
+                  color="point"
+                  children="인증"
                   onClick={() =>
                     companyRegisterationNumCheck(
                       sellerInfo.company_registration_number
@@ -434,16 +454,24 @@ export default function JoinForm() {
             </div>
           </S.AgreeLabel>
         </S.AgreeContainer>
-        <Button
+        {/* <Button
           type="submit"
-          size="M"
+          size="L"
           width="100%"
           bgcolor={!handleSubmitBtn() ? "disabled" : undefined}
           color="white"
-          fontSize="M"
+          fontSize="L"
           fontWeight="bold"
           content="가입하기"
           disabled={!handleSubmitBtn()}
+        /> */}
+        <Button
+          type="submit"
+          size="large"
+          color="point"
+          $customStyle={{ width: "100%" }}
+          children="가입하기"
+          disabled={!handleSubmitBtn() ? true : false}
         />
       </S.Form>
     </S.JoinContainer>

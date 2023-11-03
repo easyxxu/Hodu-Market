@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { ButtonStyle } from "../common/Button/Button";
+import { Button } from "../common/Button/Button";
+// import { ButtonStyle } from "../common/Button/Button";
 import { media } from "../style/media";
 
 const Title = styled.h3`
@@ -28,11 +29,11 @@ const PaymentForm = styled.form`
     padding-bottom: 8px;
   }
 `;
-const InfoSaveBtn = styled(ButtonStyle)`
+const InfoSaveBtn = styled.div`
   margin-top: 15px;
-  &:hover {
+  /* &:hover {
     background-color: var(--point-color);
-  }
+  } */
 `;
 const Label = styled.label`
   width: 100%;
@@ -95,7 +96,7 @@ const ZipCodeContainer = styled.div`
     margin: 7px 0;
   }
 `;
-const ShippingBtn = styled(ButtonStyle)``;
+// const ShippingBtn = styled(ButtonStyle)``;
 const ShippingMsgLabel = styled(Label)`
   width: 100%;
 `;
@@ -217,7 +218,7 @@ export {
   ShippingLabel,
   ShippingInfo,
   ZipCodeContainer,
-  ShippingBtn,
+  // ShippingBtn,
   ShippingMsgLabel,
   ShippingMsgInput,
   PaymentContainer,

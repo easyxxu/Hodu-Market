@@ -9,7 +9,7 @@ export default function ProductList({ productListData }: ProductListData) {
     <S.ProductUl>
       {productListData.map((product) => (
         <li key={product.product_id}>
-          <S.ProductLink to={`/product/detail/${product.product_id}`}>
+          <S.ProductLink to={`/detail/${product.product_id}`}>
             <S.ProductImg src={product.image} alt="상품이미지" />
             {product.stock === 0 && <S.SoldOut />}
             <S.ProductCorporation>{product.store_name}</S.ProductCorporation>

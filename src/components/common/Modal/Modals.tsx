@@ -13,7 +13,7 @@ export const addCart = ({ onGoCart, onKeepShopping }: AddCartProps) => {
     <>
       <S.ModalContent>장바구니에 담겼습니다.</S.ModalContent>
       <S.BtnContainer>
-        <Button
+        {/* <Button
           type="button"
           width="130px"
           color="white"
@@ -24,8 +24,24 @@ export const addCart = ({ onGoCart, onKeepShopping }: AddCartProps) => {
           type="button"
           width="130px"
           bgcolor="light"
-          border="yes"
+          border="active"
           content="장바구니 가기"
+          onClick={onGoCart}
+        /> */}
+        <Button
+          type="button"
+          size="small"
+          color="point"
+          $customStyle={{ width: "130px" }}
+          children="계속 쇼핑하기"
+          onClick={onKeepShopping}
+        />
+        <Button
+          type="button"
+          size="small"
+          color="white"
+          $customStyle={{ width: "130px" }}
+          children="장바구니 가기"
           onClick={onGoCart}
         />
       </S.BtnContainer>
@@ -44,11 +60,11 @@ export const alreadyCart = ({ onCancel, onGoCart }: AlreadyCartProps) => {
         장바구니로 이동하시겠습니까?
       </S.ModalContent>
       <S.BtnContainer>
-        <Button
+        {/* <Button
           type="button"
           width="100px"
           bgcolor="light"
-          border="yes"
+          border="active"
           content="아니오"
           onClick={onCancel}
         />
@@ -57,6 +73,20 @@ export const alreadyCart = ({ onCancel, onGoCart }: AlreadyCartProps) => {
           width="100px"
           color="white"
           content="예"
+          onClick={onGoCart}
+        /> */}
+        <Button
+          type="button"
+          size="small"
+          color="white"
+          children="아니오"
+          onClick={onCancel}
+        />
+        <Button
+          type="button"
+          size="small"
+          color="point"
+          children="예"
           onClick={onGoCart}
         />
       </S.BtnContainer>
@@ -72,11 +102,11 @@ export const productDelete = ({ onCancel, onDelete }: ProductDeleteProps) => {
     <>
       <S.ModalContent>상품을 삭제하시겠습니까?</S.ModalContent>
       <S.BtnContainer>
-        <Button
+        {/* <Button
           type="button"
           width="100px"
           bgcolor="light"
-          border="yes"
+          border="active"
           content="아니오"
           onClick={onCancel}
         />
@@ -85,6 +115,20 @@ export const productDelete = ({ onCancel, onDelete }: ProductDeleteProps) => {
           width="100px"
           color="white"
           content="예"
+          onClick={onDelete}
+        /> */}
+        <Button
+          type="button"
+          size="small"
+          color="white"
+          children="아니오"
+          onClick={onCancel}
+        />
+        <Button
+          type="button"
+          size="small"
+          color="point"
+          children="예"
           onClick={onDelete}
         />
       </S.BtnContainer>
@@ -113,11 +157,11 @@ export const goLogin = ({ onCancel, onGoLogin }: GoLoginProps) => {
         </S.ModalContent>
       )}
       <S.BtnContainer>
-        <Button
+        {/* <Button
           type="button"
           width="100px"
           bgcolor="light"
-          border="yes"
+          border="active"
           content="아니오"
           onClick={onCancel}
         />
@@ -126,6 +170,20 @@ export const goLogin = ({ onCancel, onGoLogin }: GoLoginProps) => {
           width="100px"
           color="white"
           content="예"
+          onClick={onGoLogin}
+        /> */}
+        <Button
+          type="button"
+          size="small"
+          color="white"
+          children="아니오"
+          onClick={onCancel}
+        />
+        <Button
+          type="button"
+          size="small"
+          color="point"
+          children="예"
           onClick={onGoLogin}
         />
       </S.BtnContainer>

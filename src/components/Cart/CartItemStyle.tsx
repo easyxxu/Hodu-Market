@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import ToggleCheck from "../../assets/toggle-check.svg";
-import ToggleUnCheck from "../../assets/toggle-uncheck.svg";
-import Close from "../../assets/icon-delete.svg";
+import ToggleCheck from "../../assets/svg/toggle-check.svg";
+import ToggleUnCheck from "../../assets/svg/toggle-uncheck.svg";
+import Close from "../../assets/svg/icon-delete.svg";
 import { media } from "../style/media";
 const CartItemContainer = styled.tr`
   position: relative;

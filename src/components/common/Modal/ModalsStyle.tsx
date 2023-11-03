@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import DeleteBtn from "../../../assets/icon-delete.svg";
+import DeleteBtn from "../../../assets/svg/icon-delete.svg";
 const ModalContainer = styled.div`
   width: 360px;
   height: 200px;

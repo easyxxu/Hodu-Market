@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import SearchIcon from "../../../assets/search.svg";
+import SearchIcon from "../../../assets/svg/search.svg";
 import { Link } from "react-router-dom";
 import { media } from "../../style/media";
 

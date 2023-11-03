@@ -1,27 +1,13 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import ArrowLeft from "../../assets/svg/icon-swiper-1.svg";
 import ArrowRight from "../../assets/svg/icon-swiper-2.svg";
 
-const fadeAnimation = keyframes`
-0%{
-  opacity: 1;
-}
-50%{
-  opacity: 0.5;
-}
-100%{
-  opacity:1;
-}
-`;
 export const BannerContainer = styled.div`
   width: 100vw;
   background-color: #f2f2f2;
   height: 400px;
   position: relative;
-  transition: transform 0.5s;
   overflow: hidden;
-  animation-name: ${fadeAnimation};
-  animation-duration: 0.8s;
 `;
 
 export const BannerLeftBtn = styled.button`
@@ -54,7 +40,7 @@ export const BannerImgContainer = styled.div`
   width: 100vw;
   display: flex;
   img {
-    width: 100%;
+    width: 100vw;
     height: 500px;
     object-fit: cover;
   }

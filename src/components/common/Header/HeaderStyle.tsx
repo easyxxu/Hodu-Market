@@ -17,6 +17,7 @@ const HeaderContainer = styled.header`
   padding: 26px 30px;
   z-index: 10;
   position: relative;
+  gap: 10px;
   ${media.Small`
     padding: 26px 15px;
   `}
@@ -30,6 +31,7 @@ const SearchContainer = styled.form`
   position: relative;
   width: 400px;
   min-width: 190px;
+  height: 45px;
   ${media.Small`
     width:200px;
   `}
@@ -67,6 +69,7 @@ const Nav = styled.nav`
   display: flex;
   gap: 26px;
   align-items: center;
+  /* width: 104px; */
   ${media.Small`
     gap: 10px;
   `}
@@ -81,6 +84,8 @@ const ShoppingCartLink = styled(Link)<{ active: string }>`
       props.active === "true" ? "var(--point-color)" : "inherit"};
   }
   img {
+    width: 32px;
+    height: 32px;
     ${media.Small`
       width: 26px;
       height: 26px;
@@ -93,6 +98,8 @@ const HeaderLink = styled(Link)<{ active: string }>`
   color: #767676;
   font-size: 12px;
   img {
+    width: 32px;
+    aspect-ratio: 1;
     ${media.Small`
       width: 26px;
       height: 26px;

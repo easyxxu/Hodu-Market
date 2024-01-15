@@ -62,6 +62,10 @@ const FooterSns = styled.ul`
   display: flex;
   gap: 12px;
   margin-bottom: 30px;
+  img {
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 const FooterInfo = styled.address`

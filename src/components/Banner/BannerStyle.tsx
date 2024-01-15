@@ -8,6 +8,7 @@ export const BannerContainer = styled.div`
   height: 400px;
   position: relative;
   overflow: hidden;
+  margin-bottom: 70px;
 `;
 
 export const BannerLeftBtn = styled.button`

@@ -8,7 +8,7 @@ const ProductUl = styled.ul`
   justify-items: center;
   gap: 70px;
   width: 100%;
-  margin: 70px auto 130px;
+  margin: 0 auto;
   justify-content: center;
   ${media.Medium`
     gap: 40px;

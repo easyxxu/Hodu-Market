@@ -1,7 +1,6 @@
 import { keyframes, styled } from "styled-components";
 import { media } from "../style/media";
-interface Props {}
-export default function SkeletonProduct({}: Props) {
+export default function SkeletonProduct() {
   return (
     <SkeletonWrap>
       <div></div>
@@ -40,9 +39,7 @@ const SkeletonWrap = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    /* background: linear-gradient(150deg, transparent, #dfdfdf, transparent);
-    animation: ${loading} 2s infinite linear; */
-    animation: ${loading} 2s infinite ease-in-out;
+    animation: ${loading} 1.5s infinite ease-in-out;
   }
   div:first-child {
     border-radius: 10px;

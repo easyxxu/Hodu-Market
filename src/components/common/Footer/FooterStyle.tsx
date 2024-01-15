@@ -4,6 +4,7 @@ import { media } from "../../style/media";
 const FooterContainer = styled.footer`
   background-color: #f2f2f2;
   width: 100%;
+  margin-top: 120px;
 `;
 
 const FooterStyleContainer = styled.div`

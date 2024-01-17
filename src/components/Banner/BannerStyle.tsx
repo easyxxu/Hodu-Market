@@ -42,7 +42,7 @@ export const BannerImgContainer = styled.div`
   display: flex;
   img {
     width: 100vw;
-    height: 500px;
+    height: 400px;
     object-fit: cover;
   }
 `;

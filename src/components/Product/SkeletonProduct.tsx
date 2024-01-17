@@ -22,7 +22,7 @@ const loading = keyframes`
     }
 `;
 
-const SkeletonWrap = styled.div`
+const SkeletonWrap = styled.li`
   width: 100%;
   display: flex;
   flex-direction: column;

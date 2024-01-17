@@ -1,10 +1,15 @@
 import React, { useRef, useState } from "react";
 import * as S from "./BannerStyle";
-import bannerImg1 from "../../assets/img/banner_product1.jpg";
-import bannerImg2 from "../../assets/img/banner_product2.jpg";
-import bannerImg3 from "../../assets/img/banner_product3.jpg";
-import bannerImg4 from "../../assets/img/banner_product4.jpg";
-import bannerImg5 from "../../assets/img/banner_product5.jpg";
+// import bannerImg1 from "../../assets/img/banner_product1.jpg";
+// import bannerImg2 from "../../assets/img/banner_product2.jpg";
+// import bannerImg3 from "../../assets/img/banner_product3.jpg";
+// import bannerImg4 from "../../assets/img/banner_product4.jpg";
+// import bannerImg5 from "../../assets/img/banner_product5.jpg";
+import bannerImg1 from "../../assets/img/banner_product1.webp";
+import bannerImg2 from "../../assets/img/banner_product2.webp";
+import bannerImg3 from "../../assets/img/banner_product3.webp";
+import bannerImg4 from "../../assets/img/banner_product4.webp";
+import bannerImg5 from "../../assets/img/banner_product5.webp";
 import { useEffect } from "react";
 export default function Banner() {
   const imgArr = [bannerImg1, bannerImg2, bannerImg3, bannerImg4, bannerImg5];

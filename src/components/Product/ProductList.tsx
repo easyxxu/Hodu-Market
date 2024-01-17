@@ -13,15 +13,9 @@ export default function ProductList({
     <S.ProductUl>
       {isLoading ? (
         <>
-          <li>
-            <SkeletonProduct />
-          </li>
-          <li>
-            <SkeletonProduct />
-          </li>
-          <li>
-            <SkeletonProduct />
-          </li>
+          <SkeletonProduct />
+          <SkeletonProduct />
+          <SkeletonProduct />
         </>
       ) : (
         productListData.map((product) => (

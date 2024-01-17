@@ -4,6 +4,7 @@ import { media } from "../../style/media";
 const FooterContainer = styled.footer`
   background-color: #f2f2f2;
   width: 100%;
+  margin-top: 120px;
 `;
 
 const FooterStyleContainer = styled.div`
@@ -62,6 +63,10 @@ const FooterSns = styled.ul`
   display: flex;
   gap: 12px;
   margin-bottom: 30px;
+  img {
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 const FooterInfo = styled.address`

@@ -3,12 +3,16 @@ import styled from "styled-components";
 import SoldOutIcon from "../../assets/svg/sold-out.svg";
 import { media } from "../style/media";
 const ProductUl = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
   gap: 70px;
   width: 100%;
-  margin: 70px auto 130px;
+  margin: 0 auto;
   justify-content: center;
+  ${media.Medium`
+    gap: 40px;
+  `}
   ${media.Small`
     gap: 30px;
     padding: 0 10px;

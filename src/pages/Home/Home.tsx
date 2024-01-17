@@ -19,6 +19,7 @@ export default function Home() {
     try {
       const res = await loadAllProduct(page);
       setProductListData((prev) => [...prev, ...res.data.results]);
+      setIsLoading(false);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.error("getProductList Error: ", err);
@@ -33,7 +34,7 @@ export default function Home() {
       setPage((prev) => prev + 1);
     },
     options: { threshold: 1 },
-    isLoading,
+    // isLoading,
   });
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function Home() {
 
   return (
     <MainLayout type={userType} path={path}>
-      <ProductList productListData={productListData} />
+      <ProductList productListData={productListData} isLoading={isLoading} />
       <div ref={targetRef} />
     </MainLayout>
   );

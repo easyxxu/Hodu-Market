@@ -37,7 +37,7 @@ export default function SearchResultPage() {
       setPage((prev) => prev + 1);
     },
     options: { threshold: 1 },
-    isLoading,
+    // isLoading,
   });
 
   return (

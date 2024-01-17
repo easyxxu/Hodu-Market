@@ -1,29 +1,9 @@
 import reset from "styled-reset";
 import { createGlobalStyle } from "styled-components";
-import SpoqaHanSansNeoRegular from "../style/fonts/SpoqaHanSansNeo-Regular.ttf";
-import SpoqaHanSansNeoMedium from "../style/fonts/SpoqaHanSansNeo-Medium.ttf";
-import SpoqaHanSansNeoBold from "../style/fonts/SpoqaHanSansNeo-Bold.ttf";
+
 export const GlobalStyle = createGlobalStyle`
   ${reset}
-  @font-face {
-  font-family: 'Spoqa Han Sans Neo';
-  src: url(${SpoqaHanSansNeoRegular});
-  font-weight: 400;
-  }
-
-  @font-face {
-    font-family: 'Spoqa Han Sans Neo';
-    src: url(${SpoqaHanSansNeoMedium});
-    font-weight: 500;
-  }
-
-  @font-face {
-    font-family: 'Spoqa Han Sans Neo';
-    src: url(${SpoqaHanSansNeoBold});
-    font-weight: 700;
-  }
   :root{
-    // color variables
     --content-color-dark: #767676;
     --content-color-dark-hover: #4f4f4f;
     --content-color-light: #c4c4c4;
@@ -32,29 +12,28 @@ export const GlobalStyle = createGlobalStyle`
     --color-white: #fff;
     --color-black: #000;
 
-    // font size variables
     --font-lg: 24px;
     --font-md: 18px;
     --font-sm: 16px;
   }
-  *{
-    box-sizing: border-box;
-  }
-  body {
+
+  *,*::before, *::after{
+		box-sizing: border-box;
+    font-family: 'Spoqa Han Sans Neo'; 
+	}
+
+  html, body, div, span, h1, h2, h3, h4, h5, h6, p, strong,
+	a, dl, dt, dd, ol, ul, li, form, label, table, input, button, textarea{
     font-family: 'Spoqa Han Sans Neo';
     font-weight: 400;
   }
+
   a{
-    font-family: 'Spoqa Han Sans Neo';    
-    font-weight: 400;
     color: inherit;
     text-decoration: none;
   }
-  textarea{
-    font-family: 'Spoqa Han Sans Neo';    
-  }
+
   button{
-    font-family: 'Spoqa Han Sans Neo';
     font-weight: 500;
     border: 0;
     cursor: pointer;
@@ -63,6 +42,7 @@ export const GlobalStyle = createGlobalStyle`
     background-color: inherit;
     &:disabled{cursor: not-allowed}
   }
+
   input{
     border: 0;
     /* -webkit-appearance: none; */
@@ -71,6 +51,7 @@ export const GlobalStyle = createGlobalStyle`
       outline: none;
     }
   }
+
   .a11y-hidden {
     clip: rect(1px, 1px, 1px, 1px);
     clip-path: inset(50%);
@@ -81,6 +62,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     position: absolute;
   }
+
   .ellipsis {
     white-space: nowrap;
     overflow: hidden;

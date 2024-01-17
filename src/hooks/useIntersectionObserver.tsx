@@ -9,13 +9,13 @@ const defaultOption = {
 interface UseIntersectionObserverProps {
   onIntersect: () => void;
   options?: IntersectionObserverInit;
-  isLoading: boolean;
+  // isLoading: boolean;
 }
 export default function useIntersectionObserver({
   onIntersect,
   options,
-  isLoading,
-}: UseIntersectionObserverProps) {
+}: // isLoading,
+UseIntersectionObserverProps) {
   const targetRef = useRef(null);
   const checkIntersect = useCallback(([entry]: IntersectionObserverEntry[]) => {
     if (entry.isIntersecting) {
@@ -25,7 +25,7 @@ export default function useIntersectionObserver({
 
   useEffect(() => {
     let io: IntersectionObserver | undefined;
-    if (targetRef.current && isLoading) {
+    if (targetRef.current) {
       io = new IntersectionObserver(checkIntersect, {
         ...defaultOption,
         ...options,
@@ -35,7 +35,7 @@ export default function useIntersectionObserver({
     return () => {
       io && io.disconnect();
     };
-  }, [targetRef, isLoading]);
+  }, [targetRef]);
 
   return targetRef;
 }

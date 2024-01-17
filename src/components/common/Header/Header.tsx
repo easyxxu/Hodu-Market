@@ -4,7 +4,6 @@ import ShoppingCart from "../../../assets/svg/icon-shopping-cart.svg";
 import ShoppingCartActive from "../../../assets/svg/icon-shopping-cart-2.svg";
 import MyPage from "../../../assets/svg/icon-user.svg";
 import MyPageActive from "../../../assets/svg/icon-user-2.svg";
-// import ShoppingBag from "../../../assets/svg/icon-shopping-bag.svg";
 import { Button } from "../Button/Button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as S from "./HeaderStyle";
@@ -14,7 +13,7 @@ export function Logo() {
   return (
     <h1>
       <Link to="/">
-        <S.LogoImg src={LogoIcon} alt="호두 로고" />
+        <S.LogoImg src={LogoIcon} alt="호두 로고" width={124} height={38} />
       </Link>
     </h1>
   );

@@ -161,7 +161,6 @@ export default function JoinForm() {
       if (res.data.Success === "멋진 아이디네요 :)") {
         setIdSuccessMsg(res.data.Success);
         setIdDuplicateValid(true);
-        return true;
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -175,7 +174,6 @@ export default function JoinForm() {
           });
         }
       }
-      return false;
     }
   };
 
@@ -398,7 +396,7 @@ export default function JoinForm() {
           color="point"
           $customStyle={{ width: "100%" }}
           children="가입하기"
-          disabled={!handleSubmitBtn() ? true : false}
+          disabled={!handleSubmitBtn()}
         />
       </S.Form>
       {/* <DevTool control={control} /> */}

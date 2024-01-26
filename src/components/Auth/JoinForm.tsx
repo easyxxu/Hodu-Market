@@ -53,7 +53,7 @@ export default function JoinForm() {
 
   const idRegex = /^[a-zA-Z0-9]{1,20}$/;
   const pwRegex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-
+  const companyNumRegex = /^[0-9]{10}$/;
   const idErrorMsg = "ID는 20자 이내의 영어 소문자, 대문자, 숫자만 가능합니다.";
   const pwErrorMsg = "8자 이상, 영문 소문자, 숫자를 사용하세요.";
   const requiredErrorMsg = "필수 입력입니다.";
@@ -338,6 +338,10 @@ export default function JoinForm() {
                 <S.SmInput
                   {...register("company_registration_number", {
                     required: requiredErrorMsg,
+                    pattern: {
+                      value: companyNumRegex,
+                      message: "10자리 숫자만 입력해주세요.",
+                    },
                   })}
                   type="text"
                   id="companyRegisterationNum"

@@ -24,9 +24,9 @@ const JoinTypeBtn = styled.div`
     }
   `}
 `;
-const BuyerJoinBtn = styled.button<{ active: string }>`
+const BuyerJoinBtn = styled.button<{ $active: string }>`
   ${(props) =>
-    props.active === "active"
+    props.$active === "active"
       ? css`
           z-index: 2;
           background-color: #fff;
@@ -41,9 +41,9 @@ const BuyerJoinBtn = styled.button<{ active: string }>`
           border-radius: 10px;
         `}
 `;
-const SellerJoinBtn = styled.button<{ active: string }>`
+const SellerJoinBtn = styled.button<{ $active: string }>`
   ${(props) =>
-    props.active === "active"
+    props.$active === "active"
       ? css`
           z-index: 2;
           background-color: #fff;
@@ -85,11 +85,11 @@ const JoinFormContainer = styled.div`
     width: 350px;
   `}
 `;
-const Input = styled.input<{ valid?: string }>`
+const Input = styled.input<{ $valid?: boolean }>`
   width: 100%;
   padding: 17px 40px 17px 10px;
   border: ${(props) =>
-    props.valid === "false"
+    props.$valid === false
       ? "1px solid var(--price-point-color)"
       : "1px solid #c4c4c4"};
   border-radius: 5px;
@@ -114,12 +114,10 @@ const IdContainer = styled.div`
     }
   `}
 `;
-const SmInput = styled(Input)<{ valid: string }>`
+const SmInput = styled(Input)<{ $valid: boolean }>`
   width: 75%;
   border: ${(props) =>
-    props.valid === "false"
-      ? "1px solid var(--price-point-color)"
-      : "1px solid #c4c4c4"};
+    props.$valid ? "1px solid #c4c4c4" : "1px solid var(--price-point-color)"};
 `;
 const CheckIconStyle = styled(CheckIcon)`
   fill: ${(props) => props.fill};
@@ -165,7 +163,7 @@ const PhoneContainer = styled.div`
 const PhoneInput = styled(Input)`
   width: calc((100% - 24px) / 3);
 `;
-const PhoneFirstBtn = styled.button<{ state: string }>`
+const PhoneFirstBtn = styled.button<{ $state: string }>`
   width: calc((100% - 24px) / 3);
   /* height: 54px; */
   font-size: 1em;
@@ -173,7 +171,7 @@ const PhoneFirstBtn = styled.button<{ state: string }>`
   border-radius: 5px;
   padding: 17px 73px 17px 50px;
   background-image: ${(props) =>
-    props.state === "active" ? `url(${UpArrow})` : `url(${DownArrow})`};
+    props.$state === "active" ? `url(${UpArrow})` : `url(${DownArrow})`};
   background-repeat: no-repeat;
   background-position: 90% 50%;
   ${media.Small`
@@ -207,7 +205,7 @@ const AgreeInput = styled.input`
     content: "";
     background: url(${CheckBoxIcon}) no-repeat 50% 50%;
     border: 1px solid #21bf48;
-    transform: translate(0, 5px);
+    /* transform: translate(0, 0px); */
   }
 `;
 const AgreeLabel = styled.label`
@@ -218,11 +216,9 @@ const AgreeLabel = styled.label`
     line-height: 22px;
   `}
 `;
-const ErrorMsg = styled.small<{ valid?: string }>`
+const ErrorMsg = styled.small<{ $valid?: boolean }>`
   color: ${(props) =>
-    props.valid === "success"
-      ? "var(--point-color)"
-      : "var(--price-point-color)"};
+    props.$valid ? "var(--point-color)" : "var(--price-point-color)"};
   font-size: 1em;
   margin-bottom: 12px;
 `;

@@ -22,7 +22,6 @@ interface FormValue {
   company_registration_number?: string;
   store_name?: string;
 }
-let renderCount = 0;
 export default function JoinForm() {
   const {
     control,
@@ -37,7 +36,6 @@ export default function JoinForm() {
   } = useForm<FormValue>({
     mode: "onBlur",
   });
-  console.log("#RenderCnt: ", renderCount);
   const idFieldState = getFieldState("username");
   const pw1FieldState = getFieldState("password");
   const pw2FieldState = getFieldState("password2");
@@ -45,7 +43,6 @@ export default function JoinForm() {
   const idValid = idFieldState.invalid;
   const pw1Valid = pw1FieldState.invalid;
   const pw1ValidDirty = pw1FieldState.isDirty;
-  console.log("#pw1ValidDirty: ", pw1ValidDirty);
   const pw2Valid = pw2FieldState.invalid;
   const pw2ValidDirty = pw2FieldState.isDirty;
   const companyNumValid = companyNumFieldState.invalid;
@@ -72,7 +69,6 @@ export default function JoinForm() {
   const navigate = useNavigate();
   // Form Submit API 통신
   const onSubmitHandler: SubmitHandler<FormValue> = async (data) => {
-    console.log(data);
     const {
       username,
       password,
@@ -85,14 +81,13 @@ export default function JoinForm() {
     } = data;
     try {
       if (joinType === "buyer") {
-        const res = await signupBuyerApi({
+        await signupBuyerApi({
           username: username,
           password: password,
           password2: password2,
           name: name,
           phone_number: `${phoneFirst}${phoneSecond}${phoneThird}`,
         });
-        console.log(res);
       } else if (joinType === "seller") {
         await signupSellerApi({
           username: username,
@@ -176,13 +171,6 @@ export default function JoinForm() {
       }
     }
   };
-
-  // 비밀번호 재확인
-  function pwDoubleCheck(value: string) {
-    const confirmPassword = getValues("password");
-    if (confirmPassword.length === 0) return false;
-    return confirmPassword === value;
-  }
 
   // 사업자번호 유효성 체크
   const companyRegisterationNumCheck = async () => {
@@ -281,7 +269,9 @@ export default function JoinForm() {
           <S.Input
             {...register("password2", {
               required: requiredErrorMsg,
-              validate: pwDoubleCheck,
+              validate: (value) =>
+                getValues("password") === value ||
+                "비밀번호가 일치하지 않습니다.",
             })}
             type="password"
             id="password2"
@@ -381,7 +371,6 @@ export default function JoinForm() {
             }}
             type="checkbox"
             id="agree"
-            required
           />
           <S.AgreeLabel htmlFor="agree">
             <div>
@@ -399,7 +388,7 @@ export default function JoinForm() {
           disabled={!handleSubmitBtn()}
         />
       </S.Form>
-      {/* <DevTool control={control} /> */}
+      <DevTool control={control} />
     </S.JoinContainer>
   );
 }

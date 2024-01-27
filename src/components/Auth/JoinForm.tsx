@@ -23,6 +23,7 @@ interface FormValue {
   store_name?: string;
 }
 export default function JoinForm() {
+  const navigate = useNavigate();
   const {
     control,
     register,
@@ -36,37 +37,42 @@ export default function JoinForm() {
   } = useForm<FormValue>({
     mode: "onBlur",
   });
-  const idFieldState = getFieldState("username");
+
+  // input field valid
   const pw1FieldState = getFieldState("password");
   const pw2FieldState = getFieldState("password2");
-  const companyNumFieldState = getFieldState("company_registration_number");
-  const idValid = idFieldState.invalid;
+  const idValid = getFieldState("username").invalid;
   const pw1Valid = pw1FieldState.invalid;
   const pw1ValidDirty = pw1FieldState.isDirty;
   const pw2Valid = pw2FieldState.invalid;
   const pw2ValidDirty = pw2FieldState.isDirty;
-  const companyNumValid = companyNumFieldState.invalid;
+  const companyNumValid = getFieldState("company_registration_number").invalid;
   const agreeValid = watch("agree");
 
   const idRegex = /^[a-zA-Z0-9]{1,20}$/;
   const pwRegex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
   const companyNumRegex = /^[0-9]{10}$/;
-  const idErrorMsg = "ID는 20자 이내의 영어 소문자, 대문자, 숫자만 가능합니다.";
-  const pwErrorMsg = "8자 이상, 영문 소문자, 숫자를 사용하세요.";
-  const requiredErrorMsg = "필수 입력입니다.";
+
+  const ERRMSG = {
+    id: "ID는 20자 이내의 영어 소문자, 대문자, 숫자만 가능합니다.",
+    pw1: "8자 이상, 영문 소문자, 숫자를 사용하세요.",
+    pw2: "비밀번호가 일치하지 않습니다.",
+    companyNum: "10자리 숫자만 입력해주세요.",
+    required: "필수 입력입니다.",
+  };
+
   const [idSuccessMsg, setIdSuccessMsg] = useState<string | null>("");
   const [companyNumSuccessMsg, setCompanyNumSuccessMsg] = useState<
     string | null
   >("");
-  const [joinAgree, setJoinAgree] = useState(false);
 
   const [joinType, setJoinType] = useState("buyer");
   const [idDuplicateValid, setIdDuplicateValid] = useState(false);
   const [phoneFirst, setPhoneFirst] = useState<string>("010");
   const [phoneListVisible, setPhoneListVisible] = useState(false);
   const [companyNumCheckValid, setCompanyNumCheckValid] = useState(false);
+  const [joinAgree, setJoinAgree] = useState(false);
 
-  const navigate = useNavigate();
   // Form Submit API 통신
   const onSubmitHandler: SubmitHandler<FormValue> = async (data) => {
     const {
@@ -79,28 +85,26 @@ export default function JoinForm() {
       company_registration_number,
       store_name,
     } = data;
+
+    const commonValue = {
+      username,
+      password,
+      password2,
+      name,
+      phone_number: `${phoneFirst}${phoneSecond}${phoneThird}`,
+    };
+
     try {
       if (joinType === "buyer") {
-        await signupBuyerApi({
-          username: username,
-          password: password,
-          password2: password2,
-          name: name,
-          phone_number: `${phoneFirst}${phoneSecond}${phoneThird}`,
-        });
+        await signupBuyerApi(commonValue);
       } else if (joinType === "seller") {
         await signupSellerApi({
-          username: username,
-          password: password,
-          password2: password2,
-          name: name,
-          phone_number: `${phoneFirst}${phoneSecond}${phoneThird}`,
-          company_registration_number: company_registration_number,
-          store_name: store_name,
+          ...commonValue,
+          company_registration_number,
+          store_name,
         });
       }
       navigate("/login");
-      // console.log("회원가입 성공!");
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.error("회원가입 오류", err);
@@ -218,8 +222,8 @@ export default function JoinForm() {
           <S.IdContainer>
             <S.SmInput
               {...register("username", {
-                required: requiredErrorMsg,
-                pattern: { value: idRegex, message: idErrorMsg },
+                required: ERRMSG.required,
+                pattern: { value: idRegex, message: ERRMSG.id },
               })}
               type="text"
               id="id"
@@ -248,8 +252,8 @@ export default function JoinForm() {
           </label>
           <S.Input
             {...register("password", {
-              required: requiredErrorMsg,
-              pattern: { value: pwRegex, message: pwErrorMsg },
+              required: ERRMSG.required,
+              pattern: { value: pwRegex, message: ERRMSG.pw1 },
             })}
             type="password"
             id="password"
@@ -268,10 +272,9 @@ export default function JoinForm() {
           </label>
           <S.Input
             {...register("password2", {
-              required: requiredErrorMsg,
+              required: ERRMSG.required,
               validate: (value) =>
-                getValues("password") === value ||
-                "비밀번호가 일치하지 않습니다.",
+                getValues("password") === value || ERRMSG.pw2,
             })}
             type="password"
             id="password2"
@@ -325,10 +328,10 @@ export default function JoinForm() {
               <S.SellerContainer>
                 <S.SmInput
                   {...register("company_registration_number", {
-                    required: requiredErrorMsg,
+                    required: ERRMSG.required,
                     pattern: {
                       value: companyNumRegex,
-                      message: "10자리 숫자만 입력해주세요.",
+                      message: ERRMSG.companyNum,
                     },
                   })}
                   type="text"
@@ -388,7 +391,7 @@ export default function JoinForm() {
           disabled={!handleSubmitBtn()}
         />
       </S.Form>
-      <DevTool control={control} />
+      {/* <DevTool control={control} /> */}
     </S.JoinContainer>
   );
 }

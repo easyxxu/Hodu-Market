@@ -35,7 +35,6 @@ export default function SearchResultPage() {
       setIsLoading(true);
       try {
         const res = await productSearch(page, searchKeyword);
-
         if (res.data.count === 0) {
           setNoResult(true);
           return;
@@ -46,7 +45,6 @@ export default function SearchResultPage() {
         if (res.data.next === null) {
           setPageEnd(true);
         }
-        console.log("page: ", page, "result: ", res.data);
       } catch (err) {
         if (axios.isAxiosError(err)) {
           if (err.response?.data.detail === "페이지가 유효하지 않습니다.") {

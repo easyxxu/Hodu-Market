@@ -27,6 +27,7 @@ export default function SearchResultPage() {
 
   useEffect(() => {
     setPage(1);
+    setPageEnd(false);
     setSearchResultData([]);
   }, [searchKeyword]);
 
@@ -54,7 +55,7 @@ export default function SearchResultPage() {
       }
     };
     getSearchResult();
-  }, [page, searchKeyword]);
+  }, [page]);
 
   return (
     <MainLayout type={userType}>

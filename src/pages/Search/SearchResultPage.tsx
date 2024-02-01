@@ -6,45 +6,58 @@ import ProductList from "../../components/Product/ProductList";
 import { productSearch } from "../../apis/productApi";
 import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 import axios from "axios";
+import { Product } from "../../types/product";
 
 export default function SearchResultPage() {
   const { searchKeyword } = useParams() as { searchKeyword: string };
   const userType = localStorage.getItem("user_type");
-  const [searchResultData, setSearchResultData] = useState([]);
-  const [page, setPage] = useState(0);
+  const [searchResultData, setSearchResultData] = useState<Product[]>([]);
+  const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [pageEnd, setPageEnd] = useState(false);
 
   useEffect(() => {
     const getSearchResult = async () => {
+      setIsLoading(true);
       try {
         const res = await productSearch(page, searchKeyword);
-        // console.log(res.data);
-        setSearchResultData(res.data.results);
+        setSearchResultData((prev) => [...prev, ...res.data.results]);
+        setIsLoading(false);
+        if (res.data.next === null) {
+          setPageEnd(true);
+        }
       } catch (err) {
         if (axios.isAxiosError(err)) {
-          console.error("getSearchResult Error: ", err.response?.data);
-          if (err.response?.data.detail === "페이지가 유효하지 않습니다.")
-            setIsLoading(false);
+          if (err.response?.data.detail === "페이지가 유효하지 않습니다.") {
+            console.error(err);
+          }
         }
       }
     };
-    if (page === 0) return;
-    if (isLoading) getSearchResult();
-  }, [page, searchKeyword, isLoading]);
+    getSearchResult();
+  }, [page, searchKeyword]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [searchKeyword]);
 
   const targetRef = useIntersectionObserver({
     onIntersect: () => {
       setPage((prev) => prev + 1);
     },
     options: { threshold: 1 },
-    // isLoading,
+    pageEnd,
   });
 
   return (
     <MainLayout type={userType}>
       <Title>검색 결과</Title>
       <SearchKeyword>{searchKeyword}</SearchKeyword>
-      <ProductList productListData={searchResultData} />
+      <ProductList
+        data={searchResultData}
+        isLoading={isLoading}
+        pageEnd={pageEnd}
+      />
       <div ref={targetRef} />
     </MainLayout>
   );
@@ -61,4 +74,5 @@ const SearchKeyword = styled.p`
   color: var(--content-color-dark);
   text-align: center;
   font-weight: 500;
+  margin-bottom: 54px;
 `;

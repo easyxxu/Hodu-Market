@@ -1,13 +1,21 @@
 import { keyframes, styled } from "styled-components";
 import { media } from "../style/media";
-export default function SkeletonProduct() {
+interface Props {
+  count: number;
+}
+export default function SkeletonProduct({ count }: Props) {
+  const array = Array.from({ length: count });
   return (
-    <SkeletonWrap>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </SkeletonWrap>
+    <>
+      {array.map((_, index) => (
+        <SkeletonWrap key={index}>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </SkeletonWrap>
+      ))}
+    </>
   );
 }
 const loading = keyframes`

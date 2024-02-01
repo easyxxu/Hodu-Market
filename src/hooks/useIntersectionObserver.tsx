@@ -1,21 +1,22 @@
-import React, { useCallback, useState } from "react";
-import { useEffect } from "react";
-import { useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
+
 const defaultOption = {
   root: null,
   threshold: 0.5,
   rootMargin: "0px",
 };
+
 interface UseIntersectionObserverProps {
   onIntersect: () => void;
   options?: IntersectionObserverInit;
-  // isLoading: boolean;
+  pageEnd: boolean;
 }
+
 export default function useIntersectionObserver({
   onIntersect,
   options,
-}: // isLoading,
-UseIntersectionObserverProps) {
+  pageEnd,
+}: UseIntersectionObserverProps) {
   const targetRef = useRef(null);
   const checkIntersect = useCallback(([entry]: IntersectionObserverEntry[]) => {
     if (entry.isIntersecting) {
@@ -24,18 +25,17 @@ UseIntersectionObserverProps) {
   }, []);
 
   useEffect(() => {
-    let io: IntersectionObserver | undefined;
-    if (targetRef.current) {
-      io = new IntersectionObserver(checkIntersect, {
-        ...defaultOption,
-        ...options,
-      });
+    const io = new IntersectionObserver(checkIntersect, {
+      ...defaultOption,
+      ...options,
+    });
+
+    if (targetRef.current && !pageEnd) {
       io.observe(targetRef.current);
     }
-    return () => {
-      io && io.disconnect();
-    };
-  }, [targetRef]);
+
+    return () => io && io.disconnect();
+  }, [targetRef, pageEnd]);
 
   return targetRef;
 }

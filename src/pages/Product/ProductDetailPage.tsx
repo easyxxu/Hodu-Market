@@ -1,13 +1,12 @@
 import axios from "axios";
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import { styled } from "styled-components";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { loadProductDetail } from "../../apis/productApi";
 import { MainLayout } from "../../components/Layout/Layout";
 import ProductDetail from "../../components/Product/ProductDetail";
 import { Product } from "../../types/product";
-
+import { FadeLoader } from "react-spinners";
 export default function ProductDetailPage() {
   const { productId } = useParams() as { productId: string };
   const [productInfo, setProductInfo] = useState<Product | null>(null);
@@ -29,8 +28,18 @@ export default function ProductDetailPage() {
 
   return (
     <MainLayout type={userType}>
-      {productInfo === null && <div>Loading...</div>}
+      {productInfo == null && (
+        <FadeLoaderBox>
+          <FadeLoader color="var(--point-color)" />
+        </FadeLoaderBox>
+      )}
       {productInfo !== null && <ProductDetail productInfo={productInfo} />}
     </MainLayout>
   );
 }
+const FadeLoaderBox = styled.div`
+  height: calc(100vh - 420px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

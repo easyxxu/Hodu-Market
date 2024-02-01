@@ -171,7 +171,7 @@ export default function Payment() {
   };
   // 주문자 정보와 배송받는사람 정보가 같은 경우 버튼 handler
   const handleSaveInfoBtn = () => {
-    console.log(typeof orderPersonPhoneNum);
+    // console.log(typeof orderPersonPhoneNum);
     if (typeof orderPersonPhoneNum === "object") {
       setOrderForm({
         ...orderForm,
@@ -228,7 +228,7 @@ export default function Payment() {
       setReceiverValid(true);
     }
   }, [orderForm.payment_method, orderForm.receiver]);
-  console.log("orderForm:", orderForm);
+  // console.log("orderForm:", orderForm);
   return (
     <>
       <S.Title>배송정보</S.Title>
@@ -273,16 +273,6 @@ export default function Payment() {
             이메일
             <S.Input type="email" name="email" onChange={handleOrderEmail} />
           </S.Label>
-          {/* <S.InfoSaveBtn
-            type="button"
-            bgcolor="disabled"
-            color="white"
-            width="MS"
-            onClick={handleSaveInfoBtn}
-            content="주문자 정보와 동일"
-          >
-            주문자 정보와 동일
-          </S.InfoSaveBtn> */}
           <S.InfoSaveBtn>
             <Button
               type="button"
@@ -342,13 +332,6 @@ export default function Payment() {
                   value={address.우편번호}
                   readOnly={true}
                 />
-                {/* <Button
-                  width="154px"
-                  color="white"
-                  type="button"
-                  content="우편번호 조회"
-                  onClick={handleZipCode}
-                /> */}
                 <Button
                   type="button"
                   size="small"
@@ -471,15 +454,6 @@ export default function Payment() {
                   />
                   주문 내용을 확인하였으며, 정보 제공 등에 동의합니다.
                 </label>
-                {/* <Button
-                  type="submit"
-                  width="L"
-                  size="L"
-                  bgcolor={!handleSubmitBtn() ? "disabled" : undefined}
-                  color="white"
-                  content="결제하기"
-                  disabled={!handleSubmitBtn()}
-                /> */}
                 <Button
                   type="submit"
                   size="large"

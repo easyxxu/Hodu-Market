@@ -209,16 +209,6 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
           </S.TotalContainer>
           <S.BtnBuyContainer>
             {stock === 0 ? (
-              // <Button
-              //   content="품절"
-              //   disabled={true}
-              //   type="button"
-              //   width={isMobile ? "100%" : "629px"}
-              //   bgcolor="disabled"
-              //   color="white"
-              //   fontSize="L"
-              //   fontWeight="bold"
-              // />
               <Button
                 type="button"
                 size="large"
@@ -229,27 +219,6 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
               />
             ) : (
               <>
-                {/* <Button
-                  type="button"
-                  size="M"
-                  width={isMobile ? "70%" : "416px"}
-                  color="white"
-                  fontSize="M"
-                  fontWeight="bold"
-                  content="바로구매"
-                  onClick={handleOrderModalOpen}
-                ></Button>
-                <Button
-                  type="button"
-                  size="M"
-                  width={isMobile ? "30%" : "200px"}
-                  color="white"
-                  bgcolor="dark"
-                  fontSize="M"
-                  fontWeight="bold"
-                  content="장바구니"
-                  onClick={handleCartModalOpen}
-                ></Button> */}
                 <Button
                   type="button"
                   size="large"

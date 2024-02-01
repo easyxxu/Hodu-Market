@@ -252,13 +252,6 @@ export default function CartItem({ item }: CartItemProps) {
       </td>
       <S.ProductPriceContainer>
         <p>{(cartItemInfo.price * cartQuantity).toLocaleString("ko-KR")}원</p>
-        {/* <Button
-          type="button"
-          width="130px"
-          size="M"
-          content="주문하기"
-          onClick={handleOneOrder}
-        /> */}
         <Button
           type="button"
           size="small"

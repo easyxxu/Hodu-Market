@@ -14,7 +14,7 @@ interface PostCodeProps {
 }
 const PostCode = ({ address, setAddress, setPostCodeModal }: PostCodeProps) => {
   const handleComplete = (data: any) => {
-    console.log(data);
+    // console.log(data);
     setAddress({
       ...address,
       우편번호: data.zonecode,

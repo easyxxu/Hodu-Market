@@ -54,13 +54,6 @@ export default function DashboardItem({
       </td>
       <td>{productPrice}원</td>
       <td>
-        {/* <Button
-          type="button"
-          width="70px"
-          color="white"
-          content="수정"
-          onClick={handleProductModify}
-        /> */}
         <Button
           type="button"
           size="small"
@@ -71,14 +64,6 @@ export default function DashboardItem({
         />
       </td>
       <td>
-        {/* <Button
-          type="button"
-          width="70px"
-          bgcolor="light"
-          border="active"
-          content="삭제"
-          onClick={handleProductDelete}
-        /> */}
         <Button
           type="button"
           size="small"

@@ -37,17 +37,6 @@ export default function SellerDashboard() {
               "회사이름"}
           </strong>
         </h3>
-        {/* <Button
-          type="button"
-          size="MS"
-          width="MS"
-          color="white"
-          img={PlusIcon}
-          content="상품업로드"
-          onClick={() => {
-            navigate("/sellercenter/addproduct", { state: { type: "add" } });
-          }}
-        /> */}
         <Button
           type="button"
           size="medium_small"

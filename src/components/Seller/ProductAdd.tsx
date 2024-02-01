@@ -85,18 +85,15 @@ export default function ProductAdd() {
   };
   const handleShippingMethod = (e: React.MouseEvent<HTMLButtonElement>) => {
     const button = e.target as HTMLButtonElement;
-    console.log("눌리긴함 button: ", e);
     if (button.name === "DELIVERY") {
-      console.log("나 택배");
       setProduct({ ...product, shipping_method: "DELIVERY" });
       // setShippingMethod("DELIVERY");
     } else if (button.name === "PARCEL") {
-      console.log("나 parcel");
       setProduct({ ...product, shipping_method: "PARCEL" });
       // setShippingMethod("PARCEL");
     }
   };
-  console.log("Product: ", product.shipping_method);
+  // console.log("Product: ", product.shipping_method);
   useEffect(() => {
     // 상품수정 시 해당 상품 정보 불러오기
     if (type === "modify") {
@@ -203,44 +200,6 @@ export default function ProductAdd() {
               </S.InputFrameContainer>
               <label htmlFor="deliveryMethod">배송방법</label>
               <S.DeliveryBtnContainer>
-                {/* <Button
-                  type="button"
-                  id="deliveryMethod"
-                  content="택배, 소포, 등기"
-                  name="DELIVERY"
-                  width="L"
-                  size="L"
-                  border={
-                    product.shipping_method === "DELIVERY"
-                      ? undefined
-                      : "active"
-                  }
-                  color={
-                    product.shipping_method === "DELIVERY" ? "point" : "white"
-                  }
-                  bgcolor={
-                    product.shipping_method === "DELIVERY" ? undefined : "light"
-                  }
-                  onClick={handleShippingMethod}
-                />
-                <Button
-                  type="button"
-                  id="deliverMethod"
-                  content="직접배송(화물배달)"
-                  name="PARCEL"
-                  width="L"
-                  size="L"
-                  border={
-                    product.shipping_method === "PARCEL" ? undefined : "active"
-                  }
-                  color={
-                    product.shipping_method === "PARCEL" ? "white" : undefined
-                  }
-                  bgcolor={
-                    product.shipping_method === "PARCEL" ? undefined : "light"
-                  }
-                  onClick={handleShippingMethod}
-                /> */}
                 <Button
                   type="button"
                   id="deliveryMethod"
@@ -300,19 +259,6 @@ export default function ProductAdd() {
             />
           </S.ProductDetailContainer>
           <S.FormBtnContainer>
-            {/* <Button
-              type="button"
-              width="200px"
-              bgcolor="light"
-              border="active"
-              content="취소"
-            />
-            <Button
-              type="submit"
-              width="200px"
-              color="white"
-              content="저장하기"
-            /> */}
             <Button
               type="button"
               size="small"

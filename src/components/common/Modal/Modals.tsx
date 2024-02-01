@@ -13,21 +13,6 @@ export const addCart = ({ onGoCart, onKeepShopping }: AddCartProps) => {
     <>
       <S.ModalContent>장바구니에 담겼습니다.</S.ModalContent>
       <S.BtnContainer>
-        {/* <Button
-          type="button"
-          width="130px"
-          color="white"
-          content="계속 쇼핑하기"
-          onClick={onKeepShopping}
-        />
-        <Button
-          type="button"
-          width="130px"
-          bgcolor="light"
-          border="active"
-          content="장바구니 가기"
-          onClick={onGoCart}
-        /> */}
         <Button
           type="button"
           size="small"
@@ -60,21 +45,6 @@ export const alreadyCart = ({ onCancel, onGoCart }: AlreadyCartProps) => {
         장바구니로 이동하시겠습니까?
       </S.ModalContent>
       <S.BtnContainer>
-        {/* <Button
-          type="button"
-          width="100px"
-          bgcolor="light"
-          border="active"
-          content="아니오"
-          onClick={onCancel}
-        />
-        <Button
-          type="button"
-          width="100px"
-          color="white"
-          content="예"
-          onClick={onGoCart}
-        /> */}
         <Button
           type="button"
           size="small"
@@ -102,21 +72,6 @@ export const productDelete = ({ onCancel, onDelete }: ProductDeleteProps) => {
     <>
       <S.ModalContent>상품을 삭제하시겠습니까?</S.ModalContent>
       <S.BtnContainer>
-        {/* <Button
-          type="button"
-          width="100px"
-          bgcolor="light"
-          border="active"
-          content="아니오"
-          onClick={onCancel}
-        />
-        <Button
-          type="button"
-          width="100px"
-          color="white"
-          content="예"
-          onClick={onDelete}
-        /> */}
         <Button
           type="button"
           size="small"
@@ -157,21 +112,6 @@ export const goLogin = ({ onCancel, onGoLogin }: GoLoginProps) => {
         </S.ModalContent>
       )}
       <S.BtnContainer>
-        {/* <Button
-          type="button"
-          width="100px"
-          bgcolor="light"
-          border="active"
-          content="아니오"
-          onClick={onCancel}
-        />
-        <Button
-          type="button"
-          width="100px"
-          color="white"
-          content="예"
-          onClick={onGoLogin}
-        /> */}
         <Button
           type="button"
           size="small"

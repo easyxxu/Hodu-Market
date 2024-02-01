@@ -96,14 +96,6 @@ function HeaderType(type: string | null) {
           <img src={isMyPage ? MyPageActive : MyPage} alt="my-page" />
           <p className={navItemClassName}>마이페이지</p>
         </S.HeaderLink>
-        {/* <Button
-          type="button"
-          width={isMobile ? "100%" : "MS"}
-          color="white"
-          img={ShoppingBag}
-          content={isMobile ? "" : "판매자센터"}
-          onClick={() => navigate("/sellercenter")}
-        /> */}
         <Button
           type="button"
           size="medium_small"

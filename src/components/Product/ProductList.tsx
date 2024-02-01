@@ -1,9 +1,5 @@
 import * as S from "./ProductListStyle";
-import { loadAllProduct } from "../../apis/productApi";
-import { useState, useEffect } from "react";
-import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 import { Product } from "../../types/product";
-import axios from "axios";
 import SkeletonProduct from "../../components/Product/SkeletonProduct";
 
 interface Props {

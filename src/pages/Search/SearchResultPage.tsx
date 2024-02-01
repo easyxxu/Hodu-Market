@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { styled } from "styled-components";
 import { MainLayout } from "../../components/Layout/Layout";
@@ -15,17 +15,38 @@ export default function SearchResultPage() {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [pageEnd, setPageEnd] = useState(false);
+  const [noResult, setNoResult] = useState(false);
+
+  const targetRef = useIntersectionObserver({
+    onIntersect: () => {
+      setPage((prev) => prev + 1);
+    },
+    options: { threshold: 1 },
+    pageEnd,
+  });
+
+  useEffect(() => {
+    setPage(1);
+    setSearchResultData([]);
+  }, [searchKeyword]);
 
   useEffect(() => {
     const getSearchResult = async () => {
       setIsLoading(true);
       try {
         const res = await productSearch(page, searchKeyword);
+
+        if (res.data.count === 0) {
+          setNoResult(true);
+          return;
+        }
+
         setSearchResultData((prev) => [...prev, ...res.data.results]);
         setIsLoading(false);
         if (res.data.next === null) {
           setPageEnd(true);
         }
+        console.log("page: ", page, "result: ", res.data);
       } catch (err) {
         if (axios.isAxiosError(err)) {
           if (err.response?.data.detail === "페이지가 유효하지 않습니다.") {
@@ -37,27 +58,19 @@ export default function SearchResultPage() {
     getSearchResult();
   }, [page, searchKeyword]);
 
-  useEffect(() => {
-    setPage(1);
-  }, [searchKeyword]);
-
-  const targetRef = useIntersectionObserver({
-    onIntersect: () => {
-      setPage((prev) => prev + 1);
-    },
-    options: { threshold: 1 },
-    pageEnd,
-  });
-
   return (
     <MainLayout type={userType}>
       <Title>검색 결과</Title>
       <SearchKeyword>{searchKeyword}</SearchKeyword>
-      <ProductList
-        data={searchResultData}
-        isLoading={isLoading}
-        pageEnd={pageEnd}
-      />
+      {noResult ? (
+        <NoResult>검색결과가 없어요 😢</NoResult>
+      ) : (
+        <ProductList
+          data={searchResultData}
+          isLoading={isLoading}
+          pageEnd={pageEnd}
+        />
+      )}
       <div ref={targetRef} />
     </MainLayout>
   );
@@ -75,4 +88,9 @@ const SearchKeyword = styled.p`
   text-align: center;
   font-weight: 500;
   margin-bottom: 54px;
+`;
+const NoResult = styled.p`
+  font-size: 24px;
+  text-align: center;
+  height: 20vh;
 `;

@@ -112,17 +112,17 @@ const BtnBuyContainer = styled.div`
 const DetailTabContainer = styled.div`
   display: flex;
 `;
-const BtnDetailInfo = styled.button<{ active: string }>`
+const BtnDetailInfo = styled.button<{ $active: string }>`
   width: 320px;
   font-size: 1.125em;
   padding: 19px 0;
   color: ${(props) =>
-    props.active === "true"
+    props.$active === "true"
       ? "var(--point-color)"
       : "var(--content-color-dark)"};
-  font-weight: ${(props) => (props.active === "true" ? "700" : "500")};
+  font-weight: ${(props) => (props.$active === "true" ? "700" : "500")};
   border-bottom: 6px solid
-    ${(props) => (props.active === "true" ? "var(--point-color)" : "#e0e0e0")};
+    ${(props) => (props.$active === "true" ? "var(--point-color)" : "#e0e0e0")};
 `;
 const DetailInfo = styled.div`
   margin-top: 20px;

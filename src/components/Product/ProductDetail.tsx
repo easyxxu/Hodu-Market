@@ -250,7 +250,7 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
             <S.BtnDetailInfo
               key={idx}
               onClick={() => handleTab(idx)}
-              active={tabIsActive === idx ? "true" : "false"}
+              $active={tabIsActive === idx ? "true" : "false"}
             >
               {tabItem}
             </S.BtnDetailInfo>

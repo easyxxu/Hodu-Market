@@ -89,6 +89,9 @@ const OrderTable = styled.table`
     `}
   }
   tr {
+    &:hover {
+      background-color: #dbdbdb;
+    }
     &:not(:last-child) {
       border-bottom: 1px solid var(--content-color-light);
     }

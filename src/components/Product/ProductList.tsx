@@ -2,6 +2,7 @@ import * as S from "./ProductListStyle";
 import { Product } from "../../types/product";
 import SkeletonProduct from "../../components/Product/SkeletonProduct";
 import { useLocation, useNavigate } from "react-router-dom";
+import TopButton from "../common/Button/TopButton";
 
 interface Props {
   data: Product[];
@@ -37,6 +38,7 @@ export default function ProductList({ data, isLoading, pageEnd }: Props) {
           </li>
         ))}
         {isLoading && !pageEnd && <SkeletonProduct count={3} />}
+        <TopButton />
       </S.ProductUl>
     </>
   );

@@ -1,26 +1,29 @@
-import React from "react";
-import PlusIcon from "../../../assets/icon-plus.svg";
-import { Button } from "../../common/Button/Button";
-import { TabMenuButton } from "../../common/Button/TabMenuButton";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Button } from "../../common/Button/Button";
+import { TabMenuButton } from "../../common/Button/TabMenuButton";
 import { loadSellerProduct } from "../../../apis/productApi";
-import { useState } from "react";
 import DashboardItem from "./DashboardItem";
 import { Product } from "../../../types/product";
 import { media } from "../../style/media";
 import Icon from "../../Icon/Icon";
+import useModal from "../../../hooks/useModal";
+import { modalsList } from "../../common/Modal/Modals";
 
 export default function SellerDashboard() {
   const navigate = useNavigate();
   const [productList, setProductList] = useState<Product[]>([]);
+  const { openModal } = useModal();
+
+  const handleNoFeature = () => {
+    openModal(modalsList.noFeature);
+  };
   useEffect(() => {
     const loadSellerProductList = async () => {
       try {
         const res = await loadSellerProduct();
         setProductList(res.data.results);
-        // console.log(res);
       } catch (err) {
         console.error("load error", err);
       }
@@ -60,16 +63,34 @@ export default function SellerDashboard() {
               />
             </li>
             <li>
-              <TabMenuButton active="off" content="주문/배송" cnt={2} />
+              <TabMenuButton
+                active="off"
+                content="주문/배송"
+                cnt={2}
+                onClick={handleNoFeature}
+              />
             </li>
             <li>
-              <TabMenuButton active="off" content="문의/리뷰" cnt={1} />
+              <TabMenuButton
+                active="off"
+                content="문의/리뷰"
+                cnt={1}
+                onClick={handleNoFeature}
+              />
             </li>
             <li>
-              <TabMenuButton active="off" content="통계" />
+              <TabMenuButton
+                active="off"
+                content="통계"
+                onClick={handleNoFeature}
+              />
             </li>
             <li>
-              <TabMenuButton active="off" content="스토어 설정" />
+              <TabMenuButton
+                active="off"
+                content="스토어 설정"
+                onClick={handleNoFeature}
+              />
             </li>
           </ul>
         </TabMenu>

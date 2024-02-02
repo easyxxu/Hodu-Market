@@ -18,6 +18,9 @@ const ModalContent = styled.p`
   text-align: center;
   line-height: normal;
 `;
+const NoFeatureContent = styled(ModalContent)`
+  margin-top: 30px;
+`;
 const BtnContainer = styled.div`
   display: flex;
   gap: 10px;
@@ -35,4 +38,10 @@ const ModalCloseBtn = styled.button`
   right: 18px;
 `;
 
-export { ModalContainer, ModalContent, BtnContainer, ModalCloseBtn };
+export {
+  ModalContainer,
+  ModalContent,
+  NoFeatureContent,
+  BtnContainer,
+  ModalCloseBtn,
+};

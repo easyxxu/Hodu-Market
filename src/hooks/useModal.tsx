@@ -13,7 +13,7 @@ const modalsAtom = atom<ModalItems[]>({
 export default function useModal() {
   const [modals, setModals] = useRecoilState<ModalItems[]>(modalsAtom);
   const openModal = useCallback(
-    (Component: React.ComponentType<any>, props: any) => {
+    (Component: React.ComponentType<any>, props?: any) => {
       setModals([...modals, { Component, props: { ...props } }]);
     },
     [setModals]

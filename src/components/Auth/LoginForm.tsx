@@ -59,7 +59,7 @@ export default function LoginForm() {
   };
   return (
     <LoginContainer>
-      <h1 className="a11y-hidden">로그인</h1>
+      <h2 className="a11y-hidden">로그인</h2>
       <LoginTypeBtn>
         <BuyerLoginBtn
           name="buyer"

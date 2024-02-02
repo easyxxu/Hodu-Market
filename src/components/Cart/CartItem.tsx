@@ -30,7 +30,7 @@ export default function CartItem({ item }: CartItemProps) {
   const cartItemInfo = item; // cart에 담긴 아이템의 상세 정보
   const [cartProductInfoList, setCartProductInfoList] = useRecoilState(
     cartProductInfoListAtom
-  ); // cartItemInfo map돌리기전 전체 데이터
+  );
   const cartInfoList = useRecoilValue(cartInfoListAtom); // cart에 담긴 모든 아이템의 cart_item_id, is_active, product_id, my_cart, quantity
   const [totalPrice, setTotalPrice] = useRecoilState(cartTotalAtom);
   const [checkItems, setCheckItems] = useRecoilState(cartCheckedItemsAtom); // 선택된 아이템 배열
@@ -38,7 +38,6 @@ export default function CartItem({ item }: CartItemProps) {
   const [totalCheckedItems, setTotalCheckedItems] = useState<CartItem[]>([]); // 장바구니에 담긴 아이템 중에 체크된 아이템만 담겨있는 배열(총 가격 계산을 위함)
   const [cartAllItem, setCartAllItem] = useState<CartItem[] | null>(null);
 
-  // 나머지 코드는 동일하게 유지
   // cart에 담긴 모든 상품의 수량, 가격, 배송비
   const { openModal, closeModal } = useModal();
   const { getStock, stockCheck } = useStockCheck();
@@ -75,7 +74,7 @@ export default function CartItem({ item }: CartItemProps) {
         const { price, shipping_fee } = cartListItem.data;
         return { product_id, quantity, price, shipping_fee };
       }
-      return null; // 혹은 원하는 값을 반환하세요.
+      return null;
     });
     const result = updatedCartAllItem.filter((item) => item !== null);
     setCartAllItem(result as CartItem[]);
@@ -261,7 +260,9 @@ export default function CartItem({ item }: CartItemProps) {
           onClick={handleOneOrder}
         />
       </S.ProductPriceContainer>
-      <S.BtnDelete onClick={handleModalOpen} />
+      <td>
+        <S.BtnDelete onClick={handleModalOpen} />
+      </td>
     </S.CartItemContainer>
   );
 }

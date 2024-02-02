@@ -14,28 +14,26 @@ const CartItemContainer = styled.tr`
     ${media.Small`
       padding: 10px 5px;
     `}
+    &:first-child,
+    &:nth-child(2),
+    &:nth-child(3),
+    &:nth-child(4),
+    &:nth-child(5) {
+      border-top: 2px solid #e0e0e0;
+      border-bottom: 2px solid #e0e0e0;
+    }
     &:first-child {
       text-align: center;
       border-left: 2px solid #e0e0e0;
-      border-top: 2px solid #e0e0e0;
-      border-bottom: 2px solid #e0e0e0;
       border-radius: 10px 0 0 10px;
     }
-    &:nth-child(2) {
-      border-top: 2px solid #e0e0e0;
-      border-bottom: 2px solid #e0e0e0;
-    }
     &:nth-child(3) {
-      border-top: 2px solid #e0e0e0;
-      border-bottom: 2px solid #e0e0e0;
       div {
         margin: 0 auto;
       }
     }
-    &:nth-child(4) {
+    &:nth-child(5) {
       border-right: 2px solid #e0e0e0;
-      border-top: 2px solid #e0e0e0;
-      border-bottom: 2px solid #e0e0e0;
       border-radius: 0 10px 10px 0;
     }
   }

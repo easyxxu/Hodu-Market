@@ -42,6 +42,7 @@ export default function CartHeader() {
           <th>상품정보</th>
           <th>수량</th>
           <th>상품금액</th>
+          <th></th>
         </tr>
       </S.CartHeader>
     </>

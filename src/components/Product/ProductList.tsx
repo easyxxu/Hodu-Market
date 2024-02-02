@@ -1,6 +1,8 @@
 import * as S from "./ProductListStyle";
 import { Product } from "../../types/product";
 import SkeletonProduct from "../../components/Product/SkeletonProduct";
+import { useLocation, useNavigate } from "react-router-dom";
+import TopButton from "../common/Button/TopButton";
 
 interface Props {
   data: Product[];
@@ -8,8 +10,15 @@ interface Props {
   pageEnd: boolean;
 }
 export default function ProductList({ data, isLoading, pageEnd }: Props) {
+  const location = useLocation();
+  const isHome = location.pathname === "/";
   return (
     <>
+      {isHome ? (
+        <h2 className="a11y-hidden">상품 리스트</h2>
+      ) : (
+        <h3 className="a11y-hidden">상품 리스트</h3>
+      )}
       <S.ProductUl>
         {isLoading && <SkeletonProduct count={3} />}
         {data.map((product) => (
@@ -29,6 +38,7 @@ export default function ProductList({ data, isLoading, pageEnd }: Props) {
           </li>
         ))}
         {isLoading && !pageEnd && <SkeletonProduct count={3} />}
+        <TopButton />
       </S.ProductUl>
     </>
   );

@@ -199,7 +199,7 @@ export default function JoinForm() {
 
   return (
     <S.JoinContainer>
-      <h1 className="a11y-hidden">회원가입</h1>
+      <h2 className="a11y-hidden">회원가입</h2>
       <S.JoinTypeBtn>
         <S.BuyerJoinBtn
           name="buyer"

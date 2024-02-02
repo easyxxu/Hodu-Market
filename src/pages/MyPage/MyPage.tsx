@@ -3,11 +3,18 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { styled, css } from "styled-components";
 import { logoutApi } from "../../apis/authApi";
 import { Button } from "../../components/common/Button/Button";
+import { modalsList } from "../../components/common/Modal/Modals";
 import { MainLayout } from "../../components/Layout/Layout";
 import { media } from "../../components/style/media";
+import useModal from "../../hooks/useModal";
 export default function MyPage() {
   const userType = localStorage.getItem("user_type");
   const navigate = useNavigate();
+  const { openModal } = useModal();
+
+  const handleNoFeature = () => {
+    openModal(modalsList.noFeature);
+  };
   const handleLogout = async () => {
     try {
       const res = await logoutApi();
@@ -34,9 +41,9 @@ export default function MyPage() {
               <h3>주문관리</h3>
               <ul>
                 <li onClick={handleOrderLookUp}>주문 조회</li>
-                <li>관심 상품</li>
-                <li>쿠폰 조회</li>
-                <li>적립금 내역</li>
+                <li onClick={handleNoFeature}>관심 상품</li>
+                <li onClick={handleNoFeature}>쿠폰 조회</li>
+                <li onClick={handleNoFeature}>적립금 내역</li>
               </ul>
             </OrderMenu>
             <Button

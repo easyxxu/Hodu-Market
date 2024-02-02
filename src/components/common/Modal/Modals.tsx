@@ -130,11 +130,17 @@ export const goLogin = ({ onCancel, onGoLogin }: GoLoginProps) => {
     </>
   );
 };
+const noFeature = () => {
+  return (
+    <S.NoFeatureContent>아직 준비되지 않은 기능입니다.</S.NoFeatureContent>
+  );
+};
 export const modalsList = {
   addCart: addCart,
   alreadyCart: alreadyCart,
   productDelete: productDelete,
   goLogin: goLogin,
+  noFeature: noFeature,
 };
 interface Modal {
   Component: React.ComponentType<any>;

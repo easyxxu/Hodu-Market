@@ -13,7 +13,7 @@ export function Logo() {
   return (
     <h1>
       <Link to="/">
-        <S.LogoImg src={LogoIcon} alt="호두 로고" width={124} height={38} />
+        <S.LogoImg src={LogoIcon} alt="호두마켓" width={124} height={38} />
       </Link>
     </h1>
   );

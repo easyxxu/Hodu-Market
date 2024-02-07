@@ -4,7 +4,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { loginApi } from "../../apis/authApi";
+import useModal from "../../hooks/useModal";
 import { Button } from "../common/Button/Button";
+import { modalsList } from "../common/Modal/Modals";
 import { media } from "../style/media";
 
 interface FormValue {
@@ -24,7 +26,11 @@ export default function LoginForm() {
     mode: "onBlur",
   });
   const [loginType, setLoginType] = useState("BUYER");
+  const { openModal } = useModal();
 
+  const handleNoFeature = () => {
+    openModal(modalsList.noFeature);
+  };
   // 로그인 타입 설정
   const handleLoginTypeChange = (e: React.MouseEvent<HTMLButtonElement>) => {
     const button = e.target as HTMLButtonElement;
@@ -105,7 +111,9 @@ export default function LoginForm() {
       </LoginFormContainer>
       <LoginLinkContainer>
         <Link to="/join">회원가입</Link>
-        <a href="/">비밀번호 찾기</a>
+        <button type="button" onClick={handleNoFeature}>
+          비밀번호 찾기
+        </button>
       </LoginLinkContainer>
       {/* <DevTool control={control} /> */}
     </LoginContainer>
@@ -211,9 +219,14 @@ const LoginLinkContainer = styled.div`
       &::after {
         content: "|";
         position: absolute;
-        transform: translate(14px, 0);
+        transform: translate(15px, 2px);
       }
     }
+  }
+  button {
+    color: #333;
+    font-size: var(--font-sm);
+    font-weight: 400;
   }
 `;
 const ErrorMsg = styled.small`

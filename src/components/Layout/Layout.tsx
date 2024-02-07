@@ -47,6 +47,9 @@ export function AuthLayout({ children }: AuthLayoutProps) {
     <AuthContainer>
       <Logo />
       <MainContainer>{children}</MainContainer>
+      <ModalContainer>
+        <Modals />
+      </ModalContainer>
     </AuthContainer>
   );
 }

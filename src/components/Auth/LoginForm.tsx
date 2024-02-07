@@ -1,60 +1,60 @@
+// import { DevTool } from "@hookform/devtools";
 import React, { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { loginApi } from "../../apis/authApi";
 import { Button } from "../common/Button/Button";
 import { media } from "../style/media";
+
+interface FormValue {
+  username: string;
+  password: string;
+}
+
 export default function LoginForm() {
-  const [loginInfo, setLoginInfo] = useState({
-    username: "",
-    password: "",
-    login_type: "BUYER",
-  });
-  const [loginErrorMsg, setLoginErrorMsg] = useState("");
   const navigate = useNavigate();
+  const {
+    // control,
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<FormValue>({
+    mode: "onBlur",
+  });
+  const [loginType, setLoginType] = useState("BUYER");
 
   // 로그인 타입 설정
   const handleLoginTypeChange = (e: React.MouseEvent<HTMLButtonElement>) => {
     const button = e.target as HTMLButtonElement;
     if (button.name === "buyer") {
-      setLoginInfo({ ...loginInfo, login_type: "BUYER" });
+      setLoginType("BUYER");
     } else if (button.name === "seller") {
-      setLoginInfo({ ...loginInfo, login_type: "SELLER" });
+      setLoginType("SELLER");
     }
   };
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
-  };
-  const idCheck = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (e.target.value.length < 1) {
-      setLoginErrorMsg("아이디를 입력해주세요.");
-    } else {
-      setLoginErrorMsg("");
-    }
-  };
-  const pwCheck = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (e.target.value.length < 1) {
-      setLoginErrorMsg("비밀번호를 입력해주세요.");
-    } else {
-      setLoginErrorMsg("");
-    }
-  };
-  const loginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (loginInfo.username.length < 1 && loginInfo.password.length < 1) {
-      setLoginErrorMsg("아이디와 비밀번호를 입력해주세요.");
-    } else {
-      setLoginErrorMsg("");
-    }
+
+  const onSumbmitHandler: SubmitHandler<FormValue> = async ({
+    username,
+    password,
+  }) => {
+    const formData = {
+      username,
+      password,
+      login_type: loginType,
+    };
+
     try {
-      const res = await loginApi(loginInfo);
+      const res = await loginApi(formData);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user_type", res.data.user_type);
-      // console.log("로그인 성공!", res);
       navigate("/");
     } catch (err) {
-      console.error("로그인 에러", err);
-      setLoginErrorMsg("아이디 또는 비밀번호가 틀렸습니다.");
+      setError("username", {
+        type: "manual",
+        message: "아이디 또는 비밀번호가 틀렸습니다.",
+      });
     }
   };
   return (
@@ -64,53 +64,50 @@ export default function LoginForm() {
         <BuyerLoginBtn
           name="buyer"
           onClick={handleLoginTypeChange}
-          active={loginInfo.login_type === "BUYER" ? "active" : "inactive"}
+          $active={loginType === "BUYER" ? "active" : "inactive"}
         >
           구매회원 로그인
         </BuyerLoginBtn>
         <SellerLoginBtn
           name="seller"
           onClick={handleLoginTypeChange}
-          active={loginInfo.login_type === "SELLER" ? "active" : "inactive"}
+          $active={loginType === "SELLER" ? "active" : "inactive"}
         >
           판매회원 로그인
         </SellerLoginBtn>
       </LoginTypeBtn>
-      <LoginFormContainer onSubmit={loginSubmit}>
-        <label htmlFor="Id" className="a11y-hidden" />
+      <LoginFormContainer onSubmit={handleSubmit(onSumbmitHandler)}>
+        <label htmlFor="username" className="a11y-hidden" />
         <input
+          {...register("username", {
+            required: "아이디를 입력해주세요.",
+          })}
           type="text"
-          id="Id"
+          id="username"
           name="username"
-          onChange={handleInputChange}
-          onBlur={idCheck}
           placeholder="아이디"
         />
         <label htmlFor="password" className="a11y-hidden" />
         <input
+          {...register("password", {
+            required: "비밀번호를 입력해주세요.",
+          })}
           type="password"
           id="password"
           name="password"
-          onChange={handleInputChange}
-          onBlur={pwCheck}
           placeholder="비밀번호"
         />
-        <ErrorMsg>{loginErrorMsg}</ErrorMsg>
-        {/* <Button
-          type="submit"
-          size="L"
-          width="L"
-          color="white"
-          fontSize="L"
-          fontWeight="bold"
-          content="로그인"
-        /> */}
+        <ErrorMsg>
+          {errors.username?.message?.toString() ||
+            errors.password?.message?.toString()}
+        </ErrorMsg>
         <Button type="submit" size="large" color="point" children="로그인" />
       </LoginFormContainer>
       <LoginLinkContainer>
         <Link to="/join">회원가입</Link>
         <a href="/">비밀번호 찾기</a>
       </LoginLinkContainer>
+      {/* <DevTool control={control} /> */}
     </LoginContainer>
   );
 }
@@ -135,9 +132,9 @@ const LoginTypeBtn = styled.div`
     }
   `}
 `;
-const BuyerLoginBtn = styled.button<{ active: string }>`
+const BuyerLoginBtn = styled.button<{ $active: string }>`
   ${(props) =>
-    props.active === "active"
+    props.$active === "active"
       ? css`
           z-index: 2;
           background-color: #fff;
@@ -152,9 +149,9 @@ const BuyerLoginBtn = styled.button<{ active: string }>`
           border-radius: 10px;
         `}
 `;
-const SellerLoginBtn = styled.button<{ active: string }>`
+const SellerLoginBtn = styled.button<{ $active: string }>`
   ${(props) =>
-    props.active === "active"
+    props.$active === "active"
       ? css`
           z-index: 2;
           background-color: #fff;

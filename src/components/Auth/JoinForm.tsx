@@ -22,6 +22,19 @@ interface FormValue {
   company_registration_number?: string;
   store_name?: string;
 }
+const idRegex = /^[a-zA-Z0-9]{1,20}$/;
+const pwRegex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+const companyNumRegex = /^[0-9]{10}$/;
+const phoneFirstList = ["010", "011", "016", "017", "018", "019"];
+
+const ERRMSG = {
+  id: "ID는 20자 이내의 영어 소문자, 대문자, 숫자만 가능합니다.",
+  pw1: "8자 이상, 영문 소문자, 숫자를 사용하세요.",
+  pw2: "비밀번호가 일치하지 않습니다.",
+  companyNum: "10자리 숫자만 입력해주세요.",
+  required: "필수 입력입니다.",
+};
+
 export default function JoinForm() {
   const navigate = useNavigate();
   const {
@@ -48,18 +61,6 @@ export default function JoinForm() {
   const pw2ValidDirty = pw2FieldState.isDirty;
   const companyNumValid = getFieldState("company_registration_number").invalid;
   const agreeValid = watch("agree");
-
-  const idRegex = /^[a-zA-Z0-9]{1,20}$/;
-  const pwRegex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-  const companyNumRegex = /^[0-9]{10}$/;
-
-  const ERRMSG = {
-    id: "ID는 20자 이내의 영어 소문자, 대문자, 숫자만 가능합니다.",
-    pw1: "8자 이상, 영문 소문자, 숫자를 사용하세요.",
-    pw2: "비밀번호가 일치하지 않습니다.",
-    companyNum: "10자리 숫자만 입력해주세요.",
-    required: "필수 입력입니다.",
-  };
 
   const [idSuccessMsg, setIdSuccessMsg] = useState<string | null>("");
   const [companyNumSuccessMsg, setCompanyNumSuccessMsg] = useState<
@@ -137,8 +138,6 @@ export default function JoinForm() {
     setPhoneFirst(button.textContent!);
     setPhoneListVisible(false);
   };
-
-  const phoneFirstList = ["010", "011", "016", "017", "018", "019"];
 
   const phoneList = (
     <ul>

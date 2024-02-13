@@ -1,22 +1,32 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import * as S from "./BannerStyle";
-// import bannerImg1 from "../../assets/img/banner_product1.jpg";
-// import bannerImg2 from "../../assets/img/banner_product2.jpg";
-// import bannerImg3 from "../../assets/img/banner_product3.jpg";
-// import bannerImg4 from "../../assets/img/banner_product4.jpg";
-// import bannerImg5 from "../../assets/img/banner_product5.jpg";
-import bannerImg1 from "../../assets/img/banner_product1.webp";
-import bannerImg2 from "../../assets/img/banner_product2.webp";
-import bannerImg3 from "../../assets/img/banner_product3.webp";
-import bannerImg4 from "../../assets/img/banner_product4.webp";
-import bannerImg5 from "../../assets/img/banner_product5.webp";
-import { useEffect } from "react";
+import bannerImg1 from "../../assets/img/banner1.jpg";
+import bannerImg1Lg from "../../assets/img/banner1_lg.webp";
+import bannerImg1Md from "../../assets/img/banner1_md.webp";
+import bannerImg1Sm from "../../assets/img/banner1_sm.webp";
+import bannerImg2 from "../../assets/img/banner2.jpg";
+import bannerImg2Lg from "../../assets/img/banner2_lg.webp";
+import bannerImg2Md from "../../assets/img/banner2_md.webp";
+import bannerImg2Sm from "../../assets/img/banner2_sm.webp";
+import bannerImg3 from "../../assets/img/banner3.jpg";
+import bannerImg3Lg from "../../assets/img/banner3_lg.webp";
+import bannerImg3Md from "../../assets/img/banner3_md.webp";
+import bannerImg3Sm from "../../assets/img/banner3_sm.webp";
+import bannerImg4 from "../../assets/img/banner4.jpg";
+import bannerImg4Lg from "../../assets/img/banner4_lg.webp";
+import bannerImg4Md from "../../assets/img/banner4_md.webp";
+import bannerImg4Sm from "../../assets/img/banner4_sm.webp";
+
 export default function Banner() {
-  const imgArr = [bannerImg1, bannerImg2, bannerImg3, bannerImg4, bannerImg5];
+  const imgArr = [bannerImg1, bannerImg2, bannerImg3, bannerImg4];
+  const imgArrLg = [bannerImg1Lg, bannerImg2Lg, bannerImg3Lg, bannerImg4Lg];
+  const imgArrMd = [bannerImg1Md, bannerImg2Md, bannerImg3Md, bannerImg4Md];
+  const imgArrSm = [bannerImg1Sm, bannerImg2Sm, bannerImg3Sm, bannerImg4Sm];
   const swiperRef = useRef<any>(null);
   const [swiperCurrentPosition, setSwiperCurrentPosition] = useState(0);
   const [loop, setLoop] = useState<any>(false);
-  const Total_Slides = imgArr.length - 1;
+  const Total_Slides = imgArrMd.length - 1;
+
   const nextSlide = () => {
     setSwiperCurrentPosition((prev) => {
       if (prev < Total_Slides) {
@@ -24,6 +34,7 @@ export default function Banner() {
       } else return 0;
     });
   };
+
   const prevSlide = () => {
     setSwiperCurrentPosition((prev) => {
       if (prev === 0) {
@@ -33,14 +44,16 @@ export default function Banner() {
       }
     });
   };
+
   useEffect(() => {
-    swiperRef.current.style.width = imgArr ? `${imgArr.length}00vw` : "0";
+    swiperRef.current.style.width = `${imgArrMd.length}00vw`;
   }, []);
 
   useEffect(() => {
     const swiperLoop = setTimeout(() => {
       nextSlide();
     }, 5000); // 배너 속도 조절
+
     setLoop(swiperLoop);
     return () => clearTimeout(loop);
   }, [swiperCurrentPosition]);
@@ -48,7 +61,7 @@ export default function Banner() {
   useEffect(() => {
     swiperRef.current.style.transform =
       swiperCurrentPosition === 0
-        ? `translate(000vw)`
+        ? `translate(0vw)`
         : `translate(-${swiperCurrentPosition}00vw)`;
   }, [swiperCurrentPosition]);
 
@@ -56,24 +69,31 @@ export default function Banner() {
     <S.BannerContainer>
       <S.BannerImgContainer ref={swiperRef}>
         {imgArr.map((img, idx) => (
-          <img
-            key={idx}
-            src={img}
-            alt="배너이미지"
-            className={swiperCurrentPosition === idx ? "active" : ""}
-          />
+          <picture key={idx}>
+            <source
+              srcSet={`${imgArrSm[idx]} 609w, ${imgArrMd[idx]} 1280w, ${imgArrLg[idx]} 1920w`}
+              type="image/webp"
+            />
+            <img
+              key={idx}
+              src={img}
+              loading="lazy"
+              alt={`배너이미지${idx + 1}`}
+              className={swiperCurrentPosition === idx ? "active" : ""}
+            />
+          </picture>
         ))}
       </S.BannerImgContainer>
       <S.BannerLeftBtn
         type="button"
         aria-label="왼쪽 배너 버튼"
         onClick={prevSlide}
-      ></S.BannerLeftBtn>
+      />
       <S.BannerRightBtn
         type="button"
         aria-label="오른쪽 배너 버튼"
         onClick={nextSlide}
-      ></S.BannerRightBtn>
+      />
     </S.BannerContainer>
   );
 }

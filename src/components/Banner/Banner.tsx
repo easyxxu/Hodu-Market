@@ -77,7 +77,6 @@ export default function Banner() {
             <img
               key={idx}
               src={img}
-              loading="lazy"
               alt={`배너이미지${idx + 1}`}
               className={swiperCurrentPosition === idx ? "active" : ""}
             />

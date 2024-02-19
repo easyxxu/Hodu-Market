@@ -92,7 +92,7 @@ export default function Banner() {
               key={idx}
               src={img}
               alt={`배너이미지${idx + 1}`}
-              fetchpriority={idx === 0 ? "high" : "low"}
+              fetchpriority="high"
               className={swiperCurrentPosition === idx ? "active" : ""}
             />
           </picture>

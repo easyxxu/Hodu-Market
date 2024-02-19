@@ -45,19 +45,19 @@ export default function Banner() {
       }
     });
   };
-  useLayoutEffect(() => {
-    // const preloadedImgs: HTMLImageElement[] = [];
-    const imgPreload = (images: string[]) => {
-      images.forEach((image) => {
-        const img = new Image();
-        img.src = image;
-        // img.onload = () => {
-        //   preloadedImgs.push(img);
-        // };
-      });
-    };
-    imgPreload(banner1Arr);
-  }, []);
+  // useLayoutEffect(() => {
+  //   // const preloadedImgs: HTMLImageElement[] = [];
+  //   const imgPreload = (images: string[]) => {
+  //     images.forEach((image) => {
+  //       const img = new Image();
+  //       img.src = image;
+  //       // img.onload = () => {
+  //       //   preloadedImgs.push(img);
+  //       // };
+  //     });
+  //   };
+  //   imgPreload(banner1Arr);
+  // }, []);
 
   useEffect(() => {
     swiperRef.current.style.width = `${imgArrMd.length}00vw`;
@@ -92,7 +92,7 @@ export default function Banner() {
               key={idx}
               src={img}
               alt={`배너이미지${idx + 1}`}
-              // fetchpriority="high"
+              fetchpriority={idx === 0 ? "high" : "low"}
               className={swiperCurrentPosition === idx ? "active" : ""}
             />
           </picture>

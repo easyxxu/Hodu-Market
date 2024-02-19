@@ -74,7 +74,7 @@ const FooterInfo = styled.address`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  color: #767676;
+  color: #4d4d4d;
   line-height: 24px;
   word-break: keep-all;
   strong {

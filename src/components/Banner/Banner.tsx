@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import * as S from "./BannerStyle";
 import bannerImg1 from "../../assets/img/banner1.jpg";
 import bannerImg1Lg from "../../assets/img/banner1_lg.webp";
@@ -17,11 +17,12 @@ import bannerImg4Lg from "../../assets/img/banner4_lg.webp";
 import bannerImg4Md from "../../assets/img/banner4_md.webp";
 import bannerImg4Sm from "../../assets/img/banner4_sm.webp";
 
+const imgArr = [bannerImg1, bannerImg2, bannerImg3, bannerImg4];
+const imgArrLg = [bannerImg1Lg, bannerImg2Lg, bannerImg3Lg, bannerImg4Lg];
+const imgArrMd = [bannerImg1Md, bannerImg2Md, bannerImg3Md, bannerImg4Md];
+const imgArrSm = [bannerImg1Sm, bannerImg2Sm, bannerImg3Sm, bannerImg4Sm];
+const banner1Arr = [bannerImg1, bannerImg1Lg, bannerImg1Md, bannerImg1Sm];
 export default function Banner() {
-  const imgArr = [bannerImg1, bannerImg2, bannerImg3, bannerImg4];
-  const imgArrLg = [bannerImg1Lg, bannerImg2Lg, bannerImg3Lg, bannerImg4Lg];
-  const imgArrMd = [bannerImg1Md, bannerImg2Md, bannerImg3Md, bannerImg4Md];
-  const imgArrSm = [bannerImg1Sm, bannerImg2Sm, bannerImg3Sm, bannerImg4Sm];
   const swiperRef = useRef<any>(null);
   const [swiperCurrentPosition, setSwiperCurrentPosition] = useState(0);
   const [loop, setLoop] = useState<any>(false);
@@ -44,6 +45,19 @@ export default function Banner() {
       }
     });
   };
+  useLayoutEffect(() => {
+    // const preloadedImgs: HTMLImageElement[] = [];
+    const imgPreload = (images: string[]) => {
+      images.forEach((image) => {
+        const img = new Image();
+        img.src = image;
+        // img.onload = () => {
+        //   preloadedImgs.push(img);
+        // };
+      });
+    };
+    imgPreload(banner1Arr);
+  }, []);
 
   useEffect(() => {
     swiperRef.current.style.width = `${imgArrMd.length}00vw`;
@@ -78,6 +92,7 @@ export default function Banner() {
               key={idx}
               src={img}
               alt={`배너이미지${idx + 1}`}
+              // fetchpriority="high"
               className={swiperCurrentPosition === idx ? "active" : ""}
             />
           </picture>

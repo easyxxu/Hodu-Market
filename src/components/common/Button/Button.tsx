@@ -20,6 +20,8 @@ export interface ButtonProps {
   disabled?: boolean;
   /** 커스텀 속성 */
   $customStyle?: CSSObject;
+  /** 접근성 */
+  ariaLabel?: string;
 }
 
 const ButtonStyle = styled.button<ButtonProps>`
@@ -36,7 +38,7 @@ const ButtonStyle = styled.button<ButtonProps>`
     `}
   svg {
     width: 2em;
-    margin-right: 1em;
+    margin: 0 0.5em;
   }
   &:disabled {
     background-color: var(--content-color-light);
@@ -113,6 +115,7 @@ export function Button({
   name,
   disabled,
   $customStyle,
+  ariaLabel,
 }: ButtonProps) {
   return (
     <ButtonStyle
@@ -123,6 +126,7 @@ export function Button({
       disabled={disabled}
       onClick={onClick}
       $customStyle={$customStyle}
+      aria-label={ariaLabel}
     >
       {children}
     </ButtonStyle>

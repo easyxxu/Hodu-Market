@@ -38,7 +38,7 @@ export default function ProductDetailPage() {
   );
 }
 const FadeLoaderBox = styled.div`
-  height: calc(100vh - 420px);
+  height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;

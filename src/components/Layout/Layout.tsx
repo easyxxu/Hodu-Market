@@ -56,6 +56,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
 
 const Container = styled.div`
   position: relative;
+  min-width: 390px;
   ${media.Small`
     font-size: 0.9rem;
   `}

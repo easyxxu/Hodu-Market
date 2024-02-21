@@ -12,7 +12,7 @@ import Icon from "../../Icon/Icon";
 export function Logo() {
   return (
     <h1>
-      <Link to="/">
+      <Link to="/" title="호두마켓 메인 바로가기">
         <S.LogoImg src={LogoIcon} alt="호두마켓" width={124} height={38} />
       </Link>
     </h1>
@@ -45,7 +45,7 @@ export function Header({ type }: HeaderProps) {
             placeholder="상품을 검색해보세요!"
             onChange={handleInputChange}
           />
-          <S.SearchBtn aria-label="검색하기" />
+          <S.SearchBtn aria-label="검색" />
         </S.SearchContainer>
         {HeaderType(type)}
       </S.HeaderContainer>
@@ -60,6 +60,36 @@ function HeaderType(type: string | null) {
   const isMyPage = location.pathname === "/mypage";
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 639);
   const navItemClassName = isMobile ? "a11y-hidden" : undefined;
+
+  const ShoppingCartLink = () => {
+    return (
+      <S.ShoppingCartLink
+        to="/cart"
+        active={isCartPage ? "true" : "false"}
+        title="장바구니 바로가기"
+      >
+        <img
+          src={isCartPage ? ShoppingCartActive : ShoppingCart}
+          alt="장바구니 아이콘"
+        />
+        <p className={navItemClassName}>장바구니</p>
+      </S.ShoppingCartLink>
+    );
+  };
+
+  const MyPageLink = () => {
+    return (
+      <S.HeaderLink
+        to="/mypage"
+        active={isMyPage ? "true" : "false"}
+        title="마이페이지 바로가기"
+      >
+        <img src={isMyPage ? MyPageActive : MyPage} alt="마이페이지" />
+        <p className={navItemClassName}>마이페이지</p>
+      </S.HeaderLink>
+    );
+  };
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 639);
@@ -75,32 +105,22 @@ function HeaderType(type: string | null) {
   if (type === "BUYER" && TOKEN) {
     return (
       <S.Nav>
-        <S.ShoppingCartLink to="/cart" active={isCartPage ? "true" : "false"}>
-          <img
-            src={isCartPage ? ShoppingCartActive : ShoppingCart}
-            alt="shopping-cart"
-          />
-          <p className={navItemClassName}>장바구니</p>
-        </S.ShoppingCartLink>
-        <S.HeaderLink to="/mypage" active={isMyPage ? "true" : "false"}>
-          <img src={isMyPage ? MyPageActive : MyPage} alt="my-page" />
-          <p className={navItemClassName}>마이페이지</p>
-        </S.HeaderLink>
+        <ShoppingCartLink />
+        <MyPageLink />
       </S.Nav>
     );
   } else if (type === "SELLER" && TOKEN) {
     // SELLER로 로그인한 상태
     return (
       <S.Nav>
-        <S.HeaderLink to="/mypage" active={isMyPage ? "true" : "false"}>
-          <img src={isMyPage ? MyPageActive : MyPage} alt="my-page" />
-          <p className={navItemClassName}>마이페이지</p>
-        </S.HeaderLink>
+        <MyPageLink />
         <Button
           type="button"
           size="medium_small"
           color="point"
-          $customStyle={isMobile ? { width: "100%" } : undefined}
+          $customStyle={
+            isMobile ? { width: "100%", padding: "10px 0" } : undefined
+          }
           onClick={() => navigate("/sellercenter")}
         >
           <Icon icon="shoppingbag" />
@@ -112,15 +132,9 @@ function HeaderType(type: string | null) {
     // 로그인 안한 경우
     return (
       <S.Nav>
-        <S.ShoppingCartLink to="/cart" active={isCartPage ? "true" : "false"}>
-          <img
-            src={isCartPage ? ShoppingCartActive : ShoppingCart}
-            alt="shopping-cart"
-          />
-          <p className={navItemClassName}>장바구니</p>
-        </S.ShoppingCartLink>
-        <S.HeaderLink to="/login">
-          <img src={MyPage} alt="my-page" />
+        <ShoppingCartLink />
+        <S.HeaderLink to="/login" title="로그인 바로가기">
+          <img src={MyPage} alt="로그인 아이콘" />
           <p className={navItemClassName}>로그인</p>
         </S.HeaderLink>
       </S.Nav>
@@ -135,7 +149,9 @@ export function SellerHeader() {
       <S.SellerHeaderDiv>
         <Logo />
         <h2>
-          <Link to="/sellercenter">판매자센터</Link>
+          <Link to="/sellercenter" title="판매자센터 바로가기">
+            판매자센터
+          </Link>
         </h2>
       </S.SellerHeaderDiv>
     </S.HeaderDiv>

@@ -1,40 +1,38 @@
 import styled from "styled-components";
 import { media } from "../style/media";
 
-const Wrapper = styled.div`
-  max-width: 1280px;
-  margin: 80px auto;
-  word-break: keep-all;
-  ${media.Small`
-    margin-top: 40px;
-  `}
-`;
 const DetailContainer = styled.div`
   display: flex;
-  justify-content: center;
-  margin-bottom: 140px;
+  gap: 50px;
+  margin: 80px 0 140px;
   position: relative;
+
   ${media.Small`
+    margin-top: 40px;
+    gap: 30px;
     flex-direction: column;
     flex-wrap: wrap;
     align-content: center;
   `}
 `;
 const ProductImg = styled.img`
-  width: 600px;
-  height: 600px;
-  margin-right: 50px;
+  width: 100%;
+  height: 584px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
   ${media.Medium`
-    width: 40%;
+    width: 50%;
     height: 100%;
   `}
   ${media.Small`
-    width: 80%;
+    width: 100%;
+    min-width: 376px;
     height: 100%;
-    margin: 0 0 40px;
   `}
 `;
-const ProductInfoContainer = styled.div``;
+const ProductInfoContainer = styled.div`
+  flex: 1 0 298px;
+`;
 const ProductCompany = styled.p`
   margin-bottom: 16px;
   font-size: 1.125em;
@@ -105,12 +103,14 @@ const BtnBuyContainer = styled.div`
   gap: 14px;
   ${media.Medium`
     button{
-      width: 100%;
+      width: inherit;
+      flex-grow: 1;
     }
   `}
 `;
 const DetailTabContainer = styled.div`
   display: flex;
+  word-break: keep-all;
 `;
 const BtnDetailInfo = styled.button<{ $active: string }>`
   width: 320px;
@@ -130,7 +130,6 @@ const DetailInfo = styled.div`
 `;
 
 export {
-  Wrapper,
   DetailContainer,
   ProductImg,
   ProductInfoContainer,

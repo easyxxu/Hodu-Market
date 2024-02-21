@@ -174,7 +174,7 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
   }, [productId]);
 
   return (
-    <S.Wrapper>
+    <>
       <S.DetailContainer>
         <S.ProductImg src={image} alt="상품이미지" />
         <S.ProductInfoContainer>
@@ -260,6 +260,6 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
       <S.DetailInfo>
         {tabIsActive === 0 ? product_info : "준비중입니다 :)"}
       </S.DetailInfo>
-    </S.Wrapper>
+    </>
   );
 }

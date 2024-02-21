@@ -57,9 +57,6 @@ const COLORS = {
     &:hover:enabled {
       background-color: var(--content-color-dark-hover);
     }
-    /* &:disabled {
-      background-color: var(--content-color-light);
-    } */
   `,
   white: css`
     background-color: var(--color-white);
@@ -69,15 +66,9 @@ const COLORS = {
       border: 1px solid var(--content-color-dark);
       color: var(--color-black);
     }
-    /* &:disabled {
-      background-color: var(--content-color-light);
-    } */
   `,
   point: css`
     background-color: var(--point-color);
-    /* &:disabled {
-      background-color: var(--content-color-light);
-    } */
   `,
 };
 

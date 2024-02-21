@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import SearchIcon from "../../../assets/svg/search.svg";
 import { Link } from "react-router-dom";
 import { media } from "../../style/media";
@@ -69,12 +69,25 @@ const Nav = styled.nav`
   display: flex;
   gap: 26px;
   align-items: center;
-  /* width: 104px; */
   ${media.Small`
     gap: 10px;
   `}
 `;
-
+const LogoutBtn = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #767676;
+  gap: 5px;
+  margin-top: 8px;
+  ${media.Small`
+  margin-top: 0;
+    img{
+      width: 26px;
+      height: 26px
+    }
+  `}
+`;
 const ShoppingCartLink = styled(Link)<{ active: string }>`
   text-align: center;
   color: #767676;
@@ -136,6 +149,7 @@ export {
   SearchInput,
   SearchBtn,
   Nav,
+  LogoutBtn,
   ShoppingCartLink,
   HeaderLink,
   SellerHeaderDiv,

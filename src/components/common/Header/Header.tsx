@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import LogoIcon from "../../../assets/svg/Logo-hodu.svg";
 import ShoppingCart from "../../../assets/svg/icon-shopping-cart.svg";
 import ShoppingCartActive from "../../../assets/svg/icon-shopping-cart-2.svg";
+import { ReactComponent as LogoutIcon } from "../../../assets/svg/icon-logout.svg";
 import MyPage from "../../../assets/svg/icon-user.svg";
 import MyPageActive from "../../../assets/svg/icon-user-2.svg";
 import { Button } from "../Button/Button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as S from "./HeaderStyle";
 import Icon from "../../Icon/Icon";
+import { logoutApi } from "../../../apis/authApi";
 
 export function Logo() {
   return (
@@ -60,7 +62,18 @@ function HeaderType(type: string | null) {
   const isMyPage = location.pathname === "/mypage";
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 639);
   const navItemClassName = isMobile ? "a11y-hidden" : undefined;
-
+  // logout
+  const handleLogout = async () => {
+    try {
+      await logoutApi();
+      localStorage.removeItem("token");
+      localStorage.removeItem("user_type");
+      localStorage.removeItem("recoil-persist");
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
+  };
   const ShoppingCartLink = () => {
     return (
       <S.ShoppingCartLink
@@ -113,7 +126,10 @@ function HeaderType(type: string | null) {
     // SELLER로 로그인한 상태
     return (
       <S.Nav>
-        <MyPageLink />
+        <S.LogoutBtn type="button" onClick={handleLogout}>
+          <LogoutIcon />
+          <span className={navItemClassName}>로그아웃</span>
+        </S.LogoutBtn>
         <Button
           type="button"
           size="medium_small"

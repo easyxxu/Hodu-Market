@@ -1,5 +1,9 @@
 import { useRef, useState, useEffect } from "react";
 import * as S from "./BannerStyle";
+import bannerImg1 from "../../assets/img/banner1.jpg";
+import bannerImg1Lg from "../../assets/img/banner1_lg.webp";
+import bannerImg1Md from "../../assets/img/banner1_md.webp";
+import bannerImg1Sm from "../../assets/img/banner1_sm.webp";
 import bannerImg2 from "../../assets/img/banner2.jpg";
 import bannerImg2Lg from "../../assets/img/banner2_lg.webp";
 import bannerImg2Md from "../../assets/img/banner2_md.webp";
@@ -13,14 +17,14 @@ import bannerImg4Lg from "../../assets/img/banner4_lg.webp";
 import bannerImg4Md from "../../assets/img/banner4_md.webp";
 import bannerImg4Sm from "../../assets/img/banner4_sm.webp";
 
-const banner1ImgLgSrc = `${process.env.PUBLIC_URL}/img/banner1_lg.webp`;
-const banner1ImgMdSrc = `${process.env.PUBLIC_URL}/img/banner1_md.webp`;
-const banner1ImgSmSrc = `${process.env.PUBLIC_URL}/img/banner1_sm.webp`;
-const banner1ImgSrc = `${process.env.PUBLIC_URL}/img/banner1.jpg`;
-const imgArr = [banner1ImgSrc, bannerImg2, bannerImg3, bannerImg4];
-const imgArrLg = [banner1ImgLgSrc, bannerImg2Lg, bannerImg3Lg, bannerImg4Lg];
-const imgArrMd = [banner1ImgMdSrc, bannerImg2Md, bannerImg3Md, bannerImg4Md];
-const imgArrSm = [banner1ImgSmSrc, bannerImg2Sm, bannerImg3Sm, bannerImg4Sm];
+// const banner1ImgLgSrc = `${process.env.PUBLIC_URL}/img/banner1_lg.webp`;
+// const banner1ImgMdSrc = `${process.env.PUBLIC_URL}/img/banner1_md.webp`;
+// const banner1ImgSmSrc = `${process.env.PUBLIC_URL}/img/banner1_sm.webp`;
+// const banner1ImgSrc = `${process.env.PUBLIC_URL}/img/banner1.jpg`;
+const imgArr = [bannerImg1, bannerImg2, bannerImg3, bannerImg4];
+const imgArrLg = [bannerImg1Lg, bannerImg2Lg, bannerImg3Lg, bannerImg4Lg];
+const imgArrMd = [bannerImg1Md, bannerImg2Md, bannerImg3Md, bannerImg4Md];
+const imgArrSm = [bannerImg1Sm, bannerImg2Sm, bannerImg3Sm, bannerImg4Sm];
 
 export default function Banner() {
   const swiperRef = useRef<any>(null);

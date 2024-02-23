@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { styled } from "styled-components";
-import { MainLayout } from "../../components/Layout/Layout";
 import ProductList from "../../components/Product/ProductList";
 import { productSearch } from "../../apis/productApi";
 import useIntersectionObserver from "../../hooks/useIntersectionObserver";
@@ -10,7 +9,6 @@ import { Product } from "../../types/product";
 
 export default function SearchResultPage() {
   const { searchKeyword } = useParams() as { searchKeyword: string };
-  const userType = localStorage.getItem("user_type");
   const [searchResultData, setSearchResultData] = useState<Product[]>([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
@@ -58,7 +56,7 @@ export default function SearchResultPage() {
   }, [page]);
 
   return (
-    <MainLayout type={userType}>
+    <>
       <Title>검색 결과</Title>
       <SearchKeyword>{searchKeyword}</SearchKeyword>
       {noResult ? (
@@ -71,7 +69,7 @@ export default function SearchResultPage() {
         />
       )}
       <div ref={targetRef} />
-    </MainLayout>
+    </>
   );
 }
 

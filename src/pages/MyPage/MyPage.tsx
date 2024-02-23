@@ -1,10 +1,8 @@
-import React, { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { styled, css } from "styled-components";
 import { logoutApi } from "../../apis/authApi";
 import { Button } from "../../components/common/Button/Button";
 import { modalsList } from "../../components/common/Modal/Modals";
-import { MainLayout } from "../../components/Layout/Layout";
 import { media } from "../../components/style/media";
 import useModal from "../../hooks/useModal";
 export default function MyPage() {
@@ -21,7 +19,6 @@ export default function MyPage() {
       localStorage.removeItem("token");
       localStorage.removeItem("user_type");
       localStorage.removeItem("recoil-persist");
-      // console.log(res);
       navigate("/");
     } catch (err) {
       console.error(err);
@@ -32,7 +29,7 @@ export default function MyPage() {
   };
 
   return (
-    <MainLayout type={userType}>
+    <>
       <MyPageTitle>마이페이지</MyPageTitle>
       <MyPageContainer>
         {userType === "BUYER" && (
@@ -72,7 +69,7 @@ export default function MyPage() {
           )}
         </MyPageContent>
       </MyPageContainer>
-    </MainLayout>
+    </>
   );
 }
 

@@ -3,7 +3,6 @@ import { styled } from "styled-components";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { loadProductDetail } from "../../apis/productApi";
-import { MainLayout } from "../../components/Layout/Layout";
 import ProductDetail from "../../components/Product/ProductDetail";
 import { Product } from "../../types/product";
 import { FadeLoader } from "react-spinners";
@@ -27,14 +26,14 @@ export default function ProductDetailPage() {
   }, [productId]);
 
   return (
-    <MainLayout type={userType}>
+    <>
       {productInfo == null && (
         <FadeLoaderBox>
           <FadeLoader color="var(--point-color)" />
         </FadeLoaderBox>
       )}
       {productInfo !== null && <ProductDetail productInfo={productInfo} />}
-    </MainLayout>
+    </>
   );
 }
 const FadeLoaderBox = styled.div`

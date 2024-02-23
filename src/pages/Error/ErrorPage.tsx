@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ErrorIcon from "../../assets/svg/icon-404.svg";
@@ -48,7 +47,7 @@ const ErrorContainer = styled.div`
   margin: 0 auto;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: calc(100vh - 98px);
 `;
 const ErrorMsg = styled.div`
   h2 {

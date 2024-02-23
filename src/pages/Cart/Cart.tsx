@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -18,7 +18,6 @@ import CartHeader from "../../components/Cart/CartHeader";
 import CartList from "../../components/Cart/CartList";
 import CartTotal from "../../components/Cart/CartTotal";
 import { Button } from "../../components/common/Button/Button";
-import { MainLayout } from "../../components/Layout/Layout";
 
 export default function Cart() {
   const userType = localStorage.getItem("user_type");
@@ -84,7 +83,7 @@ export default function Cart() {
   };
   // console.log("!!", cartInfoList);
   return (
-    <MainLayout type={userType}>
+    <>
       <CartTitle>장바구니</CartTitle>
       <CartContentContainer>
         <CartTable>
@@ -118,7 +117,7 @@ export default function Cart() {
           </ButtonStyle>
         </>
       )}
-    </MainLayout>
+    </>
   );
 }
 const CartTitle = styled.h2`

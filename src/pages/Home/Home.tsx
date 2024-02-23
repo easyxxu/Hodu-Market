@@ -1,16 +1,11 @@
-import ProductList from "../../components/Product/ProductList";
-import { MainLayout } from "../../components/Layout/Layout";
-import { useLocation } from "react-router-dom";
-import { loadAllProduct } from "../../apis/productApi";
 import { useState, useEffect } from "react";
+import ProductList from "../../components/Product/ProductList";
 import useIntersectionObserver from "../../hooks/useIntersectionObserver";
+import { loadAllProduct } from "../../apis/productApi";
 import { Product } from "../../types/product";
 import axios from "axios";
 
 export default function Home() {
-  const userType = localStorage.getItem("user_type");
-  const location = useLocation();
-  const path = location.pathname;
   const [productListData, setProductListData] = useState<Product[]>([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
@@ -46,13 +41,13 @@ export default function Home() {
   }, [page]);
 
   return (
-    <MainLayout type={userType} path={path}>
+    <>
       <ProductList
         data={productListData}
         isLoading={isLoading}
         pageEnd={pageEnd}
       />
       <div ref={targetRef} />
-    </MainLayout>
+    </>
   );
 }

@@ -21,9 +21,9 @@ export function Logo() {
   );
 }
 interface HeaderProps {
-  type: string | null;
+  userType: string | null;
 }
-export function Header({ type }: HeaderProps) {
+export function Header({ userType }: HeaderProps) {
   const [searchKeyword, setSearchKeyword] = useState("");
   const navigate = useNavigate();
   const handleSubmitSearch = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -49,7 +49,7 @@ export function Header({ type }: HeaderProps) {
           />
           <S.SearchBtn aria-label="검색" />
         </S.SearchContainer>
-        {HeaderType(type)}
+        {HeaderType(userType)}
       </S.HeaderContainer>
     </S.HeaderDiv>
   );

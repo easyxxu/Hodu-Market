@@ -153,13 +153,11 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
 
   // logout
   const handleLogout = async () => {
-    // console.log("logout go");
     try {
       const res = await logoutApi();
       localStorage.removeItem("token");
       localStorage.removeItem("user_type");
       localStorage.removeItem("recoil-persist");
-      // console.log("logout:", res);
     } catch (err) {
       console.error(err);
     }

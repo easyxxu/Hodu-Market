@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import LogoIcon from "../../../assets/svg/Logo-hodu.svg";
 import ShoppingCart from "../../../assets/svg/icon-shopping-cart.svg";
 import ShoppingCartActive from "../../../assets/svg/icon-shopping-cart-2.svg";
-import { ReactComponent as LogoutIcon } from "../../../assets/svg/icon-logout.svg";
 import MyPage from "../../../assets/svg/icon-user.svg";
 import MyPageActive from "../../../assets/svg/icon-user-2.svg";
+import { ReactComponent as LogoutIcon } from "../../../assets/svg/icon-logout.svg";
 import { Button } from "../Button/Button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as S from "./HeaderStyle";
@@ -81,10 +81,7 @@ function HeaderType(type: string | null) {
         active={isCartPage ? "true" : "false"}
         title="장바구니 바로가기"
       >
-        <img
-          src={isCartPage ? ShoppingCartActive : ShoppingCart}
-          alt="장바구니 아이콘"
-        />
+        <img src={isCartPage ? ShoppingCartActive : ShoppingCart} alt="" />
         <p className={navItemClassName}>장바구니</p>
       </S.ShoppingCartLink>
     );
@@ -97,7 +94,7 @@ function HeaderType(type: string | null) {
         active={isMyPage ? "true" : "false"}
         title="마이페이지 바로가기"
       >
-        <img src={isMyPage ? MyPageActive : MyPage} alt="마이페이지" />
+        <img src={isMyPage ? MyPageActive : MyPage} alt="" />
         <p className={navItemClassName}>마이페이지</p>
       </S.HeaderLink>
     );
@@ -138,6 +135,7 @@ function HeaderType(type: string | null) {
             isMobile ? { width: "100%", padding: "10px 0" } : undefined
           }
           onClick={() => navigate("/sellercenter")}
+          ariaLabel={isMobile ? "판매자센터 바로가기" : ""}
         >
           <Icon icon="shoppingbag" />
           {isMobile ? "" : "판매자센터"}
@@ -150,7 +148,7 @@ function HeaderType(type: string | null) {
       <S.Nav>
         <ShoppingCartLink />
         <S.HeaderLink to="/login" title="로그인 바로가기">
-          <img src={MyPage} alt="로그인 아이콘" />
+          <img src={MyPage} alt="" />
           <p className={navItemClassName}>로그인</p>
         </S.HeaderLink>
       </S.Nav>

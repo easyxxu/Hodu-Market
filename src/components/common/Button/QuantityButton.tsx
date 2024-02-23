@@ -85,9 +85,17 @@ export default function QuantityButton({
   }, [quantityUpdateForm, cartItemId, setCartInfoList]);
   return (
     <CountButtonStyle>
-      <button type="button" onClick={handleQuantityMinus} />
+      <button
+        type="button"
+        onClick={handleQuantityMinus}
+        aria-label="수량 감소"
+      />
       <p>{quantity}</p>
-      <button type="button" onClick={handleQuantityPlus} />
+      <button
+        type="button"
+        onClick={handleQuantityPlus}
+        aria-label="수량 증가"
+      />
     </CountButtonStyle>
   );
 }

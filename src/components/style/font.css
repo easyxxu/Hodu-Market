@@ -1,17 +1,26 @@
 @font-face {
   font-family: "Spoqa Han Sans Neo";
-  src: url(./fonts/SpoqaHanSansNeo-Regular.ttf);
+  src: local(SpoqaHanSansNeo-Regular),
+    url(./fonts/SpoqaHanSansNeo-Regular.woff2) format("woff2"),
+    url(./fonts/SpoqaHanSansNeo-Regular.woff) format("woff"),
+    url(./fonts/SpoqaHanSansNeo-Regular.ttf) format("ttf");
   font-weight: 400;
 }
 
 @font-face {
   font-family: "Spoqa Han Sans Neo";
-  src: url(./fonts/SpoqaHanSansNeo-Medium.ttf);
+  src: local(SpoqaHanSansNeo-Medium),
+    url(./fonts/SpoqaHanSansNeo-Medium.woff2) format("woff2"),
+    url(./fonts/SpoqaHanSansNeo-Medium.woff) format("woff"),
+    url(./fonts/SpoqaHanSansNeo-Medium.ttf) format("ttf");
   font-weight: 500;
 }
 
 @font-face {
   font-family: "Spoqa Han Sans Neo";
-  src: url(./fonts/SpoqaHanSansNeo-Bold.ttf);
+  src: local(SpoqaHanSansNeo-Bold),
+    url(./fonts/SpoqaHanSansNeo-Bold.woff2) format("woff2"),
+    url(./fonts/SpoqaHanSansNeo-Bold.woff) format("woff"),
+    url(./fonts/SpoqaHanSansNeo-Bold.ttf) format("ttf");
   font-weight: 700;
 }

@@ -1,53 +1,26 @@
-/* @font-face {
+@font-face {
   font-family: "Spoqa Han Sans Neo";
   src: local(NanumSquareNeo),
-    url(./fonts/SpoqaHanSansNeo-Regular.woff2) format("woff2"),
-    url(./fonts/SpoqaHanSansNeo-Regular.woff) format("woff"),
-    url(./fonts/SpoqaHanSansNeo-Regular.ttf) format("ttf");
+    url(./fonts/SpoqaHanSansNeo-Regular.subset.woff2) format("woff2"),
+    url(./fonts/SpoqaHanSansNeo-Regular.subset.woff) format("woff"),
+    url(./fonts/SpoqaHanSansNeo-Regular.subset.ttf) format("ttf");
   font-weight: 400;
 }
 
 @font-face {
   font-family: "Spoqa Han Sans Neo";
   src: local(SpoqaHanSansNeo-Medium),
-    url(./fonts/SpoqaHanSansNeo-Medium.woff2) format("woff2"),
-    url(./fonts/SpoqaHanSansNeo-Medium.woff) format("woff"),
-    url(./fonts/SpoqaHanSansNeo-Medium.ttf) format("ttf");
+    url(./fonts/SpoqaHanSansNeo-Medium.subset.woff2) format("woff2"),
+    url(./fonts/SpoqaHanSansNeo-Medium.subset.woff) format("woff"),
+    url(./fonts/SpoqaHanSansNeo-Medium.subset.ttf) format("ttf");
   font-weight: 500;
 }
 
 @font-face {
   font-family: "Spoqa Han Sans Neo";
   src: local(SpoqaHanSansNeo-Bold),
-    url(./fonts/SpoqaHanSansNeo-Bold.woff2) format("woff2"),
-    url(./fonts/SpoqaHanSansNeo-Bold.woff) format("woff"),
-    url(./fonts/SpoqaHanSansNeo-Bold.ttf) format("ttf");
-  font-weight: 700;
-} */
-
-@font-face {
-  font-family: "Spoqa Han Sans Neo";
-  src: local(NanumSquareNeo),
-    url(./fonts/subset-SpoqaHanSansNeo-Regular.woff2) format("woff2"),
-    url(./fonts/subset-SpoqaHanSansNeo-Regular.woff) format("woff"),
-    url(./fonts/subset-SpoqaHanSansNeo-Regular.ttf) format("ttf");
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: "Spoqa Han Sans Neo";
-  src: local(SpoqaHanSansNeo-Medium),
-    url(./fonts/subset-SpoqaHanSansNeo-Medium.woff2) format("woff2"),
-    url(./fonts/subset-SpoqaHanSansNeo-Medium.woff) format("woff"),
-    url(./fonts/subset-SpoqaHanSansNeo-Medium.ttf) format("ttf");
-  font-weight: 500;
-}
-
-@font-face {
-  font-family: "Spoqa Han Sans Neo";
-  src: local(SpoqaHanSansNeo-Bold),
-    url(./fonts/subset-SpoqaHanSansNeo-Bold.woff2) format("woff2"),
-    url(./fonts/subset-SpoqaHanSansNeo-Bold.woff) format("woff"),
-    url(./fonts/subset-SpoqaHanSansNeo-Bold.ttf) format("ttf");
+    url(./fonts/SpoqaHanSansNeo-Bold.subset.woff2) format("woff2"),
+    url(./fonts/SpoqaHanSansNeo-Bold.subset.woff) format("woff"),
+    url(./fonts/SpoqaHanSansNeo-Bold.subset.ttf) format("ttf");
   font-weight: 700;
 }

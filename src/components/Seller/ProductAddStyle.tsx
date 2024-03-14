@@ -95,13 +95,10 @@ const ProductImgInputBtn = styled.button`
 `;
 const ProductImgPreview = styled.img`
   position: absolute;
-  /* top: 1px;
-  left: 1px; */
   width: 100%;
   aspect-ratio: 1/1;
-  object-fit: contain;
+  object-fit: cover;
   cursor: pointer;
-  /* border: 1px solid var(--content-color-light); */
 `;
 const ProductInfo = styled.div`
   width: 50%;

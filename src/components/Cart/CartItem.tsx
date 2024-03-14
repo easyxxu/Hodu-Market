@@ -214,13 +214,15 @@ export default function CartItem({ item }: CartItemProps) {
   return (
     <S.CartItemContainer>
       <td>
-        <S.ToggleCheckBox
-          type="checkbox"
-          checked={isChecked}
-          onChange={(e) =>
-            handleCartSingleSelect(e.target.checked, cartItemInfo.product_id)
-          }
-        />
+        <label aria-label={`${cartItemInfo.product_name}`}>
+          <S.ToggleCheckBox
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e) =>
+              handleCartSingleSelect(e.target.checked, cartItemInfo.product_id)
+            }
+          />
+        </label>
       </td>
       <S.ProductInfoWrapper>
         <S.ProductImg src={cartItemInfo.image} alt="상품이미지" />
@@ -261,7 +263,7 @@ export default function CartItem({ item }: CartItemProps) {
         />
       </S.ProductPriceContainer>
       <td>
-        <S.BtnDelete onClick={handleModalOpen} />
+        <S.BtnDelete onClick={handleModalOpen} aria-label="삭제" />
       </td>
     </S.CartItemContainer>
   );

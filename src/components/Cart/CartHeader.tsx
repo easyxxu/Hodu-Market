@@ -26,21 +26,23 @@ export default function CartHeader() {
   return (
     <S.CartHeader>
       <tr>
-        <th>
-          <S.CartCheckBox
-            type="checkbox"
-            onChange={(e) => handleAllSelect(e.target.checked)}
-            checked={
-              cartCheckedItems.length === cartProductInfoList.length
-                ? true
-                : false
-            }
-          />
+        <th scope="col">
+          <label aria-label="전체상품">
+            <S.CartCheckBox
+              type="checkbox"
+              onChange={(e) => handleAllSelect(e.target.checked)}
+              checked={
+                cartCheckedItems.length === cartProductInfoList.length
+                  ? true
+                  : false
+              }
+            />
+          </label>
         </th>
-        <th>상품정보</th>
-        <th>수량</th>
-        <th>상품금액</th>
-        <th></th>
+        <th scope="col">상품정보</th>
+        <th scope="col">수량</th>
+        <th scope="col">상품금액</th>
+        <th scope="col"></th>
       </tr>
     </S.CartHeader>
   );

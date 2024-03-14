@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { cartListApi, deleteAllCartApi } from "../../apis/cartApi";
 import {
@@ -9,24 +9,35 @@ import {
   cartInfoListAtom,
   cartTotalAtom,
 } from "../../atoms/cartAtom";
-import {
-  CartLoginSeller,
-  CartNoItemBuyer,
-  CartNoLogin,
-} from "../../components/Cart/CartContent";
+import { CartContent } from "../../components/Cart/CartContent";
 import CartHeader from "../../components/Cart/CartHeader";
 import CartList from "../../components/Cart/CartList";
 import CartTotal from "../../components/Cart/CartTotal";
 import { Button } from "../../components/common/Button/Button";
 
+export const CART_STATE = {
+  NOT_LOGGED_IN: "NOT_LOGGED_IN", // 로그인 안함
+  EMPTY_CART: "EMPTY_CART", // BUYER, 카트 비어있음
+  NO_EMPTY_CART: "NO_EMPTY_CART", // BUYER, 카트 비어있지 않음
+  SELLER_LOGGED_IN: "SELLER_LOGGED_IN", // SELLER
+};
+
+function determineCartState(userType: string | null, cartItemLength: number) {
+  if (!userType) return CART_STATE.NOT_LOGGED_IN;
+  if (userType === "SELLER") return CART_STATE.SELLER_LOGGED_IN;
+  return cartItemLength === 0
+    ? CART_STATE.EMPTY_CART
+    : CART_STATE.NO_EMPTY_CART;
+}
+
 export default function Cart() {
   const userType = localStorage.getItem("user_type");
-  const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [cartProductInfoList, setCartProductInfoList] = useRecoilState(
     cartProductInfoListAtom
   );
-  const [cartInfoList, setCartInfoList] = useRecoilState(cartInfoListAtom);
+  const cartState = determineCartState(userType, cartProductInfoList.length);
+  const setCartInfoList = useSetRecoilState(cartInfoListAtom);
   const totalPriceList = useRecoilValue(cartTotalAtom);
   const totalPrice = totalPriceList.total.reduce((a, b) => a + b, 0);
 
@@ -50,51 +61,38 @@ export default function Cart() {
   };
 
   useEffect(() => {
-    if (token && userType === "BUYER") {
-      // 장바구니 리스트 로드 API
+    if (userType === "BUYER") {
       const loadCartList = async () => {
         try {
           const { cartInfoList, cartProuductInfoList } = await cartListApi();
           setCartInfoList(cartInfoList);
           setCartProductInfoList(cartProuductInfoList);
-          // console.log("장바구니 리스트 API 결과: ", cartProudctInfoList);
         } catch (err) {
           console.error("loadCartList Error: ", err);
         }
       };
       loadCartList();
-    } else if (!token || userType === "SELLER") {
+    } else if (
+      cartState === CART_STATE.NOT_LOGGED_IN ||
+      cartState === CART_STATE.SELLER_LOGGED_IN
+    ) {
       setCartProductInfoList([]);
     }
   }, []);
 
-  const cartContent = () => {
-    if (!token) {
-      return <CartNoLogin />;
-    } else if (token && userType === "SELLER") {
-      return <CartLoginSeller />;
-    } else if (
-      token &&
-      userType === "BUYER" &&
-      cartProductInfoList.length === 0
-    ) {
-      return <CartNoItemBuyer />;
-    }
-  };
-  // console.log("!!", cartInfoList);
   return (
     <>
       <CartTitle>장바구니</CartTitle>
-      <CartContentContainer>
+      <div>
         <CartTable>
           <CartHeader />
-          {token && userType === "BUYER" && cartInfoList.length !== 0 && (
-            <CartList />
-          )}
+          {cartState === CART_STATE.NO_EMPTY_CART && <CartList />}
         </CartTable>
-        {cartContent()}
-      </CartContentContainer>
-      {userType === "BUYER" && cartProductInfoList.length !== 0 && (
+        {cartState !== CART_STATE.NO_EMPTY_CART && (
+          <CartContent cartState={cartState} />
+        )}
+      </div>
+      {cartState === CART_STATE.NO_EMPTY_CART && (
         <>
           <AllDeleteBtn>
             <Button
@@ -138,7 +136,6 @@ const ButtonStyle = styled.div`
 const AllDeleteBtn = styled(ButtonStyle)`
   margin: 36px 0 0;
 `;
-const CartContentContainer = styled.div``;
 const CartTable = styled.table`
   width: 100%;
   border-collapse: separate;

@@ -27,11 +27,11 @@ export default function ProductList({ data, isLoading, pageEnd }: Props) {
         {data.map((product) => (
           <li key={product.product_id}>
             <S.ProductLink to={`/detail/${product.product_id}`}>
+              {product.stock === 0 && <S.SoldOut aria-label="품절된상품" />}
               <ProductImg
                 imgSrc={product.image}
                 alt={`${product.product_name} 이미지`}
               />
-              {product.stock === 0 && <S.SoldOut />}
               <S.ProductCorporation>{product.store_name}</S.ProductCorporation>
               <S.ProductName className="ellipsis">
                 {product.product_name}

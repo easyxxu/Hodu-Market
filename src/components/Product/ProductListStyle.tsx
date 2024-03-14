@@ -50,6 +50,7 @@ const SoldOut = styled.div`
   top: -6px;
   left: -6px;
   background: url(${SoldOutIcon}) no-repeat center center;
+  z-index: 10;
   ${media.Small`
     top: -25px;
     left: -25px;

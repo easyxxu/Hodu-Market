@@ -16,7 +16,7 @@ export function Layout({ children }: Props) {
   const isSellerCenter = currentPath.startsWith("/sellercenter");
   const isHome = currentPath === "/";
   const authPath = currentPath === "/login" || currentPath === "/join";
-
+  // console.log(authPath);
   return (
     <Container>
       {authPath ? (
@@ -52,7 +52,7 @@ const AuthContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100vh;
+  padding: 50px 0;
   h1 {
     text-align: center;
     width: 100%;

@@ -13,9 +13,10 @@ export function Layout({ children }: Props) {
   const userType = localStorage.getItem("user_type");
   const location = useLocation();
   const currentPath = location.pathname;
-  const isSellerCenter = currentPath === "/sellercenter";
+  const isSellerCenter = currentPath.startsWith("/sellercenter");
   const isHome = currentPath === "/";
   const authPath = currentPath === "/login" || currentPath === "/join";
+
   return (
     <Container>
       {authPath ? (

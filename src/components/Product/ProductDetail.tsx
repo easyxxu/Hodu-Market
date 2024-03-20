@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { addCartApi } from "../../apis/cartApi";
 import { cartAddFormAtom } from "../../atoms/cartAddFormAtom";
@@ -14,6 +14,7 @@ import useStockCheck from "../../hooks/useStockCheck";
 import { Product } from "../../types/product";
 import axios from "axios";
 import { logoutApi } from "../../apis/authApi";
+import MetaTag from "../common/MetaTag";
 interface ProductDetailProps {
   data?: any;
   productInfo: Product;
@@ -34,6 +35,8 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
   } = productInfo;
   const { productId } = useParams();
   const product_id: number = parseInt(productId!);
+  const location = useLocation();
+  const path = location.pathname;
   const [cartAddForm, setCartAddForm] = useRecoilState(cartAddFormAtom);
   const navigate = useNavigate();
   const { openModal, closeModal } = useModal();
@@ -173,6 +176,12 @@ export default function ProductDetail({ productInfo }: ProductDetailProps) {
 
   return (
     <>
+      <MetaTag
+        title={product_name}
+        description={product_info}
+        imgSrc={image}
+        url={path}
+      />
       <S.DetailContainer>
         <S.ProductImg src={image} alt="상품이미지" />
         <S.ProductInfoContainer>

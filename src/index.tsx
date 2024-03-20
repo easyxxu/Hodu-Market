@@ -1,5 +1,5 @@
-import React from "react";
 import { createRoot } from "react-dom/client";
+import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import App from "./App";
@@ -11,7 +11,9 @@ root.render(
   <BrowserRouter>
     <RecoilRoot>
       <ScrollToTop />
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </RecoilRoot>
   </BrowserRouter>
 );

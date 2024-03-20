@@ -7,10 +7,12 @@ import "./components/style/font.css";
 import { Modals } from "./components/common/Modal/Modals";
 import styled from "styled-components";
 import { Layout } from "./components/Layout/Layout";
+import MetaTag from "./components/common/MetaTag";
 
 function App() {
   return (
     <Wrap>
+      <MetaTag />
       <GlobalStyle />
       <Layout>
         <Routers />

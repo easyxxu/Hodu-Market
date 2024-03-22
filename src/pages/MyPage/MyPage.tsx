@@ -1,7 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { styled, css } from "styled-components";
-import { logoutApi } from "../../apis/authApi";
-import { Button } from "../../components/common/Button/Button";
 import { modalsList } from "../../components/common/Modal/Modals";
 import { media } from "../../components/style/media";
 import useModal from "../../hooks/useModal";
@@ -13,17 +11,7 @@ export default function MyPage() {
   const handleNoFeature = () => {
     openModal(modalsList.noFeature);
   };
-  const handleLogout = async () => {
-    try {
-      const res = await logoutApi();
-      localStorage.removeItem("token");
-      localStorage.removeItem("user_type");
-      localStorage.removeItem("recoil-persist");
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-    }
-  };
+
   const handleOrderLookUp = () => {
     navigate("/mypage/order");
   };
@@ -43,30 +31,10 @@ export default function MyPage() {
                 <li onClick={handleNoFeature}>적립금 내역</li>
               </ul>
             </OrderMenu>
-            <Button
-              type="button"
-              $customStyle={{ width: "150px" }}
-              color="point"
-              size="small"
-              onClick={handleLogout}
-            >
-              로그아웃
-            </Button>
           </MyPageMenu>
         )}
         <MyPageContent center={userType === "SELLER" ? "true" : "false"}>
           <Outlet />
-          {userType === "SELLER" && (
-            <Button
-              type="button"
-              $customStyle={{ width: "150px" }}
-              color="point"
-              size="small"
-              onClick={handleLogout}
-            >
-              로그아웃
-            </Button>
-          )}
         </MyPageContent>
       </MyPageContainer>
     </>

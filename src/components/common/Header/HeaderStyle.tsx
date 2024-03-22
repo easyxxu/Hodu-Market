@@ -141,6 +141,55 @@ const SellerHeaderDiv = styled.header`
     height: 24px;
   }
 `;
+const MyPageBtn = styled.button<{ $active: boolean }>`
+  position: relative;
+  color: #767676;
+  p {
+    color: ${(props) => (props.$active ? "var(--point-color)" : "inherit")};
+  }
+  &:hover {
+    color: var(--point-color);
+  }
+`;
+const DropDownBox = styled.div`
+  position: absolute;
+  width: 130px;
+  height: 108px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 20px 2px rgb(0 0 0 / 10%);
+  transform: translate(-33px, 15px);
+  color: #767676;
+  &::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    transform: translate(0, -55px);
+    border-left: 17.32px solid transparent;
+    border-right: 17.32px solid transparent;
+    border-bottom: 30px solid #ffffff;
+  }
+  a {
+    width: 110px;
+    height: 40px;
+    line-height: 40px;
+    &:hover {
+      color: var(--point-color);
+    }
+  }
+  button {
+    width: 110px;
+    height: 40px;
+    &:hover {
+      color: var(--point-color);
+    }
+  }
+`;
 export {
   HeaderDiv,
   HeaderContainer,
@@ -153,4 +202,6 @@ export {
   ShoppingCartLink,
   HeaderLink,
   SellerHeaderDiv,
+  MyPageBtn,
+  DropDownBox,
 };

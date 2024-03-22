@@ -59,9 +59,10 @@ function HeaderType(type: string | null) {
   const navigate = useNavigate();
   const location = useLocation();
   const isCartPage = location.pathname === "/cart";
-  const isMyPage = location.pathname === "/mypage";
+  const isMyPage = location.pathname.startsWith("/mypage");
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 639);
   const navItemClassName = isMobile ? "a11y-hidden" : undefined;
+  const [myPageDropDown, setMyPageDropDown] = useState(false);
   // logout
   const handleLogout = async () => {
     try {
@@ -87,19 +88,39 @@ function HeaderType(type: string | null) {
     );
   };
 
+  // const MyPageLink = () => {
+  //   return (
+  //     <S.HeaderLink
+  //       to="/mypage"
+  //       active={isMyPage ? "true" : "false"}
+  //       title="마이페이지 바로가기"
+  //     >
+  //       <img src={isMyPage ? MyPageActive : MyPage} alt="" />
+  //       <p className={navItemClassName}>마이페이지</p>
+  //     </S.HeaderLink>
+  //   );
+  // };
+
   const MyPageLink = () => {
     return (
-      <S.HeaderLink
-        to="/mypage"
-        active={isMyPage ? "true" : "false"}
-        title="마이페이지 바로가기"
+      <S.MyPageBtn
+        type="button"
+        onClick={() => setMyPageDropDown(!myPageDropDown)}
+        $active={isMyPage}
       >
         <img src={isMyPage ? MyPageActive : MyPage} alt="" />
         <p className={navItemClassName}>마이페이지</p>
-      </S.HeaderLink>
+        {myPageDropDown && (
+          <S.DropDownBox>
+            <Link to="/mypage">마이페이지</Link>
+            <button type="button" onClick={handleLogout}>
+              로그아웃
+            </button>
+          </S.DropDownBox>
+        )}
+      </S.MyPageBtn>
     );
   };
-
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 639);

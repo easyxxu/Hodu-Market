@@ -151,8 +151,10 @@ const MyPageBtn = styled.button<{ $active: boolean }>`
     color: var(--point-color);
   }
 `;
-const DropDownBox = styled.div`
+const DropDownBox = styled.div<{ isMobile: boolean }>`
   position: absolute;
+  bottom: 0;
+  right: ${(props) => (props.isMobile ? "5px" : "0px")};
   width: 130px;
   height: 108px;
   border-radius: 10px;
@@ -162,14 +164,16 @@ const DropDownBox = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: 0px 0px 20px 2px rgb(0 0 0 / 10%);
-  transform: translate(-33px, 15px);
+  transform: ${(props) =>
+    props.isMobile ? "translate(0px, 100px)" : "translate(5px, 100px)"};
   color: #767676;
   &::before {
     content: "";
     position: absolute;
     width: 0;
     height: 0;
-    transform: translate(0, -55px);
+    transform: ${(props) =>
+      props.isMobile ? "translate(40px,-55px)" : "translate(0, -55px)"};
     border-left: 17.32px solid transparent;
     border-right: 17.32px solid transparent;
     border-bottom: 30px solid #ffffff;
@@ -178,6 +182,9 @@ const DropDownBox = styled.div`
     width: 110px;
     height: 40px;
     line-height: 40px;
+    font-size: 13.3px;
+    font-weight: 500;
+    text-align: center;
     &:hover {
       color: var(--point-color);
     }

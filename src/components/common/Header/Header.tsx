@@ -110,14 +110,6 @@ function HeaderType(type: string | null) {
       >
         <img src={isMyPage ? MyPageActive : MyPage} alt="" />
         <p className={navItemClassName}>마이페이지</p>
-        {myPageDropDown && (
-          <S.DropDownBox>
-            <Link to="/mypage">마이페이지</Link>
-            <button type="button" onClick={handleLogout}>
-              로그아웃
-            </button>
-          </S.DropDownBox>
-        )}
       </S.MyPageBtn>
     );
   };
@@ -138,6 +130,14 @@ function HeaderType(type: string | null) {
       <S.Nav>
         <ShoppingCartLink />
         <MyPageLink />
+        {myPageDropDown && (
+          <S.DropDownBox isMobile={isMobile}>
+            <Link to="/mypage">마이페이지</Link>
+            <button type="button" onClick={handleLogout}>
+              로그아웃
+            </button>
+          </S.DropDownBox>
+        )}
       </S.Nav>
     );
   } else if (type === "SELLER" && TOKEN) {

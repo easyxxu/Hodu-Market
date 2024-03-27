@@ -88,19 +88,6 @@ function HeaderType(type: string | null) {
     );
   };
 
-  // const MyPageLink = () => {
-  //   return (
-  //     <S.HeaderLink
-  //       to="/mypage"
-  //       active={isMyPage ? "true" : "false"}
-  //       title="마이페이지 바로가기"
-  //     >
-  //       <img src={isMyPage ? MyPageActive : MyPage} alt="" />
-  //       <p className={navItemClassName}>마이페이지</p>
-  //     </S.HeaderLink>
-  //   );
-  // };
-
   const MyPageLink = () => {
     return (
       <S.MyPageBtn
@@ -131,7 +118,10 @@ function HeaderType(type: string | null) {
         <ShoppingCartLink />
         <MyPageLink />
         {myPageDropDown && (
-          <S.DropDownBox isMobile={isMobile}>
+          <S.DropDownBox
+            isMobile={isMobile}
+            onClick={() => setMyPageDropDown(false)}
+          >
             <Link to="/mypage">마이페이지</Link>
             <button type="button" onClick={handleLogout}>
               로그아웃

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LogoIcon from "../../../assets/svg/Logo-hodu.svg";
 import ShoppingCart from "../../../assets/svg/icon-shopping-cart.svg";
 import ShoppingCartActive from "../../../assets/svg/icon-shopping-cart-2.svg";
@@ -62,7 +62,8 @@ function HeaderType(type: string | null) {
   const isMyPage = location.pathname.startsWith("/mypage");
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 639);
   const navItemClassName = isMobile ? "a11y-hidden" : undefined;
-  const [myPageDropDown, setMyPageDropDown] = useState(false);
+  const [isOpenDropDown, setIsOpenDropDown] = useState(false);
+  const dropDownRef = useRef<any>(null);
   // logout
   const handleLogout = async () => {
     try {
@@ -92,7 +93,7 @@ function HeaderType(type: string | null) {
     return (
       <S.MyPageBtn
         type="button"
-        onClick={() => setMyPageDropDown(!myPageDropDown)}
+        onClick={() => setIsOpenDropDown(!isOpenDropDown)}
         $active={isMyPage}
       >
         <img src={isMyPage ? MyPageActive : MyPage} alt="" />
@@ -100,6 +101,7 @@ function HeaderType(type: string | null) {
       </S.MyPageBtn>
     );
   };
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 639);
@@ -111,16 +113,42 @@ function HeaderType(type: string | null) {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropDownRef.current &&
+        !dropDownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpenDropDown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpenDropDown, setIsOpenDropDown]);
+
+  useEffect(() => {
+    if (isOpenDropDown) {
+      console.log("focus", dropDownRef);
+      dropDownRef.current.focus();
+    }
+  }, [isOpenDropDown]);
+
   // BUYER로 로그인한 상태
   if (type === "BUYER" && TOKEN) {
     return (
       <S.Nav>
         <ShoppingCartLink />
         <MyPageLink />
-        {myPageDropDown && (
+        {isOpenDropDown && (
           <S.DropDownBox
             isMobile={isMobile}
-            onClick={() => setMyPageDropDown(false)}
+            onClick={() => setIsOpenDropDown(false)}
+            ref={dropDownRef}
           >
             <Link to="/mypage">마이페이지</Link>
             <button type="button" onClick={handleLogout}>

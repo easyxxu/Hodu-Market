@@ -163,21 +163,11 @@ const DropDownBox = styled.div<{ isMobile: boolean }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 2px;
   box-shadow: 0px 0px 20px 2px rgb(0 0 0 / 10%);
   transform: ${(props) =>
-    props.isMobile ? "translate(0px, 100px)" : "translate(5px, 100px)"};
+    props.isMobile ? "translate(0px, 90px)" : "translate(5px, 90px)"};
   color: #767676;
-  &::before {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 0;
-    transform: ${(props) =>
-      props.isMobile ? "translate(40px,-55px)" : "translate(0, -55px)"};
-    border-left: 17.32px solid transparent;
-    border-right: 17.32px solid transparent;
-    border-bottom: 30px solid #ffffff;
-  }
   a {
     width: 110px;
     height: 40px;

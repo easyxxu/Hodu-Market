@@ -101,7 +101,12 @@ function HeaderType(type: string | null) {
       </S.MyPageBtn>
     );
   };
-
+  const handleFocusDropDown = (e: React.KeyboardEvent) => {
+    if (!e.shiftKey && e.keyCode === 9) {
+      e.preventDefault();
+      dropDownRef.current.querySelector("a").focus();
+    }
+  };
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 639);
@@ -124,17 +129,22 @@ function HeaderType(type: string | null) {
       }
     };
 
+    const escDropDownClose = (e: KeyboardEvent) => {
+      if (e.keyCode === 27) {
+        setIsOpenDropDown(false);
+      }
+    };
     document.addEventListener("mousedown", handleClickOutside);
-
+    document.addEventListener("keydown", escDropDownClose);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", escDropDownClose);
     };
   }, [isOpenDropDown, setIsOpenDropDown]);
 
   useEffect(() => {
     if (isOpenDropDown) {
-      console.log("focus", dropDownRef);
-      dropDownRef.current.focus();
+      dropDownRef.current.querySelector("a").focus();
     }
   }, [isOpenDropDown]);
 
@@ -151,7 +161,11 @@ function HeaderType(type: string | null) {
             ref={dropDownRef}
           >
             <Link to="/mypage">마이페이지</Link>
-            <button type="button" onClick={handleLogout}>
+            <button
+              type="button"
+              onClick={handleLogout}
+              onKeyDown={handleFocusDropDown}
+            >
               로그아웃
             </button>
           </S.DropDownBox>

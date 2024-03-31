@@ -95,6 +95,9 @@ const ShoppingCartLink = styled(Link)<{ active: string }>`
   p {
     color: ${(props) =>
       props.active === "true" ? "var(--point-color)" : "inherit"};
+    &:hover {
+      color: var(--point-color);
+    }
   }
   img {
     width: 32px;

@@ -42,6 +42,9 @@
     "postbuild": "react-snap"
   },
   "reactSnap": {
+    "include":[
+      "/","/detail/*"
+    ],
     "exclude": [
       "/cart",
       "/join",

@@ -41,6 +41,12 @@
     "build-storybook": "storybook build",
     "postbuild": "react-snap"
   },
+  "reactSnap": {
+    "include": [
+      "/",
+      "/detail"
+    ]
+  },
   "eslintConfig": {
     "extends": [
       "react-app",

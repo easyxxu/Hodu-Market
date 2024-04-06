@@ -38,14 +38,7 @@
     "serve": "serve -s build",
     "build-and-serve": "npm run build && npm run serve",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "postbuild": "react-snap"
-  },
-  "reactSnap": {
-    "include": [
-      "/",
-      "/detail"
-    ]
+    "build-storybook": "storybook build"
   },
   "eslintConfig": {
     "extends": [
